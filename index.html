@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V17.2</title>
+<title>Dapur Kapal V17.3</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
-<meta name="application-version" content="17.0">
+<meta name="application-version" content="17.3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -274,7 +274,7 @@ footer{
     <div class="dk72-splash-title">Dapur Kapal</div>
     <div class="dk72-splash-sub">Kitchen Management System</div>
     <div class="dk72-splash-loader"><span></span></div>
-    <small>V17.2 • Web Edition</small>
+    <small>V17.3 • Web Edition</small>
   </div>
 </div>
 
@@ -283,7 +283,7 @@ footer{
 
 <header>
   <div class="dk72-header-row"><img class="dk72-app-logo" src="dapur-kapal-icon.svg" alt="Dapur Kapal"><div class="dk72-header-copy"><h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V17.2</p></div></div>
+  <p>Kitchen Management System • V17.3</p></div></div>
 </header>
 
 <div class="dk164-header-actions">
@@ -594,7 +594,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V17.2 • Data tersimpan di perangkat
+  Dapur Kapal V17.3 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -4104,7 +4104,7 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V17.2 berhasil dibuat."
+    "✅ Backup Dapur Kapal V17.3 berhasil dibuat."
   );
 
 };
@@ -4266,7 +4266,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V17.2:",
+      "Dapur Kapal V17.3:",
       error
     );
 
@@ -4282,14 +4282,14 @@ window.renderAll=function(){
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V17.2";
+    "Dapur Kapal V17.3";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V17.2"
+        "Kitchen Management System • V17.3"
       )
     );
 
@@ -4298,7 +4298,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V17.2 • Data tersimpan di perangkat"
+        "Dapur Kapal V17.3 • Data tersimpan di perangkat"
       )
     );
 
@@ -4974,7 +4974,7 @@ function dk164SyncMobileBar(){
 ========================================================= */
 (function(){
   "use strict";
-  const DK17_VERSION="17.2";
+  const DK17_VERSION="17.3";
 
   function dk17Toast(message){
     let el=document.getElementById("dk17Toast");
@@ -5247,14 +5247,14 @@ function dk164SyncMobileBar(){
   };
 
   function dk17Version(){
-    document.title="Dapur Kapal V17.2";
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.2"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.2 • Data tersimpan di perangkat"));
+    document.title="Dapur Kapal V17.3";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.3"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.3 • Data tersimpan di perangkat"));
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta) meta.setAttribute("content","#0f172a");
     let marker=document.getElementById("dk17BuildMarker");
     if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V17.2 • Web Edition";
+    marker.textContent="BUILD V17.3 • Web Edition";
   }
 
   dk17AddStyles();
@@ -5304,14 +5304,108 @@ function dk164SyncMobileBar(){
   };
 
   window.dk72SetVersion=function(){
-    document.title="Dapur Kapal V17.2";
-    const p=document.querySelector("header p"); if(p) p.textContent="Kitchen Management System • V17.2";
-    const f=document.querySelector("footer"); if(f) f.textContent="Dapur Kapal V17.2 • Data tersimpan di perangkat";
+    document.title="Dapur Kapal V17.3";
+    const p=document.querySelector("header p"); if(p) p.textContent="Kitchen Management System • V17.3";
+    const f=document.querySelector("footer"); if(f) f.textContent="Dapur Kapal V17.3 • Data tersimpan di perangkat";
     let marker=document.getElementById("dk17BuildMarker");
     if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V17.2 • Web Edition";
+    marker.textContent="BUILD V17.3 • Web Edition";
   };
   window.dk72SetVersion();
+})();
+
+
+/* =========================================================
+   DAPUR KAPAL V17.3 — MOBILE EXPERIENCE
+   Bottom navigation 5 item + More menu, reliable back history,
+   single notification entry point, and mobile safe-area polish.
+========================================================= */
+(function(){
+  const MOBILE_ITEMS=[
+    ["dashboard","🏠","Home"],
+    ["menu","🍱","Menu"],
+    ["stock","📦","Stok"],
+    ["shopping","🛒","Belanja"]
+  ];
+
+  function addStyle(){
+    if(document.getElementById("dk173MobileStyle")) return;
+    const st=document.createElement("style"); st.id="dk173MobileStyle";
+    st.textContent=`
+      @media(max-width:600px){
+        body{padding-bottom:94px!important}
+        #dk173MobileBar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:999;background:rgba(17,24,39,.98);border:1px solid #334155;border-radius:17px;padding:6px;box-shadow:0 14px 38px rgba(0,0,0,.48);padding-bottom:max(6px,env(safe-area-inset-bottom))}
+        #dk173MobileBar button{min-height:56px;border:0;background:transparent;color:#94a3b8;border-radius:11px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:700;touch-action:manipulation}
+        #dk173MobileBar button .dk173-icon{font-size:21px;line-height:22px}
+        #dk173MobileBar button.active{background:#2563eb;color:#fff}
+        #dk173MoreMenu{position:fixed;left:10px;right:10px;bottom:88px;z-index:998;background:#111827;border:1px solid #334155;border-radius:16px;padding:10px;box-shadow:0 16px 40px rgba(0,0,0,.5);display:none}
+        #dk173MoreMenu.show{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        #dk173MoreMenu button{min-height:48px;border:1px solid #334155;background:#0f172a;color:#e5e7eb;border-radius:11px;font-weight:700}
+        .dk173-back{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;min-height:44px;padding:9px 13px;border:1px solid #334155;border-radius:11px;background:#111827;color:#e5e7eb;font-weight:700;touch-action:manipulation}
+      }
+      @media(min-width:601px){#dk173MobileBar,#dk173MoreMenu{display:none!important}}
+    `;
+    document.head.appendChild(st);
+  }
+
+  function installBar(){
+    if(document.getElementById("dk173MobileBar")) return;
+    const bar=document.createElement("nav"); bar.id="dk173MobileBar"; bar.setAttribute("aria-label","Navigasi mobile");
+    MOBILE_ITEMS.forEach(([page,icon,label])=>{
+      const b=document.createElement("button"); b.type="button"; b.dataset.page=page;
+      b.innerHTML=`<span class="dk173-icon">${icon}</span><span>${label}</span>`;
+      b.onclick=()=>{hideMore(); showPage(page)}; bar.appendChild(b);
+    });
+    const more=document.createElement("button"); more.type="button"; more.dataset.page="more";
+    more.innerHTML='<span class="dk173-icon">☰</span><span>Lainnya</span>'; more.onclick=toggleMore; bar.appendChild(more);
+    document.body.appendChild(bar);
+
+    const panel=document.createElement("div"); panel.id="dk173MoreMenu"; panel.setAttribute("aria-label","Menu lainnya");
+    const items=[
+      ["recipes","📖","Resep"],["expenses","💰","Kas"],["tasks","✅","Tugas"],["notes","📝","Catatan"],["reports","📊","Laporan"],["settings","⚙️","Data"]
+    ];
+    items.forEach(([page,icon,label])=>{const b=document.createElement("button");b.type="button";b.innerHTML=`${icon} ${label}`;b.onclick=()=>{hideMore();showPage(page)};panel.appendChild(b)});
+    document.body.appendChild(panel);
+    document.addEventListener("click",e=>{if(!panel.contains(e.target)&&!more.contains(e.target)) hideMore()},{passive:true});
+  }
+  function toggleMore(){document.getElementById("dk173MoreMenu")?.classList.toggle("show")}
+  function hideMore(){document.getElementById("dk173MoreMenu")?.classList.remove("show")}
+  function syncBar(){
+    const current=document.querySelector(".page.active")?.id||"dashboard";
+    document.querySelectorAll("#dk173MobileBar button").forEach(b=>b.classList.toggle("active",b.dataset.page===current));
+    const morePages=["recipes","expenses","tasks","notes","reports","settings"];
+    const more=document.querySelector('#dk173MobileBar button[data-page="more"]');
+    if(more) more.classList.toggle("active",morePages.includes(current));
+  }
+
+  function installBack(){
+    document.querySelectorAll(".page").forEach(page=>{
+      if(page.id==="dashboard"||page.querySelector(".dk173-back")) return;
+      const first=page.firstElementChild; if(!first) return;
+      const b=document.createElement("button"); b.type="button"; b.className="dk173-back"; b.innerHTML="← Kembali";
+      b.onclick=()=>{ const prev=window.dk164PreviousPage; showPage(prev&&prev!==page.id?prev:"dashboard"); };
+      page.insertBefore(b,first);
+    });
+  }
+
+  const originalRenderAll=window.renderAll;
+  let busy=false;
+  window.renderAll=function(){
+    if(busy) return;
+    busy=true;
+    try{
+      if(typeof originalRenderAll==="function") originalRenderAll();
+      installBar(); installBack(); syncBar();
+      const notify=document.getElementById("dk164QuickNotify");
+      if(notify){
+        notify.classList.add("dk72-notify");
+        const all=document.querySelectorAll("#dk164QuickNotify");
+        all.forEach((x,i)=>{if(i>0)x.remove()});
+      }
+    }finally{busy=false}
+  };
+  addStyle();
+  setTimeout(()=>{try{window.renderAll()}catch(e){console.error("V17.3 init",e)}},120);
 })();
 
 </script>
