@@ -1062,7 +1062,10 @@ function initData(){
 function showPage(page){
 
   const current=document.querySelector(".page.active")?.id || "dashboard";
-  if(page!==current) window.dk164PreviousPage=current;
+  if(page!==current){
+    window.dk164PreviousPage=current;
+    window.dk174PreviousPage=current;
+  }
 
   document.querySelectorAll(".page").forEach(el=>{
     el.classList.remove("active");
@@ -2775,7 +2778,7 @@ function addActivity(text){
 function backupData(){
 
   const backup={
-    version:"16.1",
+    version:"17.4",
     createdAt:new Date().toISOString(),
     data:{}
   };
@@ -2824,7 +2827,7 @@ function restoreData(event){
       }
 
       if(!confirm(
-        "Restore backup akan mengganti data V16.1 saat ini. Lanjut?"
+        "Restore backup akan mengganti data V17.4 saat ini. Lanjut?"
       )){
         return;
       }
@@ -2950,13 +2953,28 @@ function dateFile(){
    START APP
 ========================================================= */
 
+function dk174HideSplash(){
+  const splash=document.getElementById("dk72Splash");
+  if(!splash) return;
+  splash.classList.add("hide");
+  splash.setAttribute("aria-hidden","true");
+  setTimeout(()=>{ splash.style.display="none"; },450);
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
-
-  initData();
-  renderAll();
-  showPage("dashboard");
-
+  try{
+    initData();
+    renderAll();
+    showPage("dashboard");
+  }catch(e){
+    console.error("Dapur Kapal startup error:",e);
+  }finally{
+    requestAnimationFrame(()=>setTimeout(dk174HideSplash,120));
+  }
 });
+
+/* Safety fallback: startup errors must never leave the splash on screen forever. */
+setTimeout(dk174HideSplash,6500);
 
   /* =========================================================
    🚢 DAPUR KAPAL V17.2 PATCH
