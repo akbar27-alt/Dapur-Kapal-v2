@@ -1,0 +1,5260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f172a">
+<title>Dapur Kapal V17.0</title>
+<meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
+<meta name="application-version" content="17.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b1220;
+  color:#e5e7eb;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1100px;margin:auto;padding:14px}
+header{
+  background:#111827;
+  border:1px solid #263244;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:12px;
+}
+header h1{margin:0 0 5px;font-size:25px}
+header p{margin:0;color:#94a3b8}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:5px 0 12px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0b1220;
+}
+.tabs button{
+  flex:none;
+  border:1px solid #334155;
+  background:#111827;
+  color:#cbd5e1;
+  padding:9px 13px;
+  border-radius:12px;
+}
+.tabs button.active{
+  background:#2563eb;
+  color:white;
+  border-color:#2563eb;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+}
+.card{
+  background:#111827;
+  border:1px solid #263244;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.card h2,.card h3{margin-top:0}
+.stat{
+  font-size:28px;
+  font-weight:bold;
+  margin-top:8px;
+}
+.muted{color:#94a3b8}
+.small{font-size:13px}
+.good{color:#4ade80}
+.warn{color:#fbbf24}
+.danger{color:#f87171}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.row>*{flex:1}
+.row .fit{flex:0 0 auto}
+
+input,select,textarea{
+  width:100%;
+  background:#0f172a;
+  color:#e5e7eb;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:10px;
+  outline:none;
+}
+textarea{min-height:100px;resize:vertical}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 13px;
+  background:#2563eb;
+  color:white;
+}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{background:#334155}
+.btn.success{background:#16a34a}
+.btn.danger{background:#dc2626}
+.btn.warning{background:#d97706}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  border-bottom:1px solid #263244;
+  padding:9px 6px;
+  text-align:left;
+  vertical-align:top;
+}
+th{color:#93c5fd}
+
+.recipe{
+  border:1px solid #263244;
+  background:#0f172a;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:10px;
+}
+.recipe h3{margin:0 0 5px}
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#1e3a8a;
+  color:#bfdbfe;
+  font-size:12px;
+  margin:2px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.75);
+  padding:15px;
+  overflow:auto;
+}
+.modal.show{display:block}
+.modal-box{
+  max-width:700px;
+  margin:30px auto;
+  background:#111827;
+  border:1px solid #334155;
+  border-radius:18px;
+  padding:18px;
+}
+.close{
+  float:right;
+  border:0;
+  background:#334155;
+  color:white;
+  border-radius:8px;
+  padding:6px 10px;
+}
+
+.day{
+  background:#0f172a;
+  border:1px solid #263244;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+}
+.day h3{margin:0 0 8px}
+
+.bar{
+  height:10px;
+  background:#1e293b;
+  border-radius:20px;
+  overflow:hidden;
+}
+.bar span{
+  display:block;
+  height:100%;
+  background:#2563eb;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#94a3b8;
+}
+
+.timer{
+  text-align:center;
+  font-size:50px;
+  font-weight:bold;
+  padding:20px;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  border-bottom:1px solid #263244;
+}
+.check input{width:auto}
+
+footer{
+  text-align:center;
+  color:#64748b;
+  padding:25px 0 10px;
+}
+
+@media(max-width:600px){
+  .app{padding:9px}
+  header h1{font-size:22px}
+  .stat{font-size:24px}
+  th,td{font-size:13px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <h1>🚢 Dapur Kapal</h1>
+  <p>Kitchen Management System • V17.0</p>
+</header>
+
+<div class="dk164-header-actions">
+  <button id="dk164QuickNotify" class="btn secondary dk164-notify" type="button">🔔 Notifikasi</button>
+</div>
+
+<nav class="tabs">
+  <button data-page="dashboard" onclick="showPage('dashboard')">🏠 Home</button>
+  <button data-page="menu" onclick="showPage('menu')">🍱 Menu</button>
+  <button data-page="stock" onclick="showPage('stock')">📦 Stok</button>
+  <button data-page="shopping" onclick="showPage('shopping')">🛒 Belanja</button>
+  <button data-page="recipes" onclick="showPage('recipes')">📖 Resep</button>
+  <button data-page="expenses" onclick="showPage('expenses')">💰 Kas</button>
+  <button data-page="tasks" onclick="showPage('tasks')">✅ Tugas</button>
+  <button data-page="notes" onclick="showPage('notes')">📝 Catatan</button>
+  <button data-page="reports" onclick="showPage('reports')">📊 Laporan</button>
+  <button data-page="settings" onclick="showPage('settings')">⚙️ Data</button>
+</nav>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+
+  <div class="grid">
+    <div class="card">
+      <div class="muted">👨‍🍳 Kru</div>
+      <div class="stat" id="dashCrew">9</div>
+      <div class="small muted">orang</div>
+    </div>
+
+    <div class="card">
+      <div class="muted">📖 Resep</div>
+      <div class="stat" id="dashRecipes">0</div>
+      <div class="small muted">tersimpan</div>
+    </div>
+
+    <div class="card">
+      <div class="muted">📦 Jenis Stok</div>
+      <div class="stat" id="dashStock">0</div>
+      <div class="small muted">item</div>
+    </div>
+
+    <div class="card">
+      <div class="muted">🛒 Belanja</div>
+      <div class="stat" id="dashShopping">0</div>
+      <div class="small muted">item</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>👋 Selamat datang, <span id="dashName">Chef</span></h2>
+    <p class="muted">Kelola menu, stok, belanja, resep dan kegiatan dapur kapal dari satu tempat.</p>
+  </div>
+
+  <div class="card">
+    <h2>⚡ Menu Cepat</h2>
+    <div class="grid">
+      <button class="btn" onclick="smartMenu()">🤖 Smart Menu</button>
+      <button class="btn success" onclick="showPage('stock')">📦 Kelola Stok</button>
+      <button class="btn warning" onclick="calculateShopping()">🛒 Hitung Belanja</button>
+      <button class="btn secondary" onclick="showPage('recipes')">📖 Lihat Resep</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📌 Ringkasan</h2>
+    <div id="dashboardSummary"></div>
+  </div>
+
+</section>
+
+<!-- MENU -->
+<section id="menu" class="page">
+
+  <div class="card">
+    <h2>🍱 Menu Mingguan</h2>
+
+    <div class="row">
+      <button class="btn fit" onclick="smartMenu()">🤖 Isi Smart Menu</button>
+      <button class="btn secondary fit" onclick="clearWeek()">🗑️ Kosongkan</button>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div>
+        <label>Jumlah kru</label>
+        <input id="crewInput" type="number" min="1" value="9" onchange="saveCrew()">
+      </div>
+      <div>
+        <label>Mode menu</label>
+        <select id="menuMode">
+          <option value="balanced">Seimbang</option>
+          <option value="stock">Prioritas stok</option>
+          <option value="random">Acak</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div id="weekMenu"></div>
+
+</section>
+
+<!-- STOCK -->
+<section id="stock" class="page">
+
+  <div class="card">
+    <h2>📦 Stok Dapur</h2>
+
+    <div class="row">
+      <input id="stockSearch" placeholder="Cari bahan..." oninput="renderStock()">
+      <button class="btn fit" onclick="openStockForm()">➕ Tambah</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="stockList"></div>
+  </div>
+
+  <div class="card">
+    <h2>📜 Riwayat Stok</h2>
+    <div id="stockHistory"></div>
+  </div>
+
+</section>
+
+<!-- SHOPPING -->
+<section id="shopping" class="page">
+
+  <div class="card">
+    <h2>🛒 Daftar Belanja</h2>
+
+    <div class="row">
+      <button class="btn" onclick="calculateShopping()">🔄 Hitung Otomatis</button>
+      <button class="btn secondary" onclick="copyShopping()">📋 Copy</button>
+      <button class="btn secondary" onclick="printShopping()">🖨️ Print</button>
+      <button class="btn danger" onclick="clearShopping()">🗑️ Hapus</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="shoppingList"></div>
+  </div>
+
+  <div class="card">
+    <h2>💵 Estimasi Biaya</h2>
+    <div class="stat" id="shoppingTotal">Rp0</div>
+  </div>
+
+</section>
+
+<!-- RECIPES -->
+<section id="recipes" class="page">
+
+  <div class="card">
+    <h2>📖 Koleksi Resep</h2>
+
+    <div class="row">
+      <input id="recipeSearch" placeholder="Cari resep..." oninput="renderRecipes()">
+
+      <select id="recipeCategory" onchange="renderRecipes()">
+        <option value="all">Semua</option>
+        <option value="breakfast">Sarapan</option>
+        <option value="lunch">Siang</option>
+        <option value="dinner">Malam</option>
+      </select>
+
+      <button class="btn fit" onclick="openRecipeForm()">➕ Resep</button>
+    </div>
+  </div>
+
+  <div id="recipeList"></div>
+
+</section>
+
+<!-- EXPENSES -->
+<section id="expenses" class="page">
+
+  <div class="card">
+    <h2>💰 Pengeluaran Dapur</h2>
+
+    <div class="row">
+      <input id="expenseName" placeholder="Contoh: Gas">
+      <input id="expenseAmount" type="number" placeholder="Nominal">
+      <button class="btn fit" onclick="addExpense()">Tambah</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Total Pengeluaran</h2>
+    <div class="stat" id="expenseTotal">Rp0</div>
+  </div>
+
+  <div class="card">
+    <div id="expenseList"></div>
+  </div>
+
+</section>
+
+<!-- TASKS -->
+<section id="tasks" class="page">
+
+  <div class="card">
+    <h2>✅ Checklist Dapur</h2>
+
+    <div class="row">
+      <input id="taskInput" placeholder="Contoh: Cek gas">
+      <button class="btn fit" onclick="addTask()">Tambah</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="taskList"></div>
+  </div>
+
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="page">
+
+  <div class="card">
+    <h2>📝 Catatan Dapur</h2>
+
+    <textarea id="dailyNote" placeholder="Tulis catatan di sini..."></textarea>
+
+    <br><br>
+
+    <button class="btn" onclick="saveNote()">💾 Simpan Catatan</button>
+  </div>
+
+  <div class="card">
+    <h2>📅 Catatan Tersimpan</h2>
+    <div id="noteStatus" class="muted"></div>
+  </div>
+
+</section>
+
+<!-- REPORTS -->
+<section id="reports" class="page">
+
+  <div class="card">
+    <h2>📊 Laporan</h2>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="muted">Total resep dimasak</div>
+      <div class="stat" id="reportCook">0</div>
+    </div>
+
+    <div class="card">
+      <div class="muted">Total pengeluaran</div>
+      <div class="stat" id="reportExpense">Rp0</div>
+    </div>
+
+    <div class="card">
+      <div class="muted">Item stok</div>
+      <div class="stat" id="reportStock">0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Resep Terpopuler</h2>
+    <div id="popularRecipes"></div>
+  </div>
+
+  <div class="card">
+    <h2>📜 Aktivitas Terakhir</h2>
+    <div id="activityLog"></div>
+  </div>
+
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+
+  <div class="card">
+    <h2>⚙️ Profil</h2>
+
+    <label>Nama Chef</label>
+    <input id="profileName" placeholder="Nama">
+
+    <br><br>
+
+    <label>Nama Kapal</label>
+    <input id="shipName" placeholder="Nama kapal">
+
+    <br><br>
+
+    <button class="btn" onclick="saveProfile()">💾 Simpan Profil</button>
+  </div>
+
+  <div class="card">
+    <h2>💾 Backup Data</h2>
+
+    <button class="btn" onclick="backupData()">⬇️ Backup</button>
+    <br><br>
+
+    <input id="restoreFile" type="file" accept=".json" onchange="restoreData(event)">
+  </div>
+
+  <div class="card">
+    <h2>⚠️ Reset</h2>
+    <p class="muted">Hanya gunakan jika ingin menghapus seluruh data aplikasi.</p>
+    <button class="btn danger" onclick="resetData()">Hapus Semua Data</button>
+  </div>
+
+</section>
+
+<footer>
+  Dapur Kapal V17.0 • Data tersimpan di perangkat
+</footer>
+
+</div>
+
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE = {
+  profile: "dk161_profile",
+  crew: "dk161_crew",
+  recipes: "dk161_recipes",
+  week: "dk161_week",
+  stock: "dk161_stock",
+  stockHistory: "dk161_stockHistory",
+  shopping: "dk161_shopping",
+  expenses: "dk161_expenses",
+  tasks: "dk161_tasks",
+  note: "dk161_note",
+  cookLog: "dk161_cookLog",
+  activity: "dk161_activity",
+  prices: "dk161_prices"
+};
+
+function getData(key, fallback){
+  try{
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  }catch(e){
+    console.error("Storage error:", key, e);
+    return fallback;
+  }
+}
+
+function setData(key,value){
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+  }catch(e){
+    alert("Gagal menyimpan data.");
+    console.error(e);
+  }
+}
+
+function uid(){
+  return Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8);
+}
+
+function rupiah(n){
+  return "Rp"+Number(n||0).toLocaleString("id-ID");
+}
+
+function esc(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   DEFAULT RECIPES
+========================================================= */
+
+const DEFAULT_RECIPES = [
+
+{
+ id:"r1",
+ name:"Pindang Ikan Palembang",
+ category:"lunch",
+ servings:9,
+ ingredients:[
+  {item:"ikan",qty:2,unit:"kg"},
+  {item:"bawang merah",qty:150,unit:"gram"},
+  {item:"bawang putih",qty:80,unit:"gram"},
+  {item:"cabai",qty:80,unit:"gram"},
+  {item:"kunyit",qty:30,unit:"gram"},
+  {item:"jahe",qty:30,unit:"gram"},
+  {item:"serai",qty:3,unit:"batang"},
+  {item:"daun salam",qty:4,unit:"lembar"},
+  {item:"asam jawa",qty:30,unit:"gram"},
+  {item:"gula",qty:30,unit:"gram"},
+  {item:"garam",qty:25,unit:"gram"}
+ ],
+ steps:[
+  "Bersihkan ikan dan potong sesuai kebutuhan.",
+  "Haluskan bawang, cabai, kunyit dan jahe.",
+  "Tumis bumbu sampai harum.",
+  "Tambahkan air, serai, daun salam dan asam.",
+  "Masukkan ikan.",
+  "Masak sampai ikan matang dan kuah meresap.",
+  "Koreksi garam dan gula."
+ ]
+},
+
+{
+ id:"r2",
+ name:"Ayam Rica-Rica",
+ category:"dinner",
+ servings:9,
+ ingredients:[
+  {item:"ayam",qty:2.5,unit:"kg"},
+  {item:"bawang merah",qty:150,unit:"gram"},
+  {item:"bawang putih",qty:80,unit:"gram"},
+  {item:"cabai",qty:150,unit:"gram"},
+  {item:"serai",qty:3,unit:"batang"},
+  {item:"daun jeruk",qty:5,unit:"lembar"},
+  {item:"jahe",qty:30,unit:"gram"},
+  {item:"garam",qty:25,unit:"gram"},
+  {item:"gula",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Potong dan cuci ayam.",
+  "Haluskan bawang, cabai dan jahe.",
+  "Tumis bumbu sampai matang.",
+  "Masukkan serai dan daun jeruk.",
+  "Masukkan ayam.",
+  "Tambahkan sedikit air.",
+  "Masak sampai ayam empuk dan bumbu meresap."
+ ]
+},
+
+{
+ id:"r3",
+ name:"Nasi Goreng Telur",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"beras",qty:1.2,unit:"kg"},
+  {item:"telur",qty:9,unit:"pcs"},
+  {item:"bawang merah",qty:100,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"cabai",qty:50,unit:"gram"},
+  {item:"kecap",qty:100,unit:"ml"},
+  {item:"garam",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Siapkan nasi yang sudah dingin.",
+  "Tumis bawang dan cabai.",
+  "Masukkan telur lalu orak-arik.",
+  "Masukkan nasi.",
+  "Tambahkan kecap dan garam.",
+  "Aduk sampai rata dan matang."
+ ]
+},
+
+{
+ id:"r4",
+ name:"Ikan Kecap Pedas",
+ category:"dinner",
+ servings:9,
+ ingredients:[
+  {item:"ikan",qty:2,unit:"kg"},
+  {item:"bawang merah",qty:120,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"cabai",qty:80,unit:"gram"},
+  {item:"kecap",qty:150,unit:"ml"},
+  {item:"garam",qty:20,unit:"gram"},
+  {item:"gula",qty:25,unit:"gram"}
+ ],
+ steps:[
+  "Bersihkan ikan.",
+  "Goreng atau pan-sear ikan sampai matang.",
+  "Tumis bawang dan cabai.",
+  "Tambahkan kecap, gula dan garam.",
+  "Masukkan ikan.",
+  "Masak sampai bumbu meresap."
+ ]
+},
+
+{
+ id:"r5",
+ name:"Soto Ayam",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"ayam",qty:1.5,unit:"kg"},
+  {item:"bawang merah",qty:120,unit:"gram"},
+  {item:"bawang putih",qty:70,unit:"gram"},
+  {item:"kunyit",qty:30,unit:"gram"},
+  {item:"jahe",qty:20,unit:"gram"},
+  {item:"serai",qty:2,unit:"batang"},
+  {item:"daun salam",qty:3,unit:"lembar"},
+  {item:"garam",qty:25,unit:"gram"},
+  {item:"bihun",qty:500,unit:"gram"}
+ ],
+ steps:[
+  "Rebus ayam sampai matang.",
+  "Angkat ayam dan suwir.",
+  "Haluskan bumbu.",
+  "Tumis bumbu sampai harum.",
+  "Masukkan bumbu ke dalam kaldu.",
+  "Masukkan serai dan daun salam.",
+  "Masak dan koreksi rasa.",
+  "Sajikan dengan ayam suwir dan bihun."
+ ]
+},
+
+{
+ id:"r6",
+ name:"Mie Goreng",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"mie",qty:1,unit:"kg"},
+  {item:"telur",qty:6,unit:"pcs"},
+  {item:"bawang merah",qty:100,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"cabai",qty:50,unit:"gram"},
+  {item:"kecap",qty:100,unit:"ml"},
+  {item:"garam",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Rebus mie sebentar lalu tiriskan.",
+  "Tumis bawang dan cabai.",
+  "Masukkan telur.",
+  "Masukkan mie.",
+  "Tambahkan kecap dan garam.",
+  "Aduk sampai rata."
+ ]
+},
+
+{
+ id:"r7",
+ name:"Orek Tempe Tahu",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"tempe",qty:700,unit:"gram"},
+  {item:"tahu",qty:700,unit:"gram"},
+  {item:"bawang merah",qty:100,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"cabai",qty:70,unit:"gram"},
+  {item:"kecap",qty:120,unit:"ml"},
+  {item:"gula",qty:30,unit:"gram"},
+  {item:"garam",qty:15,unit:"gram"}
+ ],
+ steps:[
+  "Potong tempe dan tahu.",
+  "Goreng sampai agak kering.",
+  "Tumis bawang dan cabai.",
+  "Tambahkan kecap, gula dan garam.",
+  "Masukkan tempe dan tahu.",
+  "Aduk sampai bumbu merata."
+ ]
+},
+
+{
+ id:"r8",
+ name:"Bihun Goreng Telur",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"bihun",qty:700,unit:"gram"},
+  {item:"telur",qty:8,unit:"pcs"},
+  {item:"bawang merah",qty:100,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"cabai",qty:50,unit:"gram"},
+  {item:"kecap",qty:80,unit:"ml"},
+  {item:"garam",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Rendam bihun sampai lunak.",
+  "Tumis bawang dan cabai.",
+  "Masukkan telur dan orak-arik.",
+  "Masukkan bihun.",
+  "Tambahkan kecap dan garam.",
+  "Aduk sampai matang."
+ ]
+},
+
+{
+ id:"r9",
+ name:"Telur Balado",
+ category:"dinner",
+ servings:9,
+ ingredients:[
+  {item:"telur",qty:12,unit:"pcs"},
+  {item:"cabai",qty:150,unit:"gram"},
+  {item:"bawang merah",qty:120,unit:"gram"},
+  {item:"bawang putih",qty:60,unit:"gram"},
+  {item:"tomat",qty:150,unit:"gram"},
+  {item:"garam",qty:20,unit:"gram"},
+  {item:"gula",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Rebus telur lalu kupas.",
+  "Goreng telur sebentar.",
+  "Haluskan cabai, bawang dan tomat.",
+  "Tumis bumbu sampai matang.",
+  "Tambahkan garam dan gula.",
+  "Masukkan telur dan aduk rata."
+ ]
+},
+
+{
+ id:"r10",
+ name:"Nasi Kuning + Telur",
+ category:"breakfast",
+ servings:9,
+ ingredients:[
+  {item:"beras",qty:1.2,unit:"kg"},
+  {item:"santan",qty:500,unit:"ml"},
+  {item:"kunyit",qty:30,unit:"gram"},
+  {item:"serai",qty:2,unit:"batang"},
+  {item:"daun salam",qty:3,unit:"lembar"},
+  {item:"telur",qty:9,unit:"pcs"},
+  {item:"garam",qty:20,unit:"gram"}
+ ],
+ steps:[
+  "Cuci beras.",
+  "Campur santan, kunyit, serai dan daun salam.",
+  "Masak beras dengan campuran tersebut.",
+  "Koreksi rasa.",
+  "Rebus telur.",
+  "Sajikan nasi kuning bersama telur."
+ ]
+}
+];
+
+
+/* V17.0 — Koleksi resep tambahan: sarapan, siang, malam */
+const EXTRA_RECIPES = [
+ {id:"r11",name:"Nasi Uduk Telur Balado",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"santan",qty:600,unit:"ml"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"cabai",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras dan masak bersama santan, serai, daun salam dan garam.","Rebus telur lalu kupas.","Haluskan cabai dan bawang lalu tumis sampai matang.","Masukkan telur dan aduk sampai bumbu merata.","Sajikan nasi uduk bersama telur balado."]},
+ {id:"r12",name:"Bubur Ayam Sederhana",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:700,unit:"gram"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang putih",qty:40,unit:"gram"},{item:"jahe",qty:20,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak beras dengan air sampai menjadi bubur lembut.","Rebus ayam bersama bawang putih dan jahe.","Suwir ayam setelah matang.","Bumbui bubur dengan garam.","Sajikan dengan ayam suwir dan daun bawang."]},
+ {id:"r13",name:"Telur Dadar Padang",category:"breakfast",servings:9,ingredients:[{item:"telur",qty:12,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"cabai",qty:70,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"tepung",qty:50,unit:"gram"},{item:"garam",qty:15,unit:"gram"}],steps:["Kocok telur.","Campur bawang, cabai, daun bawang, tepung dan garam.","Panaskan minyak.","Masak telur dengan api sedang sampai matang dan padat.","Potong dan sajikan."]},
+ {id:"r14",name:"Lontong Sayur Labu",category:"breakfast",servings:9,ingredients:[{item:"labu siam",qty:1.5,unit:"kg"},{item:"santan",qty:1,unit:"liter"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"cabai",qty:60,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:25,unit:"gram"}],steps:["Potong labu siam.","Haluskan bawang dan cabai lalu tumis.","Tambahkan serai dan daun salam.","Masukkan labu dan santan.","Masak sampai labu empuk.","Koreksi rasa dan sajikan dengan lontong."]},
+ {id:"r15",name:"Perkedel Kentang Telur",category:"breakfast",servings:9,ingredients:[{item:"kentang",qty:1.5,unit:"kg"},{item:"telur",qty:6,unit:"pcs"},{item:"bawang merah",qty:80,unit:"gram"},{item:"bawang putih",qty:40,unit:"gram"},{item:"daun bawang",qty:80,unit:"gram"},{item:"garam",qty:15,unit:"gram"}],steps:["Kukus atau goreng kentang sampai empuk.","Haluskan kentang.","Campur dengan bawang, daun bawang, garam dan sebagian telur.","Bentuk perkedel.","Celupkan ke telur lalu goreng sampai kecokelatan."]},
+ {id:"r16",name:"Ayam Goreng Kunyit",category:"lunch",servings:9,ingredients:[{item:"ayam",qty:2.5,unit:"kg"},{item:"kunyit",qty:40,unit:"gram"},{item:"bawang putih",qty:70,unit:"gram"},{item:"ketumbar",qty:20,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"garam",qty:25,unit:"gram"}],steps:["Potong ayam.","Haluskan kunyit, bawang putih dan ketumbar.","Lumuri ayam dengan bumbu dan garam.","Ungkep ayam sampai matang.","Goreng sampai bagian luar kecokelatan."]},
+ {id:"r17",name:"Semur Ayam Kentang",category:"lunch",servings:9,ingredients:[{item:"ayam",qty:2,unit:"kg"},{item:"kentang",qty:1.2,unit:"kg"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kecap",qty:200,unit:"ml"},{item:"pala",qty:5,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Tumis bawang sampai harum.","Masukkan ayam dan aduk.","Tambahkan kecap, pala, garam dan air.","Masukkan kentang.","Masak sampai ayam dan kentang empuk serta kuah mengental."]},
+ {id:"r18",name:"Gulai Ikan",category:"lunch",servings:9,ingredients:[{item:"ikan",qty:2.2,unit:"kg"},{item:"santan",qty:1,unit:"liter"},{item:"bawang merah",qty:130,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kunyit",qty:30,unit:"gram"},{item:"cabai",qty:80,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"garam",qty:25,unit:"gram"}],steps:["Bersihkan ikan.","Haluskan bawang, kunyit dan cabai.","Tumis bumbu lalu tambahkan serai.","Tuang santan dan masak perlahan.","Masukkan ikan.","Masak sampai ikan matang dan bumbu meresap."]},
+ {id:"r19",name:"Sambal Goreng Kentang Tempe",category:"lunch",servings:9,ingredients:[{item:"kentang",qty:1.2,unit:"kg"},{item:"tempe",qty:700,unit:"gram"},{item:"cabai",qty:100,unit:"gram"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"kecap",qty:80,unit:"ml"},{item:"garam",qty:20,unit:"gram"}],steps:["Potong kentang dan tempe lalu goreng.","Tumis bumbu halus sampai matang.","Tambahkan kecap dan garam.","Masukkan kentang dan tempe.","Aduk sampai bumbu merata."]},
+ {id:"r20",name:"Tumis Kangkung Telur Puyuh",category:"lunch",servings:9,ingredients:[{item:"kangkung",qty:1.5,unit:"kg"},{item:"telur",qty:18,unit:"pcs"},{item:"bawang putih",qty:60,unit:"gram"},{item:"cabai",qty:60,unit:"gram"},{item:"saus tiram",qty:80,unit:"ml"},{item:"garam",qty:15,unit:"gram"}],steps:["Rebus telur lalu kupas.","Tumis bawang putih dan cabai.","Masukkan kangkung.","Tambahkan saus tiram dan garam.","Masukkan telur dan aduk cepat sampai kangkung matang."]},
+ {id:"r21",name:"Sop Ayam Sayur",category:"lunch",servings:9,ingredients:[{item:"ayam",qty:1.5,unit:"kg"},{item:"wortel",qty:700,unit:"gram"},{item:"kentang",qty:700,unit:"gram"},{item:"kol",qty:500,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"garam",qty:25,unit:"gram"}],steps:["Rebus ayam sampai menjadi kaldu.","Masukkan kentang dan wortel.","Tambahkan kol.","Bumbui dengan bawang putih dan garam.","Masukkan daun bawang menjelang matang."]},
+ {id:"r22",name:"Ayam Kecap Bawang",category:"dinner",servings:9,ingredients:[{item:"ayam",qty:2.5,unit:"kg"},{item:"bawang bombai",qty:300,unit:"gram"},{item:"bawang putih",qty:70,unit:"gram"},{item:"kecap",qty:250,unit:"ml"},{item:"cabai",qty:50,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Goreng atau panggang ayam sampai setengah matang.","Tumis bawang putih dan bawang bombai.","Masukkan kecap dan cabai.","Tambahkan ayam dan sedikit air.","Masak sampai kuah mengental dan bumbu meresap."]},
+ {id:"r23",name:"Ikan Goreng Sambal Tomat",category:"dinner",servings:9,ingredients:[{item:"ikan",qty:2.2,unit:"kg"},{item:"tomat",qty:500,unit:"gram"},{item:"cabai",qty:100,unit:"gram"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:40,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Bersihkan dan bumbui ikan.","Goreng ikan sampai matang.","Goreng tomat, cabai dan bawang.","Ulek kasar sambal dan beri garam.","Sajikan ikan dengan sambal tomat."]},
+ {id:"r24",name:"Daging Sapi Lada Hitam",category:"dinner",servings:9,ingredients:[{item:"daging sapi",qty:1.8,unit:"kg"},{item:"bawang bombai",qty:300,unit:"gram"},{item:"paprika",qty:300,unit:"gram"},{item:"lada hitam",qty:25,unit:"gram"},{item:"saus tiram",qty:120,unit:"ml"},{item:"kecap",qty:80,unit:"ml"},{item:"garam",qty:15,unit:"gram"}],steps:["Iris tipis daging.","Tumis daging sampai berubah warna.","Masukkan bawang bombai dan paprika.","Tambahkan lada hitam, saus tiram dan kecap.","Masak cepat sampai daging matang dan saus mengental."]},
+ {id:"r25",name:"Opor Ayam",category:"dinner",servings:9,ingredients:[{item:"ayam",qty:2.5,unit:"kg"},{item:"santan",qty:1.2,unit:"liter"},{item:"bawang merah",qty:150,unit:"gram"},{item:"bawang putih",qty:70,unit:"gram"},{item:"kemiri",qty:50,unit:"gram"},{item:"kunyit",qty:25,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"garam",qty:25,unit:"gram"}],steps:["Haluskan bawang, kemiri dan kunyit.","Tumis bumbu sampai harum.","Masukkan ayam dan serai.","Tuang santan.","Masak perlahan sampai ayam empuk.","Koreksi rasa dan sajikan."]},
+ {id:"r26",name:"Capcay Ayam",category:"dinner",servings:9,ingredients:[{item:"ayam",qty:1,unit:"kg"},{item:"wortel",qty:500,unit:"gram"},{item:"kol",qty:500,unit:"gram"},{item:"sawi",qty:500,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"saus tiram",qty:100,unit:"ml"},{item:"garam",qty:15,unit:"gram"}],steps:["Potong ayam dan sayuran.","Tumis bawang putih.","Masukkan ayam dan masak sampai matang.","Masukkan sayuran bertahap.","Tambahkan saus tiram dan garam.","Masak sampai sayuran matang tetapi tidak terlalu lembek."]},
+ {id:"r27",name:"Tempe Bacem",category:"dinner",servings:9,ingredients:[{item:"tempe",qty:1.2,unit:"kg"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"gula merah",qty:150,unit:"gram"},{item:"kecap",qty:100,unit:"ml"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:20,unit:"gram"}],steps:["Potong tempe.","Masukkan tempe, bumbu, gula merah, kecap dan air ke panci.","Masak perlahan sampai bumbu meresap.","Angkat lalu goreng atau panggang sebentar sebelum disajikan."]},
+ {id:"r28",name:"Soto Daging",category:"dinner",servings:9,ingredients:[{item:"daging sapi",qty:1.5,unit:"kg"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kunyit",qty:25,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:25,unit:"gram"}],steps:["Rebus daging sampai empuk dan sisihkan kaldu.","Haluskan dan tumis bumbu.","Masukkan bumbu ke kaldu bersama serai dan daun salam.","Potong daging dan masukkan kembali.","Koreksi rasa lalu sajikan hangat."]}
+];
+
+// V17.0 — Tambahan resep baru agar Smart Menu lebih bervariasi.
+const V167_RECIPES = [
+ {id:"r29",name:"Nasi Bakar Ayam Suwir",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"cabai",qty:60,unit:"gram"},{item:"daun kemangi",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak nasi sampai matang.","Rebus ayam lalu suwir.","Tumis bawang dan cabai.","Masukkan ayam dan kemangi lalu bumbui.","Bungkus nasi bersama isian dengan daun pisang.","Bakar sampai harum."]},
+ {id:"r30",name:"Nasi Liwet Telur",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras.","Masak beras bersama bawang, serai, daun salam dan garam.","Rebus telur sampai matang.","Aduk nasi setelah matang.","Sajikan dengan telur."]},
+ {id:"r31",name:"Tumis Tahu Telur",category:"breakfast",servings:9,ingredients:[{item:"tahu",qty:1,unit:"kg"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang putih",qty:50,unit:"gram"},{item:"cabai",qty:50,unit:"gram"},{item:"kecap",qty:80,unit:"ml"},{item:"garam",qty:15,unit:"gram"}],steps:["Potong tahu dan goreng ringan.","Tumis bawang putih dan cabai.","Masukkan telur dan orak-arik.","Masukkan tahu.","Tambahkan kecap dan garam lalu aduk rata."]},
+ {id:"r32",name:"Mie Kuah Telur",category:"breakfast",servings:9,ingredients:[{item:"mie",qty:900,unit:"gram"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang putih",qty:50,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Tumis bawang putih.","Tambahkan air dan bumbui.","Masukkan mie.","Masukkan telur.","Masak sampai mie matang dan sajikan dengan daun bawang."]},
+ {id:"r33",name:"Ayam Bumbu Kuning",category:"lunch",servings:9,ingredients:[{item:"ayam",qty:2.5,unit:"kg"},{item:"kunyit",qty:40,unit:"gram"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kemiri",qty:40,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"garam",qty:25,unit:"gram"}],steps:["Haluskan bumbu.","Tumis sampai harum.","Masukkan ayam dan serai.","Tambahkan air lalu ungkep sampai ayam empuk.","Masak sampai kuah menyusut dan bumbu menempel."]},
+ {id:"r34",name:"Ikan Asam Manis",category:"lunch",servings:9,ingredients:[{item:"ikan",qty:2,unit:"kg"},{item:"tomat",qty:300,unit:"gram"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"saus tomat",qty:150,unit:"ml"},{item:"gula",qty:30,unit:"gram"},{item:"garam",qty:15,unit:"gram"}],steps:["Bersihkan dan goreng ikan.","Tumis bawang dan tomat.","Tambahkan saus tomat, gula dan garam.","Masak sampai saus mengental.","Siram saus di atas ikan."]},
+ {id:"r35",name:"Ayam Sambal Ijo",category:"lunch",servings:9,ingredients:[{item:"ayam",qty:2.3,unit:"kg"},{item:"cabai hijau",qty:200,unit:"gram"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"tomat",qty:150,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Goreng atau panggang ayam sampai matang.","Rebus sebentar cabai, bawang dan tomat.","Ulek kasar bahan sambal.","Tumis sambal sampai matang.","Masukkan ayam dan aduk sampai rata."]},
+ {id:"r36",name:"Tumis Buncis Ayam",category:"lunch",servings:9,ingredients:[{item:"buncis",qty:1.2,unit:"kg"},{item:"ayam",qty:900,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"bawang bombai",qty:200,unit:"gram"},{item:"saus tiram",qty:100,unit:"ml"},{item:"garam",qty:15,unit:"gram"}],steps:["Iris ayam dan buncis.","Tumis bawang putih dan bawang bombai.","Masukkan ayam sampai matang.","Masukkan buncis.","Tambahkan saus tiram dan garam lalu masak hingga matang."]},
+ {id:"r37",name:"Ayam Panggang Kecap",category:"dinner",servings:9,ingredients:[{item:"ayam",qty:2.5,unit:"kg"},{item:"kecap",qty:200,unit:"ml"},{item:"bawang putih",qty:60,unit:"gram"},{item:"jahe",qty:30,unit:"gram"},{item:"madu",qty:50,unit:"ml"},{item:"garam",qty:20,unit:"gram"}],steps:["Campur kecap, bawang putih, jahe, madu dan garam.","Lumuri ayam dan diamkan agar bumbu meresap.","Panggang atau bakar sampai matang.","Olesi sisa bumbu selama proses memanggang."]},
+ {id:"r38",name:"Ikan Kuah Kuning",category:"dinner",servings:9,ingredients:[{item:"ikan",qty:2,unit:"kg"},{item:"kunyit",qty:40,unit:"gram"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"cabai",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"garam",qty:20,unit:"gram"}],steps:["Haluskan bawang, kunyit dan cabai.","Tumis bumbu bersama serai.","Tambahkan air dan garam.","Masukkan ikan.","Masak sampai ikan matang dan kuah harum."]},
+ {id:"r39",name:"Sapi Teriyaki Bawang",category:"dinner",servings:9,ingredients:[{item:"daging sapi",qty:1.8,unit:"kg"},{item:"bawang bombai",qty:300,unit:"gram"},{item:"saus teriyaki",qty:180,unit:"ml"},{item:"bawang putih",qty:50,unit:"gram"},{item:"lada",qty:10,unit:"gram"}],steps:["Iris tipis daging.","Tumis bawang putih.","Masukkan daging dan masak cepat.","Tambahkan bawang bombai dan saus teriyaki.","Bumbui lada dan masak sampai saus meresap."]},
+ {id:"r40",name:"Telur Kuah Santan Pedas",category:"dinner",servings:9,ingredients:[{item:"telur",qty:12,unit:"pcs"},{item:"santan",qty:800,unit:"ml"},{item:"cabai",qty:80,unit:"gram"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"kunyit",qty:20,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Rebus dan kupas telur.","Haluskan bawang, cabai dan kunyit lalu tumis.","Tambahkan santan dan garam.","Masukkan telur.","Masak dengan api kecil sampai bumbu meresap."]}
+];
+
+// Gabungkan resep lama + resep tambahan tanpa menggandakan ID.
+DEFAULT_RECIPES.push(...EXTRA_RECIPES, ...V167_RECIPES);
+
+/* V17.0 migration: pengguna lama tetap mendapatkan resep baru. */
+function migrateRecipeCollection(){
+  const current=getData(STORAGE.recipes,[]);
+  const known=new Set(current.map(r=>r.id));
+  const additions=DEFAULT_RECIPES.filter(r=>!known.has(r.id));
+  if(additions.length){
+    setData(STORAGE.recipes,[...current,...additions]);
+  }
+}
+
+
+/* =========================================================
+   INITIAL DATA
+========================================================= */
+
+function initData(){
+
+  if(!localStorage.getItem(STORAGE.recipes)){
+    setData(STORAGE.recipes,DEFAULT_RECIPES);
+  }
+
+  migrateRecipeCollection();
+
+  if(!localStorage.getItem(STORAGE.crew)){
+    setData(STORAGE.crew,9);
+  }
+
+  if(!localStorage.getItem(STORAGE.week)){
+    setData(STORAGE.week,{
+      Senin:{breakfast:null,lunch:null,dinner:null},
+      Selasa:{breakfast:null,lunch:null,dinner:null},
+      Rabu:{breakfast:null,lunch:null,dinner:null},
+      Kamis:{breakfast:null,lunch:null,dinner:null},
+      Jumat:{breakfast:null,lunch:null,dinner:null},
+      Sabtu:{breakfast:null,lunch:null,dinner:null},
+      Minggu:{breakfast:null,lunch:null,dinner:null}
+    });
+  }
+
+  if(!localStorage.getItem(STORAGE.stock)){
+    setData(STORAGE.stock,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.stockHistory)){
+    setData(STORAGE.stockHistory,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.shopping)){
+    setData(STORAGE.shopping,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.expenses)){
+    setData(STORAGE.expenses,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.tasks)){
+    setData(STORAGE.tasks,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.cookLog)){
+    setData(STORAGE.cookLog,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.activity)){
+    setData(STORAGE.activity,[]);
+  }
+
+  if(!localStorage.getItem(STORAGE.prices)){
+    setData(STORAGE.prices,{});
+  }
+
+  const profile=getData(STORAGE.profile,{
+    name:"Chef",
+    ship:""
+  });
+
+  document.getElementById("profileName").value=profile.name||"";
+  document.getElementById("shipName").value=profile.ship||"";
+
+  const crew=getData(STORAGE.crew,9);
+  document.getElementById("crewInput").value=crew;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+  const current=document.querySelector(".page.active")?.id || "dashboard";
+  if(page!==current) window.dk164PreviousPage=current;
+
+  document.querySelectorAll(".page").forEach(el=>{
+    el.classList.remove("active");
+  });
+
+  const target=document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".tabs button").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page===page
+    );
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  renderAll();
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+function renderAll(){
+  renderDashboard();
+  renderWeek();
+  renderStock();
+  renderShopping();
+  renderRecipes();
+  renderExpenses();
+  renderTasks();
+  renderNote();
+  renderReports();
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function saveProfile(){
+
+  const profile={
+    name:document.getElementById("profileName").value.trim()||"Chef",
+    ship:document.getElementById("shipName").value.trim()
+  };
+
+  setData(STORAGE.profile,profile);
+
+  addActivity("Profil diperbarui");
+
+  alert("Profil tersimpan.");
+  renderAll();
+}
+
+function saveCrew(){
+
+  let crew=parseInt(document.getElementById("crewInput").value);
+
+  if(!crew || crew<1) crew=1;
+
+  setData(STORAGE.crew,crew);
+  document.getElementById("crewInput").value=crew;
+
+  addActivity("Jumlah kru diubah menjadi "+crew+" orang");
+
+  renderAll();
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+  const profile=getData(STORAGE.profile,{name:"Chef",ship:""});
+  const recipes=getData(STORAGE.recipes,[]);
+  const stock=getData(STORAGE.stock,[]);
+  const shopping=getData(STORAGE.shopping,[]);
+  const crew=getData(STORAGE.crew,9);
+
+  document.getElementById("dashName").textContent=profile.name||"Chef";
+  document.getElementById("dashCrew").textContent=crew;
+  document.getElementById("dashRecipes").textContent=recipes.length;
+  document.getElementById("dashStock").textContent=stock.length;
+  document.getElementById("dashShopping").textContent=
+    shopping.filter(x=>!x.checked).length;
+
+  let low=stock.filter(x=>Number(x.qty)<=Number(x.min||0));
+
+  document.getElementById("dashboardSummary").innerHTML=
+    `
+    <p>🚢 Kapal: <b>${esc(profile.ship||"-")}</b></p>
+    <p>📦 Stok menipis: <b class="${low.length?"warn":"good"}">${low.length}</b></p>
+    <p>🛒 Belanja belum dibeli: <b>${shopping.filter(x=>!x.checked).length}</b></p>
+    `;
+}
+
+
+/* =========================================================
+   WEEK MENU
+========================================================= */
+
+const DAYS=[
+  "Senin","Selasa","Rabu","Kamis",
+  "Jumat","Sabtu","Minggu"
+];
+
+const MEALS=[
+  ["breakfast","🌅 Sarapan"],
+  ["lunch","☀️ Makan Siang"],
+  ["dinner","🌙 Makan Malam"]
+];
+
+function renderWeek(){
+
+  const week=getData(STORAGE.week,{});
+  const recipes=getData(STORAGE.recipes,[]);
+
+  let html="";
+
+  DAYS.forEach(day=>{
+
+    html+=`<div class="day"><h3>📅 ${day}</h3>`;
+
+    MEALS.forEach(([meal,label])=>{
+
+      const id=week[day]?.[meal];
+      const recipe=recipes.find(r=>r.id===id);
+
+      html+=`
+      <div class="card" style="margin:7px 0">
+        <div class="row">
+          <div>
+            <b>${label}</b><br>
+
+            <span class="${recipe?'':'muted'}">
+              ${recipe
+                ? `🍽️ <b>${esc(recipe.name)}</b>`
+                : "Belum ada menu"
+              }
+            </span>
+          </div>
+
+          <div class="row" style="flex:0 0 auto">
+
+            ${
+              recipe
+              ? `
+                <button class="btn success fit"
+                  onclick="showRecipe('${recipe.id}')">
+                  👀 Lihat Resep
+                </button>
+
+                <button class="btn secondary fit"
+                  onclick="chooseMenu('${day}','${meal}')">
+                  ✏️ Ganti
+                </button>
+              `
+              : `
+                <button class="btn fit"
+                  onclick="chooseMenu('${day}','${meal}')">
+                  ➕ Pilih
+                </button>
+              `
+            }
+
+          </div>
+        </div>
+      </div>
+      `;
+    });
+
+    html+="</div>";
+  });
+
+  document.getElementById("weekMenu").innerHTML=html;
+}
+
+function chooseMenu(day,meal){
+
+  const recipes=getData(STORAGE.recipes,[]);
+
+  let options=recipes.map(r=>
+    `<option value="${esc(r.id)}">${esc(r.name)}</option>`
+  ).join("");
+
+  openModal(`
+    <h2>Pilih Menu</h2>
+    <p>${esc(day)} — ${esc(meal)}</p>
+
+    <select id="chooseRecipe">
+      <option value="">-- Pilih resep --</option>
+      ${options}
+    </select>
+
+    <br><br>
+
+    <button class="btn" onclick="saveChosenMenu('${day}','${meal}')">
+      Simpan
+    </button>
+  `);
+}
+
+function saveChosenMenu(day,meal){
+
+  const id=document.getElementById("chooseRecipe").value;
+
+  if(!id){
+    alert("Pilih resep dulu.");
+    return;
+  }
+
+  const week=getData(STORAGE.week,{});
+
+  if(!week[day]){
+    week[day]={breakfast:null,lunch:null,dinner:null};
+  }
+
+  week[day][meal]=id;
+
+  setData(STORAGE.week,week);
+
+  addActivity("Menu "+day+" diperbarui");
+
+  closeModal();
+  renderAll();
+}
+
+function clearWeek(){
+
+  if(!confirm("Kosongkan semua menu mingguan?")) return;
+
+  const week={};
+
+  DAYS.forEach(day=>{
+    week[day]={
+      breakfast:null,
+      lunch:null,
+      dinner:null
+    };
+  });
+
+  setData(STORAGE.week,week);
+  addActivity("Menu mingguan dikosongkan");
+
+  renderAll();
+}
+
+
+/* =========================================================
+   SMART MENU
+========================================================= */
+
+function smartMenu(){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const mode=document.getElementById("menuMode")?.value||"balanced";
+
+  if(!recipes.length){
+    alert("Belum ada resep.");
+    return;
+  }
+
+  const week={};
+
+  DAYS.forEach(day=>{
+    week[day]={
+      breakfast:null,
+      lunch:null,
+      dinner:null
+    };
+  });
+
+  const used=[];
+
+  MEALS.forEach(([meal])=>{
+
+    DAYS.forEach(day=>{
+
+      let candidates=recipes.filter(r=>r.category===meal);
+
+      if(!candidates.length){
+        candidates=recipes;
+      }
+
+      let available=candidates.filter(r=>!used.includes(r.id));
+
+      if(!available.length){
+        available=candidates;
+      }
+
+      if(mode==="stock"){
+        const stock=getData(STORAGE.stock,[]);
+
+        available.sort((a,b)=>
+          stockScore(b,stock)-stockScore(a,stock)
+        );
+      }else if(mode==="random"){
+        available.sort(()=>Math.random()-.5);
+      }
+
+      const chosen=available[0];
+
+      if(chosen){
+        week[day][meal]=chosen.id;
+        used.push(chosen.id);
+      }
+
+    });
+
+  });
+
+  setData(STORAGE.week,week);
+
+  addActivity("Smart Menu dibuat");
+
+  alert("Smart Menu berhasil dibuat.");
+  showPage("menu");
+}
+
+function stockScore(recipe,stock){
+
+  if(!recipe.ingredients?.length) return 0;
+
+  let score=0;
+
+  recipe.ingredients.forEach(i=>{
+    const s=stock.find(x=>normalize(x.item)===normalize(i.item));
+
+    if(s && Number(s.qty)>0){
+      score++;
+    }
+  });
+
+  return score;
+}
+
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+function normalize(text){
+  return String(text||"").trim().toLowerCase();
+}
+
+function renderStock(){
+
+  const search=normalize(
+    document.getElementById("stockSearch")?.value
+  );
+
+  const stock=getData(STORAGE.stock,[]);
+
+  const filtered=stock.filter(x=>
+    normalize(x.item).includes(search)
+  );
+
+  if(!filtered.length){
+    document.getElementById("stockList").innerHTML=
+      `<div class="empty">Belum ada stok.</div>`;
+    return;
+  }
+
+  let html=`
+  <div style="overflow:auto">
+  <table>
+    <tr>
+      <th>Bahan</th>
+      <th>Qty</th>
+      <th>Min</th>
+      <th>Aksi</th>
+    </tr>
+  `;
+
+  filtered.forEach(x=>{
+
+    const low=Number(x.qty)<=Number(x.min||0);
+
+    html+=`
+    <tr>
+      <td>
+        <b>${esc(x.item)}</b>
+        ${low?`<span class="badge">MENIPIS</span>`:""}
+      </td>
+
+      <td>${Number(x.qty)} ${esc(x.unit)}</td>
+
+      <td>${Number(x.min||0)} ${esc(x.unit)}</td>
+
+      <td>
+        <div class="row">
+          <button class="btn fit" onclick="editStock('${x.id}')">Edit</button>
+          <button class="btn danger fit" onclick="deleteStock('${x.id}')">Hapus</button>
+        </div>
+      </td>
+    </tr>
+    `;
+  });
+
+  html+="</table></div>";
+
+  document.getElementById("stockList").innerHTML=html;
+
+  renderStockHistory();
+}
+
+function openStockForm(id=null){
+
+  const stock=getData(STORAGE.stock,[]);
+  const item=id?stock.find(x=>x.id===id):null;
+
+  openModal(`
+    <h2>${item?"✏️ Edit Stok":"➕ Tambah Stok"}</h2>
+
+    <label>Nama bahan</label>
+    <input id="stockItem" value="${esc(item?.item||"")}">
+
+    <br><br>
+
+    <label>Jumlah</label>
+    <input id="stockQty" type="number" step="0.01"
+      value="${item?.qty??""}">
+
+    <br><br>
+
+    <label>Satuan</label>
+    <select id="stockUnit">
+      ${unitOption("kg",item?.unit)}
+      ${unitOption("gram",item?.unit)}
+      ${unitOption("liter",item?.unit)}
+      ${unitOption("ml",item?.unit)}
+      ${unitOption("pcs",item?.unit)}
+      ${unitOption("batang",item?.unit)}
+      ${unitOption("lembar",item?.unit)}
+      ${unitOption("bungkus",item?.unit)}
+    </select>
+
+    <br><br>
+
+    <label>Batas minimum</label>
+    <input id="stockMin" type="number" step="0.01"
+      value="${item?.min??0}">
+
+    <br><br>
+
+    <button class="btn" onclick="${item?
+      `saveStock('${item.id}')`:
+      "saveStock()"
+    }">
+      💾 Simpan
+    </button>
+  `);
+}
+
+function unitOption(value,current){
+  return `<option value="${value}" ${value===current?"selected":""}>${value}</option>`;
+}
+
+function saveStock(id=null){
+
+  const item=document.getElementById("stockItem").value.trim();
+  const qty=Number(document.getElementById("stockQty").value);
+  const unit=document.getElementById("stockUnit").value;
+  const min=Number(document.getElementById("stockMin").value)||0;
+
+  if(!item){
+    alert("Nama bahan wajib diisi.");
+    return;
+  }
+
+  if(qty<0){
+    alert("Jumlah tidak boleh negatif.");
+    return;
+  }
+
+  const stock=getData(STORAGE.stock,[]);
+
+  if(id){
+
+    const index=stock.findIndex(x=>x.id===id);
+
+    if(index>=0){
+
+      const old=stock[index].qty;
+
+      stock[index]={
+        ...stock[index],
+        item,
+        qty,
+        unit,
+        min
+      };
+
+      addStockHistory(
+        `Stok ${item} diubah: ${old} → ${qty} ${unit}`
+      );
+    }
+
+  }else{
+
+    const existing=stock.find(
+      x=>normalize(x.item)===normalize(item) &&
+         x.unit===unit
+    );
+
+    if(existing){
+
+      existing.qty+=qty;
+      existing.min=min;
+
+      addStockHistory(
+        `Stok ${item} ditambah ${qty} ${unit}`
+      );
+
+    }else{
+
+      stock.push({
+        id:uid(),
+        item,
+        qty,
+        unit,
+        min
+      });
+
+      addStockHistory(
+        `Stok ${item} ditambahkan`
+      );
+    }
+  }
+
+  setData(STORAGE.stock,stock);
+
+  addActivity("Stok diperbarui");
+
+  closeModal();
+  renderAll();
+}
+
+function editStock(id){
+  openStockForm(id);
+}
+
+function deleteStock(id){
+
+  const stock=getData(STORAGE.stock,[]);
+  const item=stock.find(x=>x.id===id);
+
+  if(!item) return;
+
+  if(!confirm(`Hapus stok ${item.item}?`)) return;
+
+  setData(
+    STORAGE.stock,
+    stock.filter(x=>x.id!==id)
+  );
+
+  addStockHistory(`Stok ${item.item} dihapus`);
+  addActivity("Stok dihapus");
+
+  renderAll();
+}
+
+function addStockHistory(text){
+
+  const history=getData(STORAGE.stockHistory,[]);
+
+  history.unshift({
+    id:uid(),
+    text,
+    time:new Date().toISOString()
+  });
+
+  setData(
+    STORAGE.stockHistory,
+    history.slice(0,100)
+  );
+}
+
+function renderStockHistory(){
+
+  const history=getData(STORAGE.stockHistory,[]);
+
+  if(!history.length){
+    document.getElementById("stockHistory").innerHTML=
+      `<div class="empty">Belum ada riwayat.</div>`;
+    return;
+  }
+
+  document.getElementById("stockHistory").innerHTML=
+    history.slice(0,30).map(h=>`
+      <div class="check">
+        <div>
+          <b>${esc(h.text)}</b>
+          <div class="small muted">
+            ${formatDate(h.time)}
+          </div>
+        </div>
+      </div>
+    `).join("");
+}
+
+
+/* =========================================================
+   COOKING
+========================================================= */
+
+function cookRecipe(id){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const recipe=recipes.find(r=>r.id===id);
+
+  if(!recipe) return;
+
+  const crew=getData(STORAGE.crew,9);
+
+  let multiplier=crew/Number(recipe.servings||9);
+
+  let stock=getData(STORAGE.stock,[]);
+  let missing=[];
+
+  recipe.ingredients.forEach(ing=>{
+
+    const needed=Number(ing.qty)*multiplier;
+
+    const s=stock.find(
+      x=>normalize(x.item)===normalize(ing.item) &&
+         x.unit===ing.unit
+    );
+
+    if(!s || Number(s.qty)<needed){
+      missing.push(
+        `${ing.item}: perlu ${round(needed)} ${ing.unit}`
+      );
+    }
+  });
+
+  if(missing.length){
+
+    const proceed=confirm(
+      "⚠️ Stok tidak mencukupi:\n\n"+
+      missing.join("\n")+
+      "\n\nTetap masak?"
+    );
+
+    if(!proceed) return;
+  }
+
+  recipe.ingredients.forEach(ing=>{
+
+    const needed=Number(ing.qty)*multiplier;
+
+    const s=stock.find(
+      x=>normalize(x.item)===normalize(ing.item) &&
+         x.unit===ing.unit
+    );
+
+    if(s){
+      s.qty=Math.max(0,Number(s.qty)-needed);
+
+      addStockHistory(
+        `Dipakai untuk ${recipe.name}: ${round(needed)} ${ing.unit} ${ing.item}`
+      );
+    }
+  });
+
+  setData(STORAGE.stock,stock);
+
+  const log=getData(STORAGE.cookLog,[]);
+
+  log.unshift({
+    id:uid(),
+    recipeId:id,
+    recipeName:recipe.name,
+    crew,
+    time:new Date().toISOString()
+  });
+
+  setData(STORAGE.cookLog,log);
+
+  addActivity("Memasak "+recipe.name);
+
+  alert(
+    `🍳 ${recipe.name}\n\n`+
+    `Untuk ${crew} orang.\n\n`+
+    `Stok bahan dikurangi otomatis.`
+  );
+
+  renderAll();
+}
+
+
+/* =========================================================
+   SHOPPING
+========================================================= */
+
+function calculateShopping(){
+
+  const week=getData(STORAGE.week,{});
+  const recipes=getData(STORAGE.recipes,[]);
+  const stock=getData(STORAGE.stock,[]);
+  const crew=getData(STORAGE.crew,9);
+
+  const total={};
+
+  DAYS.forEach(day=>{
+
+    MEALS.forEach(([meal])=>{
+
+      const id=week[day]?.[meal];
+
+      if(!id) return;
+
+      const recipe=recipes.find(r=>r.id===id);
+
+      if(!recipe) return;
+
+      const multiplier=crew/Number(recipe.servings||9);
+
+      recipe.ingredients.forEach(ing=>{
+
+        const key=normalize(ing.item)+"|"+ing.unit;
+
+        if(!total[key]){
+          total[key]={
+            item:ing.item,
+            unit:ing.unit,
+            qty:0
+          };
+        }
+
+        total[key].qty+=Number(ing.qty)*multiplier;
+      });
+
+    });
+
+  });
+
+  const shopping=[];
+
+  Object.values(total).forEach(x=>{
+
+    const s=stock.find(
+      st=>normalize(st.item)===normalize(x.item) &&
+          st.unit===x.unit
+    );
+
+    const have=s?Number(s.qty):0;
+    const need=Math.max(0,x.qty-have);
+
+    if(need>0){
+
+      shopping.push({
+        id:uid(),
+        item:x.item,
+        unit:x.unit,
+        qty:round(need),
+        checked:false,
+        price:0
+      });
+
+    }
+  });
+
+  setData(STORAGE.shopping,shopping);
+
+  addActivity("Daftar belanja dihitung otomatis");
+
+  renderAll();
+
+  alert(
+    shopping.length?
+    `🛒 ${shopping.length} item perlu dibeli.`:
+    "🎉 Stok cukup untuk semua menu."
+  );
+}
+
+function renderShopping(){
+
+  const list=getData(STORAGE.shopping,[]);
+
+  if(!list.length){
+    document.getElementById("shoppingList").innerHTML=
+      `<div class="empty">
+        Belum ada daftar belanja.<br><br>
+        Klik <b>Hitung Otomatis</b>.
+      </div>`;
+
+    document.getElementById("shoppingTotal").textContent="Rp0";
+    return;
+  }
+
+  const prices=getData(STORAGE.prices,{});
+
+  let total=0;
+
+  let html="";
+
+  list.forEach(x=>{
+
+    const price=Number(prices[normalize(x.item)]||x.price||0);
+    const subtotal=price*Number(x.qty);
+
+    total+=subtotal;
+
+    html+=`
+    <div class="check">
+      <input type="checkbox"
+        ${x.checked?"checked":""}
+        onchange="toggleShopping('${x.id}')">
+
+      <div style="flex:1">
+        <b class="${x.checked?"muted":""}">
+          ${esc(x.item)}
+        </b>
+
+        <div class="small">
+          ${round(x.qty)} ${esc(x.unit)}
+        </div>
+
+        <div class="row" style="margin-top:5px">
+          <input
+            type="number"
+            placeholder="Harga/unit"
+            value="${price||""}"
+            onchange="setPrice('${x.id}',this.value)"
+          >
+
+          <span class="small">
+            ${rupiah(subtotal)}
+          </span>
+        </div>
+
+      </div>
+    </div>
+    `;
+  });
+
+  document.getElementById("shoppingList").innerHTML=html;
+  document.getElementById("shoppingTotal").textContent=rupiah(total);
+}
+
+function toggleShopping(id){
+
+  const list=getData(STORAGE.shopping,[]);
+  const item=list.find(x=>x.id===id);
+
+  if(!item) return;
+
+  item.checked=!item.checked;
+
+  setData(STORAGE.shopping,list);
+
+  renderAll();
+}
+
+function setPrice(id,value){
+
+  const list=getData(STORAGE.shopping,[]);
+  const item=list.find(x=>x.id===id);
+
+  if(!item) return;
+
+  item.price=Number(value)||0;
+
+  const prices=getData(STORAGE.prices,{});
+  prices[normalize(item.item)]=item.price;
+
+  setData(STORAGE.prices,prices);
+  setData(STORAGE.shopping,list);
+
+  renderShopping();
+}
+
+function clearShopping(){
+
+  if(!confirm("Hapus semua daftar belanja?")) return;
+
+  setData(STORAGE.shopping,[]);
+  addActivity("Daftar belanja dihapus");
+
+  renderAll();
+}
+
+function copyShopping(){
+
+  const list=getData(STORAGE.shopping,[]);
+
+  if(!list.length){
+    alert("Daftar belanja kosong.");
+    return;
+  }
+
+  let text="🛒 DAFTAR BELANJA DAPUR KAPAL\n\n";
+
+  list.forEach(x=>{
+    text+=`${x.checked?"☑":"☐"} ${x.item} — ${round(x.qty)} ${x.unit}\n`;
+  });
+
+  if(navigator.clipboard){
+
+    navigator.clipboard.writeText(text)
+      .then(()=>alert("Berhasil dicopy."))
+      .catch(()=>fallbackCopy(text));
+
+  }else{
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text){
+
+  const area=document.createElement("textarea");
+  area.value=text;
+  document.body.appendChild(area);
+  area.select();
+
+  try{
+    document.execCommand("copy");
+    alert("Berhasil dicopy.");
+  }catch(e){
+    alert(text);
+  }
+
+  area.remove();
+}
+
+function printShopping(){
+
+  const list=getData(STORAGE.shopping,[]);
+
+  let text="DAFTAR BELANJA DAPUR KAPAL\n\n";
+
+  list.forEach(x=>{
+    text+=`${x.checked?"[✓]":"[ ]"} ${x.item} - ${round(x.qty)} ${x.unit}\n`;
+  });
+
+  const win=window.open("","_blank");
+
+  if(!win){
+    alert("Popup diblokir browser.");
+    return;
+  }
+
+  win.document.write(`
+    <!doctype html>
+    <html>
+    <head>
+      <title>Belanja Dapur Kapal</title>
+    </head>
+    <body>
+      <pre style="font-size:18px">${esc(text)}</pre>
+      <script>
+        window.onload=function(){
+          window.print();
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  win.document.close();
+}
+
+
+/* =========================================================
+   RECIPES
+========================================================= */
+
+function renderRecipes(){
+
+  const recipes=getData(STORAGE.recipes,[]);
+
+  const search=normalize(
+    document.getElementById("recipeSearch")?.value
+  );
+
+  const category=
+    document.getElementById("recipeCategory")?.value||"all";
+
+  const filtered=recipes.filter(r=>{
+
+    const matchSearch=
+      normalize(r.name).includes(search);
+
+    const matchCategory=
+      category==="all" ||
+      r.category===category;
+
+    return matchSearch && matchCategory;
+  });
+
+  if(!filtered.length){
+
+    document.getElementById("recipeList").innerHTML=
+      `<div class="card empty">Resep tidak ditemukan.</div>`;
+
+    return;
+  }
+
+  document.getElementById("recipeList").innerHTML=
+    filtered.map(r=>{
+
+      const cookCount=getCookCount(r.id);
+
+      return `
+      <div class="recipe">
+
+        <h3>🍽️ ${esc(r.name)}</h3>
+
+        <span class="badge">
+          ${categoryName(r.category)}
+        </span>
+
+        <span class="badge">
+          ${r.servings} orang
+        </span>
+
+        <span class="badge">
+          ${cookCount}x dimasak
+        </span>
+
+        <br><br>
+
+        <div class="row">
+
+          <button class="btn fit"
+            onclick="showRecipe('${r.id}')">
+            👀 Lihat
+          </button>
+
+          <button class="btn success fit"
+            onclick="cookRecipe('${r.id}')">
+            🍳 Masak
+          </button>
+
+          <button class="btn secondary fit"
+            onclick="editRecipe('${r.id}')">
+            ✏️ Edit
+          </button>
+
+          <button class="btn danger fit"
+            onclick="deleteRecipe('${r.id}')">
+            🗑️
+          </button>
+
+        </div>
+
+      </div>
+      `;
+    }).join("");
+}
+
+function categoryName(c){
+
+  return {
+    breakfast:"Sarapan",
+    lunch:"Siang",
+    dinner:"Malam"
+  }[c]||"Lainnya";
+}
+
+function showRecipe(id){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const r=recipes.find(x=>x.id===id);
+
+  if(!r) return;
+
+  const crew=getData(STORAGE.crew,9);
+  const multiplier=crew/Number(r.servings||9);
+
+  const ingredients=r.ingredients.map(i=>`
+    <li>
+      ${esc(i.item)} —
+      ${round(Number(i.qty)*multiplier)}
+      ${esc(i.unit)}
+    </li>
+  `).join("");
+
+  const steps=r.steps.map((s,i)=>
+    `<li>${esc(s)}</li>`
+  ).join("");
+
+  openModal(`
+    <h2>🍽️ ${esc(r.name)}</h2>
+
+    <p class="muted">
+      Resep dasar: ${r.servings} orang •
+      Disesuaikan: ${crew} orang
+    </p>
+
+    <h3>🧂 Bahan</h3>
+    <ul>${ingredients}</ul>
+
+    <h3>👨‍🍳 Cara Masak</h3>
+    <ol>${steps}</ol>
+
+    <hr>
+
+    <div class="row">
+      <button class="btn success"
+        onclick="cookRecipe('${r.id}');closeModal()">
+        🍳 Masak Sekarang
+      </button>
+
+      <button class="btn secondary"
+        onclick="startChefTimer('${r.id}')">
+        ⏱️ Chef Timer
+      </button>
+    </div>
+  `);
+}
+
+function openRecipeForm(id=null){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const r=id?recipes.find(x=>x.id===id):null;
+
+  const ingredientText=(r?.ingredients||[])
+    .map(i=>`${i.qty} ${i.unit} ${i.item}`)
+    .join("\n");
+
+  const stepText=(r?.steps||[]).join("\n");
+
+  openModal(`
+    <h2>${r?"✏️ Edit Resep":"➕ Tambah Resep"}</h2>
+
+    <label>Nama resep</label>
+    <input id="newRecipeName" value="${esc(r?.name||"")}">
+
+    <br><br>
+
+    <label>Kategori</label>
+    <select id="newRecipeCategory">
+      <option value="breakfast" ${r?.category==="breakfast"?"selected":""}>Sarapan</option>
+      <option value="lunch" ${r?.category==="lunch"?"selected":""}>Siang</option>
+      <option value="dinner" ${r?.category==="dinner"?"selected":""}>Malam</option>
+    </select>
+
+    <br><br>
+
+    <label>Porsi resep</label>
+    <input id="newRecipeServings" type="number"
+      value="${r?.servings||9}">
+
+    <br><br>
+
+    <label>Bahan</label>
+    <textarea id="newRecipeIngredients"
+      placeholder="Contoh:
+500 gram ayam
+50 gram bawang merah
+5 pcs telur">${esc(ingredientText)}</textarea>
+
+    <p class="small muted">
+      Format: jumlah satuan nama bahan
+    </p>
+
+    <label>Cara memasak</label>
+    <textarea id="newRecipeSteps"
+      placeholder="Satu langkah per baris">${esc(stepText)}</textarea>
+
+    <br>
+
+    <button class="btn"
+      onclick="${r?`saveRecipe('${r.id}')`:"saveRecipe()"}">
+      💾 Simpan
+    </button>
+  `);
+}
+
+function parseIngredientLine(line){
+
+  const parts=line.trim().split(/\s+/);
+
+  if(parts.length<3) return null;
+
+  const qty=parseFloat(parts[0]);
+
+  if(isNaN(qty)) return null;
+
+  const unit=parts[1];
+  const item=parts.slice(2).join(" ");
+
+  return {
+    item,
+    qty,
+    unit
+  };
+}
+
+function saveRecipe(id=null){
+
+  const name=document.getElementById("newRecipeName").value.trim();
+  const category=document.getElementById("newRecipeCategory").value;
+  const servings=Number(
+    document.getElementById("newRecipeServings").value
+  )||9;
+
+  const ingredients=document.getElementById(
+    "newRecipeIngredients"
+  ).value
+    .split("\n")
+    .map(x=>x.trim())
+    .filter(Boolean)
+    .map(parseIngredientLine)
+    .filter(Boolean);
+
+  const steps=document.getElementById(
+    "newRecipeSteps"
+  ).value
+    .split("\n")
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+  if(!name){
+    alert("Nama resep wajib diisi.");
+    return;
+  }
+
+  if(!ingredients.length){
+    alert("Masukkan minimal satu bahan.");
+    return;
+  }
+
+  const recipes=getData(STORAGE.recipes,[]);
+
+  if(id){
+
+    const index=recipes.findIndex(x=>x.id===id);
+
+    if(index>=0){
+      recipes[index]={
+        ...recipes[index],
+        name,
+        category,
+        servings,
+        ingredients,
+        steps
+      };
+    }
+
+  }else{
+
+    recipes.push({
+      id:uid(),
+      name,
+      category,
+      servings,
+      ingredients,
+      steps
+    });
+  }
+
+  setData(STORAGE.recipes,recipes);
+
+  addActivity(
+    id?"Resep diperbarui: ":"Resep ditambahkan: "+name
+  );
+
+  closeModal();
+  renderAll();
+}
+
+function editRecipe(id){
+  openRecipeForm(id);
+}
+
+function deleteRecipe(id){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const r=recipes.find(x=>x.id===id);
+
+  if(!r) return;
+
+  if(!confirm(`Hapus resep "${r.name}"?`)) return;
+
+  setData(
+    STORAGE.recipes,
+    recipes.filter(x=>x.id!==id)
+  );
+
+  addActivity("Resep dihapus: "+r.name);
+
+  renderAll();
+}
+
+function getCookCount(id){
+
+  return getData(STORAGE.cookLog,[])
+    .filter(x=>x.recipeId===id)
+    .length;
+}
+
+
+/* =========================================================
+   CHEF TIMER
+========================================================= */
+
+let timerInterval=null;
+let timerSeconds=0;
+let timerRecipeId=null;
+
+function startChefTimer(id){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const r=recipes.find(x=>x.id===id);
+
+  if(!r) return;
+
+  timerRecipeId=id;
+  timerSeconds=30*60;
+
+  openModal(`
+    <h2>👨‍🍳 Chef Timer</h2>
+    <h3>${esc(r.name)}</h3>
+
+    <div class="timer" id="timerDisplay">
+      30:00
+    </div>
+
+    <div class="row">
+      <button class="btn success" onclick="runTimer()">▶ Mulai</button>
+      <button class="btn warning" onclick="pauseTimer()">⏸ Pause</button>
+      <button class="btn secondary" onclick="resetTimer()">↻ Reset</button>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <button class="btn secondary" onclick="setTimer(10)">10 Menit</button>
+      <button class="btn secondary" onclick="setTimer(20)">20 Menit</button>
+      <button class="btn secondary" onclick="setTimer(30)">30 Menit</button>
+      <button class="btn secondary" onclick="setTimer(45)">45 Menit</button>
+    </div>
+  `);
+}
+
+function updateTimerDisplay(){
+
+  const el=document.getElementById("timerDisplay");
+
+  if(!el) return;
+
+  const min=Math.floor(timerSeconds/60);
+  const sec=timerSeconds%60;
+
+  el.textContent=
+    String(min).padStart(2,"0")+":"+
+    String(sec).padStart(2,"0");
+}
+
+function runTimer(){
+
+  if(timerInterval) return;
+
+  timerInterval=setInterval(()=>{
+
+    if(timerSeconds<=0){
+
+      pauseTimer();
+
+      if(navigator.vibrate){
+        navigator.vibrate([300,200,300]);
+      }
+
+      alert("⏰ Timer selesai!");
+      return;
+    }
+
+    timerSeconds--;
+    updateTimerDisplay();
+
+  },1000);
+}
+
+function pauseTimer(){
+
+  if(timerInterval){
+    clearInterval(timerInterval);
+    timerInterval=null;
+  }
+}
+
+function resetTimer(){
+
+  pauseTimer();
+  timerSeconds=30*60;
+  updateTimerDisplay();
+}
+
+function setTimer(minutes){
+
+  pauseTimer();
+
+  timerSeconds=minutes*60;
+
+  updateTimerDisplay();
+}
+
+
+/* =========================================================
+   EXPENSE
+========================================================= */
+
+function addExpense(){
+
+  const name=document.getElementById("expenseName").value.trim();
+  const amount=Number(
+    document.getElementById("expenseAmount").value
+  );
+
+  if(!name || amount<=0){
+    alert("Isi nama dan nominal.");
+    return;
+  }
+
+  const expenses=getData(STORAGE.expenses,[]);
+
+  expenses.unshift({
+    id:uid(),
+    name,
+    amount,
+    time:new Date().toISOString()
+  });
+
+  setData(STORAGE.expenses,expenses);
+
+  document.getElementById("expenseName").value="";
+  document.getElementById("expenseAmount").value="";
+
+  addActivity("Pengeluaran: "+name);
+
+  renderAll();
+}
+
+function renderExpenses(){
+
+  const expenses=getData(STORAGE.expenses,[]);
+
+  const total=expenses.reduce(
+    (sum,x)=>sum+Number(x.amount||0),
+    0
+  );
+
+  document.getElementById("expenseTotal").textContent=
+    rupiah(total);
+
+  if(!expenses.length){
+
+    document.getElementById("expenseList").innerHTML=
+      `<div class="empty">Belum ada pengeluaran.</div>`;
+
+    return;
+  }
+
+  document.getElementById("expenseList").innerHTML=
+    expenses.map(x=>`
+      <div class="check">
+        <div style="flex:1">
+          <b>${esc(x.name)}</b>
+          <div class="small muted">
+            ${formatDate(x.time)}
+          </div>
+        </div>
+
+        <strong>${rupiah(x.amount)}</strong>
+
+        <button class="btn danger fit"
+          onclick="deleteExpense('${x.id}')">
+          Hapus
+        </button>
+      </div>
+    `).join("");
+}
+
+function deleteExpense(id){
+
+  const expenses=getData(STORAGE.expenses,[]);
+
+  setData(
+    STORAGE.expenses,
+    expenses.filter(x=>x.id!==id)
+  );
+
+  renderAll();
+}
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+function addTask(){
+
+  const input=document.getElementById("taskInput");
+  const text=input.value.trim();
+
+  if(!text) return;
+
+  const tasks=getData(STORAGE.tasks,[]);
+
+  tasks.push({
+    id:uid(),
+    text,
+    done:false,
+    time:new Date().toISOString()
+  });
+
+  setData(STORAGE.tasks,tasks);
+
+  input.value="";
+
+  renderAll();
+}
+
+function renderTasks(){
+
+  const tasks=getData(STORAGE.tasks,[]);
+
+  if(!tasks.length){
+
+    document.getElementById("taskList").innerHTML=
+      `<div class="empty">Belum ada tugas.</div>`;
+
+    return;
+  }
+
+  document.getElementById("taskList").innerHTML=
+    tasks.map(x=>`
+      <div class="check">
+
+        <input type="checkbox"
+          ${x.done?"checked":""}
+          onchange="toggleTask('${x.id}')">
+
+        <div style="flex:1;
+          ${x.done?"text-decoration:line-through;color:#64748b":""}">
+          ${esc(x.text)}
+        </div>
+
+        <button class="btn danger fit"
+          onclick="deleteTask('${x.id}')">
+          Hapus
+        </button>
+
+      </div>
+    `).join("");
+}
+
+function toggleTask(id){
+
+  const tasks=getData(STORAGE.tasks,[]);
+  const task=tasks.find(x=>x.id===id);
+
+  if(!task) return;
+
+  task.done=!task.done;
+
+  setData(STORAGE.tasks,tasks);
+
+  renderTasks();
+}
+
+function deleteTask(id){
+
+  const tasks=getData(STORAGE.tasks,[]);
+
+  setData(
+    STORAGE.tasks,
+    tasks.filter(x=>x.id!==id)
+  );
+
+  renderTasks();
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function saveNote(){
+
+  const note=document.getElementById("dailyNote").value;
+
+  setData(STORAGE.note,{
+    text:note,
+    time:new Date().toISOString()
+  });
+
+  addActivity("Catatan diperbarui");
+
+  document.getElementById("noteStatus").textContent=
+    "Terakhir disimpan: "+new Date().toLocaleString("id-ID");
+}
+
+function renderNote(){
+
+  const note=getData(STORAGE.note,{text:"",time:null});
+
+  document.getElementById("dailyNote").value=note.text||"";
+
+  document.getElementById("noteStatus").textContent=
+    note.time?
+    "Terakhir disimpan: "+formatDate(note.time):
+    "Belum ada catatan tersimpan.";
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function renderReports(){
+
+  const cookLog=getData(STORAGE.cookLog,[]);
+  const expenses=getData(STORAGE.expenses,[]);
+  const stock=getData(STORAGE.stock,[]);
+  const recipes=getData(STORAGE.recipes,[]);
+
+  const expenseTotal=expenses.reduce(
+    (sum,x)=>sum+Number(x.amount||0),
+    0
+  );
+
+  document.getElementById("reportCook").textContent=
+    cookLog.length;
+
+  document.getElementById("reportExpense").textContent=
+    rupiah(expenseTotal);
+
+  document.getElementById("reportStock").textContent=
+    stock.length;
+
+  const counts={};
+
+  cookLog.forEach(x=>{
+    counts[x.recipeId]=(counts[x.recipeId]||0)+1;
+  });
+
+  const popular=recipes
+    .map(r=>({
+      ...r,
+      count:counts[r.id]||0
+    }))
+    .sort((a,b)=>b.count-a.count)
+    .slice(0,10);
+
+  document.getElementById("popularRecipes").innerHTML=
+    popular.length?
+    popular.map(r=>`
+      <div class="check">
+        <div style="flex:1">
+          <b>${esc(r.name)}</b>
+        </div>
+        <strong>${r.count}x</strong>
+      </div>
+    `).join(""):
+    `<div class="empty">Belum ada data.</div>`;
+
+  renderActivity();
+}
+
+function renderActivity(){
+
+  const logs=getData(STORAGE.activity,[]);
+
+  document.getElementById("activityLog").innerHTML=
+    logs.length?
+    logs.slice(0,30).map(x=>`
+      <div class="check">
+        <div>
+          <b>${esc(x.text)}</b>
+          <div class="small muted">${formatDate(x.time)}</div>
+        </div>
+      </div>
+    `).join(""):
+    `<div class="empty">Belum ada aktivitas.</div>`;
+}
+
+function addActivity(text){
+
+  const logs=getData(STORAGE.activity,[]);
+
+  logs.unshift({
+    id:uid(),
+    text,
+    time:new Date().toISOString()
+  });
+
+  setData(
+    STORAGE.activity,
+    logs.slice(0,100)
+  );
+}
+
+
+/* =========================================================
+   BACKUP / RESTORE
+========================================================= */
+
+function backupData(){
+
+  const backup={
+    version:"16.1",
+    createdAt:new Date().toISOString(),
+    data:{}
+  };
+
+  Object.values(STORAGE).forEach(key=>{
+    backup.data[key]=getData(key,null);
+  });
+
+  const blob=new Blob(
+    [JSON.stringify(backup,null,2)],
+    {type:"application/json"}
+  );
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=
+    "dapur-kapal-backup-"+dateFile()+".json";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+  alert("Backup berhasil dibuat.");
+}
+
+function restoreData(event){
+
+  const file=event.target.files?.[0];
+
+  if(!file) return;
+
+  const reader=new FileReader();
+
+  reader.onload=function(){
+
+    try{
+
+      const backup=JSON.parse(reader.result);
+
+      if(!backup.data){
+        throw new Error("Format backup tidak dikenal.");
+      }
+
+      if(!confirm(
+        "Restore backup akan mengganti data V16.1 saat ini. Lanjut?"
+      )){
+        return;
+      }
+
+      Object.values(STORAGE).forEach(key=>{
+
+        if(Object.prototype.hasOwnProperty.call(
+          backup.data,key
+        )){
+          setData(key,backup.data[key]);
+        }
+
+      });
+
+      alert("Restore berhasil.");
+
+      location.reload();
+
+    }catch(e){
+
+      console.error(e);
+
+      alert(
+        "File backup tidak valid atau rusak."
+      );
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+function resetData(){
+
+  const first=confirm(
+    "Yakin ingin menghapus SEMUA data Dapur Kapal?"
+  );
+
+  if(!first) return;
+
+  const second=confirm(
+    "Ini tidak bisa dibatalkan. Lanjut?"
+  );
+
+  if(!second) return;
+
+  Object.values(STORAGE).forEach(key=>{
+    localStorage.removeItem(key);
+  });
+
+  location.reload();
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(html){
+
+  document.getElementById("modalContent").innerHTML=html;
+
+  document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+
+  pauseTimer();
+
+  document.getElementById("modal").classList.remove("show");
+  document.getElementById("modalContent").innerHTML="";
+}
+
+document.getElementById("modal").addEventListener(
+  "click",
+  function(e){
+    if(e.target===this){
+      closeModal();
+    }
+  }
+);
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function round(n){
+
+  return Math.round(
+    Number(n)*100
+  )/100;
+}
+
+function formatDate(value){
+
+  try{
+    return new Date(value).toLocaleString(
+      "id-ID",
+      {
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+  }catch(e){
+    return "-";
+  }
+}
+
+function dateFile(){
+
+  const d=new Date();
+
+  return d.toISOString()
+    .slice(0,19)
+    .replaceAll(":","-");
+}
+
+
+/* =========================================================
+   START APP
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  initData();
+  renderAll();
+  showPage("dashboard");
+
+});
+
+  /* =========================================================
+   🚢 DAPUR KAPAL V17.0 PATCH
+   Dibuat khusus untuk source V16.1 yang kamu kirim
+========================================================= */
+
+(function(){
+
+"use strict";
+
+/* =========================================================
+   V17.0 HELPERS
+========================================================= */
+
+function v162Month(value){
+
+  const d=new Date(value);
+
+  if(isNaN(d.getTime())) return "";
+
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0");
+}
+
+
+function v162TodayMonth(){
+
+  return v162Month(new Date());
+
+}
+
+
+function v162GetRecentRecipes(days){
+
+  const logs=getData(STORAGE.cookLog,[]);
+
+  const limit=
+    Date.now()-(days*24*60*60*1000);
+
+  return logs
+    .filter(x=>{
+      const t=new Date(x.time).getTime();
+      return !isNaN(t) && t>=limit;
+    })
+    .map(x=>x.recipeId);
+
+}
+
+
+/* =========================================================
+   🧠 SMART MENU V17.0
+   Prioritas:
+   1. Sesuai kategori waktu makan
+   2. Punya stok
+   3. Tidak baru dimasak
+   4. Mengurangi pengulangan
+========================================================= */
+
+window.smartMenuV162=function(){
+
+  const recipes=getData(STORAGE.recipes,[]);
+  const stock=getData(STORAGE.stock,[]);
+  const recent=v162GetRecentRecipes(3);
+
+  const mode=
+    document.getElementById("menuMode")?.value||
+    "balanced";
+
+  if(!recipes.length){
+
+    alert("Belum ada resep.");
+
+    return;
+  }
+
+
+  function score(recipe){
+
+    let value=0;
+
+    /* Stok */
+    value+=stockScore(recipe,stock)*5;
+
+    /* Jangan terlalu sering muncul */
+    if(recent.includes(recipe.id)){
+      value-=15;
+    }
+
+    /* Random sedikit supaya tidak selalu sama */
+    value+=Math.random()*5;
+
+    return value;
+  }
+
+
+  const week={};
+
+  DAYS.forEach(day=>{
+
+    week[day]={
+      breakfast:null,
+      lunch:null,
+      dinner:null
+    };
+
+  });
+
+
+  const usedToday={};
+
+
+  MEALS.forEach(([meal])=>{
+
+    DAYS.forEach(day=>{
+
+      let candidates=
+        recipes.filter(r=>r.category===meal);
+
+      if(!candidates.length){
+        candidates=[...recipes];
+      }
+
+
+      /* Hindari pengulangan */
+      let fresh=
+        candidates.filter(r=>
+          !recent.includes(r.id) &&
+          !Object.values(usedToday).includes(r.id)
+        );
+
+
+      if(!fresh.length){
+
+        fresh=
+          candidates.filter(r=>
+            !Object.values(usedToday).includes(r.id)
+          );
+      }
+
+
+      if(!fresh.length){
+        fresh=candidates;
+      }
+
+
+      if(mode==="random"){
+
+        fresh.sort(
+          ()=>Math.random()-.5
+        );
+
+      }else{
+
+        fresh.sort(
+          (a,b)=>score(b)-score(a)
+        );
+
+      }
+
+
+      const chosen=fresh[0];
+
+      if(chosen){
+
+        week[day][meal]=chosen.id;
+
+        usedToday[
+          day+"_"+meal
+        ]=chosen.id;
+
+      }
+
+    });
+
+  });
+
+
+  setData(STORAGE.week,week);
+
+  addActivity(
+    "Smart Menu V17.0 dibuat"
+  );
+
+  renderAll();
+
+  alert(
+    "🤖 Smart Menu V17.0 berhasil dibuat!\n\n"+
+    "Menu yang baru dimasak dalam 3 hari terakhir "+
+    "akan dikurangi prioritasnya."
+  );
+
+};
+
+
+/* Ganti tombol Smart Menu lama */
+window.smartMenu=window.smartMenuV162;
+
+
+/* =========================================================
+   🔴 STOK KRITIS
+========================================================= */
+
+function v162CriticalStock(){
+
+  const stock=getData(STORAGE.stock,[]);
+
+  return stock.filter(x=>{
+
+    const qty=Number(x.qty)||0;
+    const min=Number(x.min)||0;
+
+    return qty<=min;
+
+  });
+
+}
+
+
+function v162RenderCriticalStock(){
+
+  const box=
+    document.getElementById(
+      "v162CriticalStock"
+    );
+
+  if(!box) return;
+
+
+  const critical=
+    v162CriticalStock();
+
+
+  if(!critical.length){
+
+    box.innerHTML=`
+      <div class="good">
+        ✅ Semua stok masih aman.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML=`
+
+    <div class="danger">
+      ⚠️ <b>${critical.length} bahan perlu dibeli</b>
+    </div>
+
+    <br>
+
+    ${critical.map(x=>`
+
+      <div class="check">
+
+        <div style="flex:1">
+
+          <b>${esc(x.item)}</b>
+
+          <div class="small danger">
+
+            Stok:
+            ${round(x.qty)}
+            ${esc(x.unit)}
+
+            • Minimum:
+            ${round(x.min)}
+            ${esc(x.unit)}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("")}
+
+  `;
+
+}
+
+
+/* =========================================================
+   📦 PANEL STOK KRITIS DI HOME
+========================================================= */
+
+function v162InstallCriticalCard(){
+
+  if(document.getElementById(
+    "v162CriticalCard"
+  )) return;
+
+
+  const dashboard=
+    document.getElementById("dashboard");
+
+  if(!dashboard) return;
+
+
+  const card=
+    document.createElement("div");
+
+  card.id="v162CriticalCard";
+
+  card.className="card";
+
+  card.innerHTML=`
+
+    <h2>🚨 Stok Kritis</h2>
+
+    <div id="v162CriticalStock"></div>
+
+    <br>
+
+    <button
+      class="btn warning"
+      onclick="showPage('stock')">
+
+      📦 Buka Stok
+
+    </button>
+
+  `;
+
+
+  const summary=
+    document.getElementById(
+      "dashboardSummary"
+    );
+
+
+  if(summary){
+
+    summary.parentElement.after(card);
+
+  }else{
+
+    dashboard.appendChild(card);
+
+  }
+
+}
+
+
+/* =========================================================
+   🛒 BELANJA → MASUK STOK
+========================================================= */
+
+window.v162BuyToStock=function(id){
+
+  const list=
+    getData(STORAGE.shopping,[]);
+
+  const item=
+    list.find(x=>x.id===id);
+
+  if(!item){
+
+    alert("Barang tidak ditemukan.");
+
+    return;
+  }
+
+
+  const qty=
+    Number(item.qty)||0;
+
+
+  if(qty<=0){
+
+    alert("Jumlah barang tidak valid.");
+
+    return;
+  }
+
+
+  let stock=
+    getData(STORAGE.stock,[]);
+
+
+  const existing=
+    stock.find(x=>
+      normalize(x.item)===
+      normalize(item.item) &&
+      x.unit===item.unit
+    );
+
+
+  if(existing){
+
+    existing.qty=
+      Number(existing.qty||0)+qty;
+
+    /*
+      Kalau stok sebelumnya belum punya
+      minimum, biarkan minimum tetap.
+    */
+
+  }else{
+
+    stock.push({
+
+      id:uid(),
+
+      item:item.item,
+
+      qty:qty,
+
+      unit:item.unit,
+
+      min:0
+
+    });
+
+  }
+
+
+  setData(
+    STORAGE.stock,
+    stock
+  );
+
+
+  setData(
+    STORAGE.shopping,
+    list.filter(x=>x.id!==id)
+  );
+
+
+  addStockHistory(
+    `Barang belanja masuk stok: +${round(qty)} ${item.unit} ${item.item}`
+  );
+
+
+  addActivity(
+    `Belanja masuk stok: ${item.item}`
+  );
+
+
+  renderAll();
+
+
+  alert(
+    "📦 Berhasil masuk stok!\n\n"+
+    `${item.item}: ${round(qty)} ${item.unit}`
+  );
+
+};
+
+
+window.v162BuyChecked=function(){
+
+  const list=
+    getData(STORAGE.shopping,[]);
+
+  const checked=
+    list.filter(x=>x.checked);
+
+
+  if(!checked.length){
+
+    alert(
+      "Centang dulu barang yang sudah dibeli."
+    );
+
+    return;
+  }
+
+
+  let stock=
+    getData(STORAGE.stock,[]);
+
+
+  checked.forEach(item=>{
+
+    const qty=
+      Number(item.qty)||0;
+
+
+    if(qty<=0) return;
+
+
+    const existing=
+      stock.find(x=>
+        normalize(x.item)===
+        normalize(item.item) &&
+        x.unit===item.unit
+      );
+
+
+    if(existing){
+
+      existing.qty=
+        Number(existing.qty||0)+qty;
+
+    }else{
+
+      stock.push({
+
+        id:uid(),
+
+        item:item.item,
+
+        qty,
+
+        unit:item.unit,
+
+        min:0
+
+      });
+
+    }
+
+
+    addStockHistory(
+      `Belanja masuk stok: +${round(qty)} ${item.unit} ${item.item}`
+    );
+
+  });
+
+
+  setData(
+    STORAGE.stock,
+    stock
+  );
+
+
+  setData(
+    STORAGE.shopping,
+    list.filter(x=>!x.checked)
+  );
+
+
+  addActivity(
+    `${checked.length} barang belanja masuk stok`
+  );
+
+
+  renderAll();
+
+
+  alert(
+    `✅ ${checked.length} barang berhasil masuk stok.`
+  );
+
+};
+
+
+/* =========================================================
+   Tambahkan tombol BELI → STOK ke daftar belanja
+========================================================= */
+
+function v162ShoppingButtons(){
+
+  const container=
+    document.getElementById(
+      "shoppingList"
+    );
+
+  if(!container) return;
+
+
+  const list=
+    getData(STORAGE.shopping,[]);
+
+
+  if(!list.length) return;
+
+
+  /*
+    Tambahkan tombol bulk
+  */
+
+  if(!document.getElementById(
+    "v162BulkStock"
+  )){
+
+    const bulk=
+      document.createElement("button");
+
+    bulk.id="v162BulkStock";
+
+    bulk.className=
+      "btn success";
+
+    bulk.style.width="100%";
+    bulk.style.marginBottom="10px";
+
+    bulk.textContent=
+      "📦 Masukkan Semua yang Dicentang ke Stok";
+
+    bulk.onclick=
+      v162BuyChecked;
+
+
+    container.prepend(bulk);
+
+  }
+
+
+  /*
+    Ambil semua baris belanja.
+    Baris memiliki class .check
+  */
+
+  const rows=
+    Array.from(
+      container.children
+    ).filter(el=>
+      el.classList.contains("check")
+    );
+
+
+  list.forEach((item,index)=>{
+
+    const row=rows[index];
+
+    if(!row) return;
+
+
+    if(row.querySelector(
+      "[data-v162-buy]"
+    )) return;
+
+
+    const button=
+      document.createElement("button");
+
+    button.className=
+      "btn success fit";
+
+    button.dataset.v162Buy="1";
+
+    button.textContent=
+      "📦 Ke Stok";
+
+
+    button.style.marginTop="6px";
+
+
+    button.onclick=function(){
+
+      v162BuyToStock(item.id);
+
+    };
+
+
+    const content=
+      row.querySelector(
+        "div[style*='flex:1']"
+      );
+
+
+    if(content){
+
+      content.appendChild(button);
+
+    }else{
+
+      row.appendChild(button);
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   📊 LAPORAN BULANAN
+========================================================= */
+
+function v162RenderMonthlyReport(){
+
+  const box=
+    document.getElementById(
+      "v162MonthlyReport"
+    );
+
+  if(!box) return;
+
+
+  const select=
+    document.getElementById(
+      "v162ReportMonth"
+    );
+
+
+  const month=
+    select?.value||
+    v162TodayMonth();
+
+
+  const cookLog=
+    getData(STORAGE.cookLog,[]);
+
+
+  const expenses=
+    getData(STORAGE.expenses,[]);
+
+
+  const recipes=
+    getData(STORAGE.recipes,[]);
+
+
+  const cooks=
+    cookLog.filter(x=>
+      v162Month(x.time)===month
+    );
+
+
+  const monthExpenses=
+    expenses.filter(x=>
+      v162Month(x.time)===month
+    );
+
+
+  const expenseTotal=
+    monthExpenses.reduce(
+      (sum,x)=>
+        sum+Number(x.amount||0),
+      0
+    );
+
+
+  const counts={};
+
+
+  cooks.forEach(x=>{
+
+    counts[x.recipeId]=
+      (counts[x.recipeId]||0)+1;
+
+  });
+
+
+  const popular=
+    recipes
+      .map(r=>({
+
+        name:r.name,
+
+        count:counts[r.id]||0
+
+      }))
+      .filter(x=>x.count>0)
+      .sort((a,b)=>b.count-a.count)
+      .slice(0,5);
+
+
+  box.innerHTML=`
+
+    <div class="grid">
+
+      <div class="card">
+
+        <div class="muted">
+          🍳 Masakan bulan ini
+        </div>
+
+        <div class="stat">
+          ${cooks.length}
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="muted">
+          💰 Pengeluaran bulan ini
+        </div>
+
+        <div class="stat">
+          ${rupiah(expenseTotal)}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <h3>🏆 Menu Terbanyak</h3>
+
+    ${
+      popular.length
+
+      ?
+
+      popular.map(x=>`
+
+        <div class="check">
+
+          <div style="flex:1">
+
+            <b>${esc(x.name)}</b>
+
+          </div>
+
+          <strong>
+            ${x.count}x
+          </strong>
+
+        </div>
+
+      `).join("")
+
+      :
+
+      `<div class="empty">
+        Belum ada masakan bulan ini.
+      </div>`
+    }
+
+  `;
+
+}
+
+
+/* =========================================================
+   📅 PANEL LAPORAN BULANAN
+========================================================= */
+
+function v162InstallMonthlyReport(){
+
+  if(document.getElementById(
+    "v162MonthlyCard"
+  )) return;
+
+
+  const reports=
+    document.getElementById(
+      "reports"
+    );
+
+  if(!reports) return;
+
+
+  const card=
+    document.createElement("div");
+
+  card.id="v162MonthlyCard";
+
+  card.className="card";
+
+
+  card.innerHTML=`
+
+    <h2>📅 Laporan Bulanan</h2>
+
+    <div class="row">
+
+      <input
+        id="v162ReportMonth"
+        type="month"
+        value="${v162TodayMonth()}"
+        onchange="v162RenderMonthlyReport()">
+
+    </div>
+
+    <br>
+
+    <div id="v162MonthlyReport"></div>
+
+  `;
+
+
+  reports.insertBefore(
+    card,
+    reports.children[1]||null
+  );
+
+}
+
+
+/* =========================================================
+   👨‍🍳 CHEF MODE
+========================================================= */
+
+window.v162ChefMode=function(id){
+
+  const recipes=
+    getData(STORAGE.recipes,[]);
+
+  const recipe=
+    recipes.find(x=>x.id===id);
+
+
+  if(!recipe) return;
+
+
+  const crew=
+    getData(STORAGE.crew,9);
+
+
+  const multiplier=
+    crew/Number(recipe.servings||9);
+
+
+  const ingredients=
+    recipe.ingredients.map(x=>`
+
+      <li>
+
+        <b>${esc(x.item)}</b>
+
+        —
+
+        ${round(
+          Number(x.qty)*multiplier
+        )}
+
+        ${esc(x.unit)}
+
+      </li>
+
+    `).join("");
+
+
+  const steps=
+    (recipe.steps||[]).map(
+      (step,index)=>`
+
+        <div class="card"
+          style="margin-bottom:8px">
+
+          <b>
+            Langkah ${index+1}
+          </b>
+
+          <p>
+            ${esc(step)}
+          </p>
+
+        </div>
+
+      `
+    ).join("");
+
+
+  openModal(`
+
+    <h2>👨‍🍳 Chef Mode</h2>
+
+    <h3>
+      🍽️ ${esc(recipe.name)}
+    </h3>
+
+    <p class="muted">
+      Untuk ${crew} orang
+    </p>
+
+
+    <h3>🧂 Bahan</h3>
+
+    <ul>
+      ${ingredients}
+    </ul>
+
+
+    <h3>🔥 Langkah Memasak</h3>
+
+    ${steps}
+
+
+    <br>
+
+    <div class="row">
+
+      <button
+        class="btn warning"
+        onclick="startChefTimer('${recipe.id}')">
+
+        ⏱️ Timer
+
+      </button>
+
+
+      <button
+        class="btn success"
+        onclick="cookRecipe('${recipe.id}');closeModal()">
+
+        🍳 Sudah Masak
+
+      </button>
+
+    </div>
+
+  `);
+
+};
+
+
+/* =========================================================
+   Tambahkan tombol Chef Mode ke kartu resep
+========================================================= */
+
+function v162RecipeButtons(){
+
+  const list=
+    document.getElementById(
+      "recipeList"
+    );
+
+  if(!list) return;
+
+
+  const cards=
+    list.querySelectorAll(".recipe");
+
+
+  const recipes=
+    getData(STORAGE.recipes,[]);
+
+
+  cards.forEach(card=>{
+
+    const title=
+      card.querySelector("h3");
+
+    if(!title) return;
+
+
+    const name=
+      title.textContent
+        .replace("🍽️","")
+        .trim();
+
+
+    const recipe=
+      recipes.find(r=>
+        r.name===name
+      );
+
+
+    if(!recipe) return;
+
+
+    if(card.querySelector(
+      "[data-v162-chef]"
+    )) return;
+
+
+    const button=
+      document.createElement("button");
+
+    button.className=
+      "btn warning fit";
+
+    button.dataset.v162Chef="1";
+
+    button.textContent=
+      "👨‍🍳 Chef Mode";
+
+
+    button.onclick=function(){
+
+      v162ChefMode(recipe.id);
+
+    };
+
+
+    const row=
+      card.querySelector(".row");
+
+
+    if(row){
+
+      row.appendChild(button);
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   💾 BACKUP V17.0
+   Tetap memakai key dk161_
+========================================================= */
+
+window.v162Backup=function(){
+
+  const backup={
+
+    version:"16.2",
+
+    createdAt:
+      new Date().toISOString(),
+
+    data:{}
+
+  };
+
+
+  Object.values(STORAGE).forEach(key=>{
+
+    backup.data[key]=
+      getData(key,null);
+
+  });
+
+
+  const blob=
+    new Blob(
+      [
+        JSON.stringify(
+          backup,
+          null,
+          2
+        )
+      ],
+      {
+        type:"application/json"
+      }
+    );
+
+
+  const url=
+    URL.createObjectURL(blob);
+
+
+  const a=
+    document.createElement("a");
+
+
+  a.href=url;
+
+  a.download=
+    "dapur-kapal-v16.2-"+
+    dateFile()+
+    ".json";
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+
+  URL.revokeObjectURL(url);
+
+
+  alert(
+    "✅ Backup Dapur Kapal V17.0 berhasil dibuat."
+  );
+
+};
+
+
+/* =========================================================
+   Tambahkan tombol backup V17.0
+========================================================= */
+
+function v162BackupButton(){
+
+  const settings=
+    document.getElementById(
+      "settings"
+    );
+
+  if(!settings) return;
+
+
+  if(document.getElementById(
+    "v162BackupBtn"
+  )) return;
+
+
+  const cards=
+    settings.querySelectorAll(
+      ".card"
+    );
+
+
+  const backupCard=
+    Array.from(cards).find(card=>
+      card.textContent.includes(
+        "Backup Data"
+      )
+    );
+
+
+  if(!backupCard) return;
+
+
+  const button=
+    document.createElement("button");
+
+
+  button.id=
+    "v162BackupBtn";
+
+  button.className=
+    "btn success";
+
+  button.style.marginLeft="8px";
+
+  button.textContent=
+    "⬇️ Backup V17.0";
+
+
+  button.onclick=
+    v162Backup;
+
+
+  backupCard
+    .querySelector("button")
+    ?.after(button);
+
+}
+
+
+/* =========================================================
+   📱 MOBILE
+========================================================= */
+
+function v162Mobile(){
+
+  const style=
+    document.getElementById(
+      "v162MobileStyle"
+    );
+
+  if(style) return;
+
+
+  const css=
+    document.createElement("style");
+
+  css.id=
+    "v162MobileStyle";
+
+
+  css.textContent=`
+
+    @media(max-width:600px){
+
+      .row{
+        gap:6px;
+      }
+
+      .btn{
+        min-height:42px;
+      }
+
+      .card{
+        padding:13px;
+      }
+
+      .tabs button{
+        padding:10px 12px;
+      }
+
+      table{
+        min-width:620px;
+      }
+
+      .timer{
+        font-size:44px;
+      }
+
+    }
+
+  `;
+
+
+  document.head.appendChild(css);
+
+}
+
+
+/* =========================================================
+   🔄 RENDER HOOK
+========================================================= */
+
+const v162OriginalRenderAll=
+  window.renderAll;
+
+
+window.renderAll=function(){
+
+  v162OriginalRenderAll();
+
+
+  try{
+
+    v162InstallCriticalCard();
+
+    v162InstallMonthlyReport();
+
+    v162BackupButton();
+
+    v162ShoppingButtons();
+
+    v162RecipeButtons();
+
+    v162RenderCriticalStock();
+
+    v162RenderMonthlyReport();
+
+    v162Mobile();
+
+  }catch(error){
+
+    console.error(
+      "Dapur Kapal V17.0:",
+      error
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   V17.0 VERSION DISPLAY
+========================================================= */
+
+function v162Version(){
+
+  document.title=
+    "Dapur Kapal V17.0";
+
+
+  document
+    .querySelector("header p")
+    ?.replaceChildren(
+      document.createTextNode(
+        "Kitchen Management System • V17.0"
+      )
+    );
+
+
+  document
+    .querySelector("footer")
+    ?.replaceChildren(
+      document.createTextNode(
+        "Dapur Kapal V17.0 • Data tersimpan di perangkat"
+      )
+    );
+
+}
+
+
+/* =========================================================
+   START PATCH
+========================================================= */
+
+v162Version();
+
+
+/*
+  render pertama setelah seluruh fungsi V17.0
+  sudah terpasang.
+*/
+
+setTimeout(()=>{
+
+  try{
+
+    renderAll();
+
+  }catch(e){
+
+    console.error(
+      "V17.0 initial render:",
+      e
+    );
+
+  }
+
+},50);
+
+
+})();
+/* =========================================================
+   DAPUR KAPAL V17.0
+   MODE JADWAL PAGI / SIANG / MALAM / GABUNGAN
+========================================================= */
+
+const DK163_SCHEDULE_KEY = "dk163_scheduleMode";
+
+function getScheduleMode(){
+  return localStorage.getItem(DK163_SCHEDULE_KEY) || "all";
+}
+
+function setScheduleMode(mode){
+  localStorage.setItem(DK163_SCHEDULE_KEY, mode);
+  renderWeek();
+}
+
+/* Tambahkan panel pilihan mode ke halaman Menu */
+function initScheduleModeUI(){
+
+  const menuPage = document.getElementById("menu");
+  const weekMenu = document.getElementById("weekMenu");
+
+  if(!menuPage || !weekMenu) return;
+
+  if(document.getElementById("dk163SchedulePanel")) return;
+
+  const panel = document.createElement("div");
+  panel.id = "dk163SchedulePanel";
+  panel.className = "card";
+
+  panel.innerHTML = `
+    <h2>📅 Mode Jadwal Mingguan</h2>
+
+    <p class="muted">
+      Pilih tampilan jadwal yang ingin digunakan.
+      Data menu tetap tersimpan untuk setiap hari.
+    </p>
+
+    <div class="dk163-mode-grid">
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="breakfast"
+        onclick="setScheduleMode('breakfast')">
+        🌅
+        <b>Pagi</b>
+        <span>Sarapan saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="lunch"
+        onclick="setScheduleMode('lunch')">
+        ☀️
+        <b>Siang</b>
+        <span>Makan siang saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="dinner"
+        onclick="setScheduleMode('dinner')">
+        🌙
+        <b>Malam</b>
+        <span>Makan malam saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="all"
+        onclick="setScheduleMode('all')">
+        📅
+        <b>Gabungan</b>
+        <span>Pagi + Siang + Malam</span>
+      </button>
+
+    </div>
+  `;
+
+  weekMenu.parentNode.insertBefore(panel,weekMenu);
+
+  updateScheduleModeUI();
+}
+
+/* Tandai mode yang sedang aktif */
+function updateScheduleModeUI(){
+
+  const mode = getScheduleMode();
+
+  document.querySelectorAll(".dk163-mode-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.mode === mode
+    );
+  });
+}
+
+/* Render ulang jadwal sesuai mode */
+function renderWeek(){
+
+  initScheduleModeUI();
+
+  const week = getData(STORAGE.week,{});
+  const recipes = getData(STORAGE.recipes,[]);
+
+  const mode = getScheduleMode();
+
+  let mealsToShow = MEALS;
+
+  if(mode === "breakfast"){
+    mealsToShow = [
+      ["breakfast","🌅 Sarapan"]
+    ];
+  }
+
+  if(mode === "lunch"){
+    mealsToShow = [
+      ["lunch","☀️ Makan Siang"]
+    ];
+  }
+
+  if(mode === "dinner"){
+    mealsToShow = [
+      ["dinner","🌙 Makan Malam"]
+    ];
+  }
+
+  let html = "";
+
+  DAYS.forEach(day=>{
+
+    html += `
+      <div class="day">
+        <h3>📅 ${day}</h3>
+    `;
+
+    mealsToShow.forEach(([meal,label])=>{
+
+      const id = week[day]?.[meal];
+
+      const recipe = recipes.find(
+        r => r.id === id
+      );
+
+      html += `
+        <div class="card" style="margin:7px 0">
+
+          <div class="row">
+
+            <div>
+              <b>${label}</b><br>
+
+              <span class="${recipe ? "" : "muted"}">
+
+                ${
+                  recipe
+                  ? `🍽️ <b>${esc(recipe.name)}</b>`
+                  : "Belum ada menu"
+                }
+
+              </span>
+
+            </div>
+
+            <div
+              class="row"
+              style="flex:0 0 auto"
+            >
+
+              ${
+                recipe
+                ? `
+
+                  <button
+                    class="btn success fit"
+                    onclick="showRecipe('${recipe.id}')">
+                    👀 Lihat Resep
+                  </button>
+
+                  <button
+                    class="btn secondary fit"
+                    onclick="chooseMenu('${day}','${meal}')">
+                    ✏️ Ganti
+                  </button>
+
+                `
+                : `
+
+                  <button
+                    class="btn fit"
+                    onclick="chooseMenu('${day}','${meal}')">
+                    ➕ Pilih
+                  </button>
+
+                `
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
+
+  document.getElementById("weekMenu").innerHTML = html;
+
+  updateScheduleModeUI();
+}
+
+
+/* =========================================================
+   SMART MENU V17.0
+========================================================= */
+
+function smartMenu(){
+
+  const recipes = getData(STORAGE.recipes,[]);
+
+  const mode =
+    document.getElementById("menuMode")?.value ||
+    "balanced";
+
+  const scheduleMode = getScheduleMode();
+
+  if(!recipes.length){
+
+    alert("Belum ada resep.");
+
+    return;
+  }
+
+  const week = {};
+
+  DAYS.forEach(day=>{
+
+    week[day] = {
+      breakfast:null,
+      lunch:null,
+      dinner:null
+    };
+
+  });
+
+  let mealsToFill = MEALS;
+
+  if(scheduleMode === "breakfast"){
+
+    mealsToFill = [
+      ["breakfast","🌅 Sarapan"]
+    ];
+
+  }
+
+  if(scheduleMode === "lunch"){
+
+    mealsToFill = [
+      ["lunch","☀️ Makan Siang"]
+    ];
+
+  }
+
+  if(scheduleMode === "dinner"){
+
+    mealsToFill = [
+      ["dinner","🌙 Makan Malam"]
+    ];
+
+  }
+
+  const used = [];
+
+  mealsToFill.forEach(([meal])=>{
+
+    DAYS.forEach(day=>{
+
+      let candidates =
+        recipes.filter(
+          r => r.category === meal
+        );
+
+      if(!candidates.length){
+
+        candidates = recipes;
+
+      }
+
+      let available =
+        candidates.filter(
+          r => !used.includes(r.id)
+        );
+
+      if(!available.length){
+
+        available = candidates;
+
+      }
+
+      if(mode === "stock"){
+
+        const stock =
+          getData(STORAGE.stock,[]);
+
+        available.sort(
+          (a,b)=>
+            stockScore(b,stock) -
+            stockScore(a,stock)
+        );
+
+      }
+
+      else if(mode === "random"){
+
+        available.sort(
+          () => Math.random() - 0.5
+        );
+
+      }
+
+      const chosen = available[0];
+
+      if(chosen){
+
+        week[day][meal] = chosen.id;
+
+        used.push(chosen.id);
+
+      }
+
+    });
+
+  });
+
+  setData(STORAGE.week,week);
+
+  addActivity(
+    "Smart Menu V17.0 dibuat: " +
+    scheduleMode
+  );
+
+  renderAll();
+
+  alert(
+    "Smart Menu berhasil dibuat untuk mode " +
+    scheduleModeLabel(scheduleMode) +
+    "."
+  );
+
+}
+
+
+/* Nama mode */
+function scheduleModeLabel(mode){
+
+  if(mode === "breakfast")
+    return "Pagi";
+
+  if(mode === "lunch")
+    return "Siang";
+
+  if(mode === "dinner")
+    return "Malam";
+
+  return "Gabungan";
+}
+
+
+/* =========================================================
+   STYLE V17.0
+========================================================= */
+
+function initDK163Style(){
+
+  if(document.getElementById("dk163Style"))
+    return;
+
+  const style =
+    document.createElement("style");
+
+  style.id = "dk163Style";
+
+  style.textContent = `
+
+    .dk163-mode-grid{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+      gap:10px;
+
+      margin-top:12px;
+
+    }
+
+    .dk163-mode-btn{
+
+      border:1px solid #334155;
+
+      background:#0f172a;
+
+      color:#cbd5e1;
+
+      border-radius:14px;
+
+      padding:14px 10px;
+
+      min-height:92px;
+
+      display:flex;
+
+      flex-direction:column;
+
+      align-items:center;
+
+      justify-content:center;
+
+      gap:5px;
+
+      cursor:pointer;
+
+      transition:.2s;
+
+    }
+
+    .dk163-mode-btn b{
+
+      font-size:16px;
+
+      color:#e5e7eb;
+
+    }
+
+    .dk163-mode-btn span{
+
+      font-size:12px;
+
+      color:#94a3b8;
+
+      text-align:center;
+
+    }
+
+    .dk163-mode-btn.active{
+
+      background:#2563eb;
+
+      border-color:#2563eb;
+
+      color:white;
+
+      transform:translateY(-1px);
+
+      box-shadow:
+        0 6px 18px rgba(37,99,235,.25);
+
+    }
+
+    .dk163-mode-btn.active b,
+    .dk163-mode-btn.active span{
+
+      color:white;
+
+    }
+
+    @media(max-width:700px){
+
+      .dk163-mode-grid{
+
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+}
+
+
+/* =========================================================
+   START V17.0
+========================================================= */
+
+(function(){
+
+  initDK163Style();
+
+  setTimeout(()=>{
+
+    initScheduleModeUI();
+
+    renderWeek();
+
+  },100);
+
+})();
+
+/* =========================================================
+   DAPUR KAPAL V17.0
+   PATCH: mobile navigation, back button, notifications,
+   safer storage compatibility, and version metadata.
+   Existing dk161_* storage keys are intentionally preserved.
+========================================================= */
+
+const DK164_VERSION = "17.0";
+window.dk164PreviousPage="dashboard";
+
+function dk164AddStyle(){
+  if(document.getElementById("dk164Style")) return;
+  const style=document.createElement("style");
+  style.id="dk164Style";
+  style.textContent=`
+    .dk164-mobile-bar{display:none}
+    .dk164-back{display:none}
+    .dk164-notify{position:relative}
+    .dk164-dot{position:absolute;top:5px;right:5px;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:#dc2626;color:#fff;font-size:10px;display:none;align-items:center;justify-content:center}
+    .dk164-toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);z-index:300;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;max-width:90%;text-align:center}
+    .dk164-header-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+    .dk164-mobile-only{display:none}
+    @media(max-width:600px){
+      body{padding-bottom:88px;overflow-x:hidden}
+      .app{width:100%;max-width:100%;padding:8px}
+      header{padding:12px 4px 10px;position:sticky;top:0;z-index:80;background:rgba(2,6,23,.96);backdrop-filter:blur(10px)}
+      header h1{font-size:21px;margin:0}
+      header p{font-size:12px;margin:3px 0 0}
+      .tabs{display:none}
+      .grid{grid-template-columns:1fr 1fr}
+      .row{display:grid;grid-template-columns:1fr;gap:8px;align-items:stretch}
+      .row>*{min-width:0;width:100%}
+      .row .fit{width:100%}
+      .card{padding:12px;margin-bottom:10px}
+      .card h2{font-size:18px}
+      .stat{font-size:24px}
+      .btn{min-height:44px;padding:10px 12px;font-size:14px;touch-action:manipulation}
+      input,select,textarea{font-size:16px;min-height:44px}
+      table{min-width:620px}
+      .day{padding:10px}
+      .day .row{display:flex;flex-direction:column;align-items:stretch}
+      .day .row>div{width:100%}
+      .dk163-mode-grid{grid-template-columns:1fr 1fr}
+      .dk164-mobile-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;position:fixed;left:8px;right:8px;bottom:8px;z-index:90;background:rgba(17,24,39,.98);border:1px solid #334155;border-radius:16px;padding:6px;box-shadow:0 12px 35px rgba(0,0,0,.45);padding-bottom:max(6px,env(safe-area-inset-bottom))}
+      .dk164-mobile-bar button{border:0;background:transparent;color:#94a3b8;border-radius:10px;padding:7px 2px;font-size:10px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
+      .dk164-mobile-bar button.active{background:#2563eb;color:#fff}
+      .dk164-back{display:inline-flex!important;align-items:center;gap:6px;margin-bottom:9px;border:1px solid #334155;background:#111827;color:#cbd5e1;border-radius:10px;padding:9px 12px;min-height:42px}
+      .dk164-notify{width:100%;margin-top:8px}
+      .modal{padding:8px}
+      .modal-box{width:100%;margin:8px auto;padding:14px;border-radius:16px;max-height:calc(100vh - 16px);overflow:auto}
+      .close{min-height:40px}
+      .timer{font-size:42px}
+      footer{font-size:12px;padding-bottom:20px}
+    }
+    @media(min-width:601px){.dk164-header-actions{justify-content:flex-end}}
+  `;
+  document.head.appendChild(style);
+}
+
+function dk164Toast(message){
+  let el=document.getElementById("dk164Toast");
+  if(!el){
+    el=document.createElement("div");
+    el.id="dk164Toast";
+    el.className="dk164-toast";
+    document.body.appendChild(el);
+  }
+  el.textContent=message;
+  el.style.display="block";
+  clearTimeout(window.dk164ToastTimer);
+  window.dk164ToastTimer=setTimeout(()=>{el.style.display="none";},2200);
+}
+
+function dk164AddBackButtons(){
+  document.querySelectorAll(".page").forEach(page=>{
+    if(page.id==="dashboard" || page.querySelector(".dk164-back")) return;
+    const first=page.firstElementChild;
+    if(!first) return;
+    const b=document.createElement("button");
+    b.className="dk164-back";
+    b.type="button";
+    b.innerHTML="← Kembali";
+    b.onclick=()=>dk164GoBack();
+    page.insertBefore(b,first);
+  });
+}
+
+function dk164GoBack(){
+  const previous=window.dk164PreviousPage;
+  showPage(previous && previous!=="dashboard" ? previous : "dashboard");
+}
+
+function dk164InstallMobileBar(){
+  if(document.getElementById("dk164MobileBar")) return;
+  const bar=document.createElement("nav");
+  bar.id="dk164MobileBar";
+  bar.className="dk164-mobile-bar";
+  const items=[
+    ["dashboard","🏠","Home"],
+    ["menu","🍱","Menu"],
+    ["stock","📦","Stok"],
+    ["shopping","🛒","Belanja"],
+    ["settings","⚙️","Data"]
+  ];
+  items.forEach(([page,icon,label])=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.dataset.page=page;
+    b.innerHTML=`<span>${icon}</span><span>${label}</span>`;
+    b.onclick=()=>showPage(page);
+    bar.appendChild(b);
+  });
+  document.body.appendChild(bar);
+}
+
+function dk164SyncMobileBar(){
+  const active=document.querySelector(".tabs button.active")?.dataset.page || "dashboard";
+  document.querySelectorAll("#dk164MobileBar button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===active);
+  });
+}
+
+function dk164UpdateNotifications(){
+  const stock=getData(STORAGE.stock,[]);
+  const shopping=getData(STORAGE.shopping,[]);
+  const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0)).length;
+  const pending=shopping.filter(x=>!x.checked).length;
+  const count=low+pending;
+  let btn=document.getElementById("dk164QuickNotify");
+  if(!btn){
+    const container=document.querySelector(".dk164-header-actions");
+    if(!container) return;
+    btn=document.createElement("button");
+    btn.id="dk164QuickNotify";
+    btn.className="btn secondary dk164-notify";
+    btn.type="button";
+    btn.setAttribute("aria-label","Buka notifikasi");
+    btn.textContent="🔔 Notifikasi";
+    container.appendChild(btn);
+  }
+  document.querySelectorAll("#dk164NotifyBtn").forEach(el=>el.remove());
+  btn.innerHTML='🔔 Notifikasi<span class="dk164-dot" aria-hidden="true"></span>';
+  btn.onclick=()=>{
+    if(low){
+      showPage("stock");
+      dk164Toast(`📦 ${low} stok menipis`);
+      return;
+    }
+    if(pending){
+      showPage("shopping");
+      dk164Toast(`🛒 ${pending} item belanja belum selesai`);
+      return;
+    }
+    dk164Toast("✅ Tidak ada notifikasi baru");
+  };
+  const dot=btn.querySelector(".dk164-dot");
+  if(dot){
+    dot.textContent=count>99?"99+":String(count);
+    dot.style.display=count?"flex":"none";
+  }
+}
+
+function dk164Version(){
+  document.title="Dapur Kapal V17.0";
+  const p=document.querySelector("header p");
+  if(p) p.textContent="Kitchen Management System • V17.0";
+  const f=document.querySelector("footer");
+  if(f) f.textContent="Dapur Kapal V17.0 • Data tersimpan di perangkat";
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content","#0f172a");
+}
+
+// Extend the existing render hook without changing its underlying data model.
+const dk164PreviousRenderAll=window.renderAll;
+window.renderAll=function(){
+  dk164PreviousRenderAll();
+  dk164AddBackButtons();
+  dk164InstallMobileBar();
+  dk164SyncMobileBar();
+  dk164UpdateNotifications();
+};
+
+dk164AddStyle();
+dk164Version();
+setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);}},120);
+
+
+
+
+/* =========================================================
+   DAPUR KAPAL V17.0 — FINAL QUALITY PASS
+   Fokus: mobile UX, notifikasi, stok, belanja, resep,
+   backup/restore, laporan, dan integrasi antar modul.
+   Storage lama dk161_ dipertahankan untuk kompatibilitas.
+========================================================= */
+(function(){
+  "use strict";
+  const DK17_VERSION="17.0";
+
+  function dk17Toast(message){
+    let el=document.getElementById("dk17Toast");
+    if(!el){
+      el=document.createElement("div");
+      el.id="dk17Toast";
+      el.className="dk17-toast";
+      document.body.appendChild(el);
+    }
+    el.textContent=message;
+    el.classList.add("show");
+    clearTimeout(el._timer);
+    el._timer=setTimeout(()=>el.classList.remove("show"),2600);
+  }
+  window.dk17Toast=dk17Toast;
+
+  function dk17Alerts(){
+    const stock=getData(STORAGE.stock,[]);
+    const shopping=getData(STORAGE.shopping,[]);
+    const tasks=getData(STORAGE.tasks,[]);
+    const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0));
+    const pendingShopping=shopping.filter(x=>!x.checked);
+    const pendingTasks=tasks.filter(x=>!x.done);
+    return {low,pendingShopping,pendingTasks,total:low.length+pendingShopping.length+pendingTasks.length};
+  }
+  window.dk17Alerts=dk17Alerts;
+
+  function dk17NotificationPanel(){
+    const a=dk17Alerts();
+    const section=(title,items,icon,render)=> items.length ? `
+      <div class="dk17-alert-group">
+        <h3>${icon} ${title} <span class="badge">${items.length}</span></h3>
+        ${items.slice(0,8).map(render).join("")}
+      </div>` : "";
+    const html=`
+      <h2>🔔 Notifikasi Dapur</h2>
+      <p class="muted">${a.total?`${a.total} hal membutuhkan perhatian.`:"Semua aman. Tidak ada notifikasi baru."}</p>
+      ${section("Stok Menipis",a.low,"📦",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)} / min ${round(x.min||0)}</span></div>`)}
+      ${section("Belanja Belum Selesai",a.pendingShopping,"🛒",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)}</span></div>`)}
+      ${section("Tugas Belum Selesai",a.pendingTasks,"✅",x=>`<div class="dk17-alert-row"><b>${esc(x.text)}</b></div>`)}
+      <div class="row" style="margin-top:14px">
+        ${a.low.length?`<button class="btn danger fit" onclick="closeModal();showPage('stock')">📦 Buka Stok</button>`:""}
+        ${a.pendingShopping.length?`<button class="btn warning fit" onclick="closeModal();showPage('shopping')">🛒 Buka Belanja</button>`:""}
+        ${a.pendingTasks.length?`<button class="btn secondary fit" onclick="closeModal();showPage('tasks')">✅ Buka Tugas</button>`:""}
+      </div>`;
+    openModal(html);
+  }
+
+  function dk17InstallNotifications(){
+    const btn=document.getElementById("dk164QuickNotify");
+    if(!btn) return;
+    const a=dk17Alerts();
+    btn.id="dk17QuickNotify";
+    btn.className="btn secondary dk17-notify";
+    btn.innerHTML=`🔔 Notifikasi <span class="dk17-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
+    btn.onclick=dk17NotificationPanel;
+  }
+
+  function dk17AdjustStock(id,delta){
+    const stock=getData(STORAGE.stock,[]);
+    const item=stock.find(x=>x.id===id);
+    if(!item) return;
+    const old=Number(item.qty)||0;
+    item.qty=Math.max(0,round(old+delta));
+    setData(STORAGE.stock,stock);
+    addStockHistory(`${item.item}: ${delta>0?"+":""}${round(item.qty-old)} ${item.unit}`);
+    addActivity(`Stok ${delta>0?"ditambah":"dikurangi"}: ${item.item}`);
+    renderAll();
+    dk17Toast(`${item.item}: ${round(item.qty)} ${item.unit}`);
+  }
+  window.dk17AdjustStock=dk17AdjustStock;
+
+  const dk17OriginalRenderStock=window.renderStock;
+  window.renderStock=function(){
+    dk17OriginalRenderStock();
+    const stock=getData(STORAGE.stock,[]);
+    const search=normalize(document.getElementById("stockSearch")?.value);
+    const filtered=stock.filter(x=>normalize(x.item).includes(search));
+    const box=document.getElementById("stockList");
+    if(!box || !filtered.length) return;
+    const rows=box.querySelectorAll("tbody tr, table tr");
+    filtered.forEach((x,i)=>{
+      const row=rows[i+1];
+      if(!row) return;
+      const action=row.cells?.[3];
+      if(!action || action.querySelector("[data-dk17-stock]") ) return;
+      const wrap=document.createElement("div");
+      wrap.className="dk17-stock-actions";
+      wrap.innerHTML=`<button class="btn secondary fit" data-dk17-stock="1" title="Kurangi 1">−1</button><button class="btn success fit" data-dk17-stock="1" title="Tambah 1">+1</button>`;
+      wrap.children[0].onclick=()=>dk17AdjustStock(x.id,-1);
+      wrap.children[1].onclick=()=>dk17AdjustStock(x.id,1);
+      action.appendChild(wrap);
+    });
+  };
+
+  window.dk17RecipeToShopping=function(id){
+    const recipes=getData(STORAGE.recipes,[]);
+    const recipe=recipes.find(r=>r.id===id);
+    if(!recipe) return;
+    const crew=getData(STORAGE.crew,9);
+    const multiplier=crew/Number(recipe.servings||9);
+    const stock=getData(STORAGE.stock,[]);
+    const list=getData(STORAGE.shopping,[]);
+    const existing=new Map(list.map(x=>[normalize(x.item)+"|"+x.unit,x]));
+    let added=0;
+    (recipe.ingredients||[]).forEach(i=>{
+      const need=Number(i.qty)*multiplier;
+      const s=stock.find(x=>normalize(x.item)===normalize(i.item)&&x.unit===i.unit);
+      const shortage=Math.max(0,need-(s?Number(s.qty):0));
+      if(shortage<=0) return;
+      const key=normalize(i.item)+"|"+i.unit;
+      const old=existing.get(key);
+      if(old){ old.qty=round(Number(old.qty)+shortage); }
+      else {
+        const item={id:uid(),item:i.item,unit:i.unit,qty:round(shortage),checked:false,price:0};
+        list.push(item); existing.set(key,item);
+      }
+      added++;
+    });
+    setData(STORAGE.shopping,list);
+    addActivity(`Bahan ${recipe.name} ditambahkan ke belanja`);
+    renderAll();
+    closeModal();
+    showPage("shopping");
+    dk17Toast(added?`🛒 ${added} bahan masuk daftar belanja`:`✅ Stok cukup untuk ${recipe.name}`);
+  };
+
+  window.showRecipe=function(id){
+    const recipes=getData(STORAGE.recipes,[]);
+    const r=recipes.find(x=>x.id===id);
+    if(!r) return;
+    const crew=getData(STORAGE.crew,9);
+    const multiplier=crew/Number(r.servings||9);
+    const ingredients=(r.ingredients||[]).map(i=>`<li><b>${esc(i.item)}</b> — ${round(Number(i.qty)*multiplier)} ${esc(i.unit)}</li>`).join("");
+    const steps=(r.steps||[]).map((s,i)=>`<li>${esc(s)}</li>`).join("");
+    openModal(`<h2>🍽️ ${esc(r.name)}</h2><p class="muted">Resep dasar ${r.servings} orang • disesuaikan untuk ${crew} orang</p><h3>🧂 Bahan</h3><ul>${ingredients}</ul><h3>👨‍🍳 Cara Masak</h3><ol>${steps}</ol><hr><div class="row"><button class="btn success fit" onclick="cookRecipe('${r.id}');closeModal()">🍳 Masak</button><button class="btn warning fit" onclick="startChefTimer('${r.id}')">⏱️ Timer</button><button class="btn secondary fit" onclick="dk17RecipeToShopping('${r.id}')">🛒 Ke Belanja</button></div>`);
+  };
+
+  window.dk17Backup=function(){
+    const backup={app:"Dapur Kapal",version:DK17_VERSION,createdAt:new Date().toISOString(),data:{}};
+    Object.values(STORAGE).forEach(key=>backup.data[key]=getData(key,null));
+    const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=`dapur-kapal-v17.0-${dateFile()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    dk17Toast("✅ Backup V17.0 berhasil dibuat");
+  };
+
+  window.backupData=window.dk17Backup;
+
+  window.restoreData=function(event){
+    const file=event.target.files?.[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(){
+      try{
+        const backup=JSON.parse(reader.result);
+        if(!backup?.data) throw new Error("Format backup tidak dikenal");
+        const confirmText=`Restore backup ${backup.version||"lama"} akan mengganti data saat ini. Sebelum restore, backup data sekarang akan dibuat otomatis. Lanjutkan?`;
+        if(!confirm(confirmText)) return;
+        dk17Backup();
+        Object.values(STORAGE).forEach(key=>{
+          if(Object.prototype.hasOwnProperty.call(backup.data,key)) setData(key,backup.data[key]);
+        });
+        alert("✅ Restore berhasil. Aplikasi akan dimuat ulang.");
+        location.reload();
+      }catch(e){ console.error(e); alert("File backup tidak valid atau rusak."); }
+      event.target.value="";
+    };
+    reader.readAsText(file);
+  };
+
+  function dk17DashboardStatus(){
+    const dash=document.getElementById("dashboard");
+    if(!dash || document.getElementById("dk17StatusCard")) return;
+    const card=document.createElement("div");
+    card.id="dk17StatusCard"; card.className="card";
+    card.innerHTML=`<h2>🧭 Status Dapur</h2><div id="dk17StatusGrid" class="dk17-status-grid"></div>`;
+    const summary=document.getElementById("dashboardSummary");
+    (summary?.parentElement||dash).after(card);
+  }
+  function dk17RenderDashboardStatus(){
+    dk17DashboardStatus();
+    const box=document.getElementById("dk17StatusGrid"); if(!box) return;
+    const a=dk17Alerts();
+    const week=getData(STORAGE.week,{});
+    let menuCount=0; DAYS.forEach(d=>MEALS.forEach(([m])=>{if(week[d]?.[m]) menuCount++;}));
+    const stock=getData(STORAGE.stock,[]);
+    const safe=stock.filter(x=>Number(x.qty)>Number(x.min||0)).length;
+    box.innerHTML=`<div class="dk17-status ok"><b>🍱 Menu</b><span>${menuCount}/21 slot terisi</span></div><div class="dk17-status ${a.low.length?"bad":"ok"}"><b>📦 Stok</b><span>${a.low.length?`${a.low.length} menipis`:`${safe} aman`}</span></div><div class="dk17-status ${a.pendingShopping.length?"warn":"ok"}"><b>🛒 Belanja</b><span>${a.pendingShopping.length} belum selesai</span></div><div class="dk17-status ${a.pendingTasks.length?"warn":"ok"}><b>✅ Tugas</b><span>${a.pendingTasks.length} belum selesai</span></div>`;
+  }
+
+  const dk17OriginalRenderDashboard=window.renderDashboard;
+  window.renderDashboard=function(){
+    dk17OriginalRenderDashboard();
+    dk17RenderDashboardStatus();
+  };
+
+  function dk17Reports(){
+    const reports=document.getElementById("reports");
+    if(!reports || document.getElementById("dk17ReportExtra")) return;
+    const card=document.createElement("div"); card.id="dk17ReportExtra"; card.className="card";
+    card.innerHTML=`<h2>📌 Ringkasan Operasional</h2><div id="dk17ReportGrid" class="dk17-status-grid"></div>`;
+    reports.appendChild(card);
+  }
+  function dk17RenderReports(){
+    dk17Reports();
+    const box=document.getElementById("dk17ReportGrid"); if(!box) return;
+    const expenses=getData(STORAGE.expenses,[]);
+    const shopping=getData(STORAGE.shopping,[]);
+    const stock=getData(STORAGE.stock,[]);
+    const cooks=getData(STORAGE.cookLog,[]);
+    const crew=getData(STORAGE.crew,9);
+    const totalExpense=expenses.reduce((s,x)=>s+Number(x.amount||0),0);
+    const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0)).length;
+    const costPerCook=cooks.length?totalExpense/cooks.length:0;
+    const costPerCrew=cooks.length?totalExpense/(cooks.length*crew):0;
+    box.innerHTML=`<div class="dk17-status"><b>💰 Total kas</b><span>${rupiah(totalExpense)}</span></div><div class="dk17-status"><b>🍳 Masak</b><span>${cooks.length} log</span></div><div class="dk17-status"><b>📦 Stok kritis</b><span>${low}</span></div><div class="dk17-status"><b>💵 Kas / log masak</b><span>${rupiah(costPerCook)}</span></div><div class="dk17-status"><b>👨‍🍳 Kas / kru / log</b><span>${rupiah(costPerCrew)}</span></div><div class="dk17-status"><b>🛒 Belanja pending</b><span>${shopping.filter(x=>!x.checked).length}</span></div>`;
+  }
+  const dk17OriginalRenderReports=window.renderReports;
+  window.renderReports=function(){
+    dk17OriginalRenderReports();
+    dk17RenderReports();
+  };
+
+  function dk17AddStyles(){
+    if(document.getElementById("dk17Styles")) return;
+    const style=document.createElement("style"); style.id="dk17Styles";
+    style.textContent=`
+      .dk17-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:1000;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 15px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.2s;max-width:calc(100vw - 30px);text-align:center}.dk17-toast.show{opacity:1;transform:translate(-50%,0)}
+      .dk17-badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;padding:0 6px;margin-left:5px;border-radius:999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700}.dk17-badge[hidden]{display:none}
+      .dk17-alert-group{margin:12px 0;padding:10px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-alert-group h3{margin:0 0 8px}.dk17-alert-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #263244}.dk17-alert-row:last-child{border-bottom:0}.dk17-alert-row span{color:#94a3b8;font-size:13px}
+      .dk17-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk17-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-status span{color:#94a3b8;text-align:right}.dk17-status.ok{border-color:#14532d}.dk17-status.warn{border-color:#854d0e}.dk17-status.bad{border-color:#7f1d1d}.dk17-stock-actions{display:flex;gap:5px;margin-top:6px}
+      @media(max-width:600px){.dk17-status-grid{grid-template-columns:1fr 1fr}.dk17-status{display:block}.dk17-status span{display:block;text-align:left;margin-top:4px}.dk17-alert-row{display:block}.dk17-alert-row span{display:block;margin-top:3px}.dk17-stock-actions .btn{min-width:44px;padding-left:8px;padding-right:8px}.dk17-notify{min-height:44px}.modal-box{margin:10px auto;padding:15px}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}}
+      @media(max-width:380px){.dk17-status-grid{grid-template-columns:1fr}.dk17-notify{width:100%}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function dk17Version(){
+    document.title="Dapur Kapal V17.0";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.0"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.0 • Data tersimpan di perangkat"));
+    let marker=document.getElementById("dk17BuildMarker");
+    if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
+    marker.textContent="BUILD V17.0 • Web Edition";
+  }
+
+  const dk17PrevRenderAll=window.renderAll;
+  window.renderAll=function(){
+    dk17PrevRenderAll();
+    try{ dk17InstallNotifications(); dk17RenderDashboardStatus(); dk17RenderReports(); }catch(e){console.error("V17.0 render:",e)}
+  };
+
+  dk17AddStyles();
+  dk17Version();
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.0 initial:",e)}},80);
+})();
+
+</script>
+
+</body>
+</html>
