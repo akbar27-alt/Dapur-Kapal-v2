@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#183b79"/><stop offset="1" stop-color="#07101f"/></linearGradient>
+  <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<circle cx="388" cy="106" r="52" fill="#f59e0b"/>
+<!-- chef hat -->
+<path d="M150 190c-2-30 22-55 53-55 12 0 23 4 32 11 12-18 32-29 55-29 34 0 61 26 64 59 23 3 41 22 41 46 0 27-22 49-49 49H169c-31 0-56-25-56-56 0-25 16-46 37-54z" fill="#fff"/>
+<path d="M139 244h271v31c0 15-12 27-27 27H166c-15 0-27-12-27-27z" fill="#e5e7eb"/>
+<!-- ship bow -->
+<path d="M103 320h306l-38 54c-15 21-39 34-65 34H197c-27 0-52-13-68-35z" fill="#fff"/>
+<path d="M128 350h256l-16 22c-11 15-28 24-47 24H193c-19 0-37-9-48-25z" fill="#1e3a8a"/>
+<!-- anchor -->
+<path d="M256 304v91M225 340h62M256 395c-31 0-58-19-68-47M256 395c31 0 58-19 68-47M237 304a19 19 0 1 0 38 0" fill="none" stroke="#f59e0b" stroke-width="13" stroke-linecap="round"/>
+<!-- waves -->
+<path d="M70 430c38-28 76 28 114 0s76 28 114 0 76 28 114 0" fill="none" stroke="url(#wave)" stroke-width="18" stroke-linecap="round"/>
+<path d="M98 466c30-21 60 21 90 0s60 21 90 0 60 21 90 0" fill="none" stroke="#60a5fa" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+<!-- fork/spoon -->
+<path d="M104 118v62M91 118v34M117 118v34M104 152v28M408 118c-16 0-25 18-25 39 0 18 7 31 17 35v39M400 118v113" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>

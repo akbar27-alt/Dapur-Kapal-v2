@@ -1,0 +1,14 @@
+{
+  "name": "Dapur Kapal",
+  "short_name": "Dapur Kapal",
+  "description": "Kitchen Management System",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {"src":"dapur-kapal-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
