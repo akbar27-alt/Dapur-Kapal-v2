@@ -4225,7 +4225,509 @@ setTimeout(()=>{
 
 
 })();
+/* =========================================================
+   DAPUR KAPAL V16.3
+   MODE JADWAL PAGI / SIANG / MALAM / GABUNGAN
+========================================================= */
 
+const DK163_SCHEDULE_KEY = "dk163_scheduleMode";
+
+function getScheduleMode(){
+  return localStorage.getItem(DK163_SCHEDULE_KEY) || "all";
+}
+
+function setScheduleMode(mode){
+  localStorage.setItem(DK163_SCHEDULE_KEY, mode);
+  renderWeek();
+}
+
+/* Tambahkan panel pilihan mode ke halaman Menu */
+function initScheduleModeUI(){
+
+  const menuPage = document.getElementById("menu");
+  const weekMenu = document.getElementById("weekMenu");
+
+  if(!menuPage || !weekMenu) return;
+
+  if(document.getElementById("dk163SchedulePanel")) return;
+
+  const panel = document.createElement("div");
+  panel.id = "dk163SchedulePanel";
+  panel.className = "card";
+
+  panel.innerHTML = `
+    <h2>📅 Mode Jadwal Mingguan</h2>
+
+    <p class="muted">
+      Pilih tampilan jadwal yang ingin digunakan.
+      Data menu tetap tersimpan untuk setiap hari.
+    </p>
+
+    <div class="dk163-mode-grid">
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="breakfast"
+        onclick="setScheduleMode('breakfast')">
+        🌅
+        <b>Pagi</b>
+        <span>Sarapan saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="lunch"
+        onclick="setScheduleMode('lunch')">
+        ☀️
+        <b>Siang</b>
+        <span>Makan siang saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="dinner"
+        onclick="setScheduleMode('dinner')">
+        🌙
+        <b>Malam</b>
+        <span>Makan malam saja</span>
+      </button>
+
+      <button
+        class="dk163-mode-btn"
+        data-mode="all"
+        onclick="setScheduleMode('all')">
+        📅
+        <b>Gabungan</b>
+        <span>Pagi + Siang + Malam</span>
+      </button>
+
+    </div>
+  `;
+
+  weekMenu.parentNode.insertBefore(panel,weekMenu);
+
+  updateScheduleModeUI();
+}
+
+/* Tandai mode yang sedang aktif */
+function updateScheduleModeUI(){
+
+  const mode = getScheduleMode();
+
+  document.querySelectorAll(".dk163-mode-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.mode === mode
+    );
+  });
+}
+
+/* Render ulang jadwal sesuai mode */
+function renderWeek(){
+
+  initScheduleModeUI();
+
+  const week = getData(STORAGE.week,{});
+  const recipes = getData(STORAGE.recipes,[]);
+
+  const mode = getScheduleMode();
+
+  let mealsToShow = MEALS;
+
+  if(mode === "breakfast"){
+    mealsToShow = [
+      ["breakfast","🌅 Sarapan"]
+    ];
+  }
+
+  if(mode === "lunch"){
+    mealsToShow = [
+      ["lunch","☀️ Makan Siang"]
+    ];
+  }
+
+  if(mode === "dinner"){
+    mealsToShow = [
+      ["dinner","🌙 Makan Malam"]
+    ];
+  }
+
+  let html = "";
+
+  DAYS.forEach(day=>{
+
+    html += `
+      <div class="day">
+        <h3>📅 ${day}</h3>
+    `;
+
+    mealsToShow.forEach(([meal,label])=>{
+
+      const id = week[day]?.[meal];
+
+      const recipe = recipes.find(
+        r => r.id === id
+      );
+
+      html += `
+        <div class="card" style="margin:7px 0">
+
+          <div class="row">
+
+            <div>
+              <b>${label}</b><br>
+
+              <span class="${recipe ? "" : "muted"}">
+
+                ${
+                  recipe
+                  ? `🍽️ <b>${esc(recipe.name)}</b>`
+                  : "Belum ada menu"
+                }
+
+              </span>
+
+            </div>
+
+            <div
+              class="row"
+              style="flex:0 0 auto"
+            >
+
+              ${
+                recipe
+                ? `
+
+                  <button
+                    class="btn success fit"
+                    onclick="showRecipe('${recipe.id}')">
+                    👀 Lihat Resep
+                  </button>
+
+                  <button
+                    class="btn secondary fit"
+                    onclick="chooseMenu('${day}','${meal}')">
+                    ✏️ Ganti
+                  </button>
+
+                `
+                : `
+
+                  <button
+                    class="btn fit"
+                    onclick="chooseMenu('${day}','${meal}')">
+                    ➕ Pilih
+                  </button>
+
+                `
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
+
+  document.getElementById("weekMenu").innerHTML = html;
+
+  updateScheduleModeUI();
+}
+
+
+/* =========================================================
+   SMART MENU V16.3
+========================================================= */
+
+function smartMenu(){
+
+  const recipes = getData(STORAGE.recipes,[]);
+
+  const mode =
+    document.getElementById("menuMode")?.value ||
+    "balanced";
+
+  const scheduleMode = getScheduleMode();
+
+  if(!recipes.length){
+
+    alert("Belum ada resep.");
+
+    return;
+  }
+
+  const week = {};
+
+  DAYS.forEach(day=>{
+
+    week[day] = {
+      breakfast:null,
+      lunch:null,
+      dinner:null
+    };
+
+  });
+
+  let mealsToFill = MEALS;
+
+  if(scheduleMode === "breakfast"){
+
+    mealsToFill = [
+      ["breakfast","🌅 Sarapan"]
+    ];
+
+  }
+
+  if(scheduleMode === "lunch"){
+
+    mealsToFill = [
+      ["lunch","☀️ Makan Siang"]
+    ];
+
+  }
+
+  if(scheduleMode === "dinner"){
+
+    mealsToFill = [
+      ["dinner","🌙 Makan Malam"]
+    ];
+
+  }
+
+  const used = [];
+
+  mealsToFill.forEach(([meal])=>{
+
+    DAYS.forEach(day=>{
+
+      let candidates =
+        recipes.filter(
+          r => r.category === meal
+        );
+
+      if(!candidates.length){
+
+        candidates = recipes;
+
+      }
+
+      let available =
+        candidates.filter(
+          r => !used.includes(r.id)
+        );
+
+      if(!available.length){
+
+        available = candidates;
+
+      }
+
+      if(mode === "stock"){
+
+        const stock =
+          getData(STORAGE.stock,[]);
+
+        available.sort(
+          (a,b)=>
+            stockScore(b,stock) -
+            stockScore(a,stock)
+        );
+
+      }
+
+      else if(mode === "random"){
+
+        available.sort(
+          () => Math.random() - 0.5
+        );
+
+      }
+
+      const chosen = available[0];
+
+      if(chosen){
+
+        week[day][meal] = chosen.id;
+
+        used.push(chosen.id);
+
+      }
+
+    });
+
+  });
+
+  setData(STORAGE.week,week);
+
+  addActivity(
+    "Smart Menu V16.3 dibuat: " +
+    scheduleMode
+  );
+
+  renderAll();
+
+  alert(
+    "Smart Menu berhasil dibuat untuk mode " +
+    scheduleModeLabel(scheduleMode) +
+    "."
+  );
+
+}
+
+
+/* Nama mode */
+function scheduleModeLabel(mode){
+
+  if(mode === "breakfast")
+    return "Pagi";
+
+  if(mode === "lunch")
+    return "Siang";
+
+  if(mode === "dinner")
+    return "Malam";
+
+  return "Gabungan";
+}
+
+
+/* =========================================================
+   STYLE V16.3
+========================================================= */
+
+function initDK163Style(){
+
+  if(document.getElementById("dk163Style"))
+    return;
+
+  const style =
+    document.createElement("style");
+
+  style.id = "dk163Style";
+
+  style.textContent = `
+
+    .dk163-mode-grid{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+      gap:10px;
+
+      margin-top:12px;
+
+    }
+
+    .dk163-mode-btn{
+
+      border:1px solid #334155;
+
+      background:#0f172a;
+
+      color:#cbd5e1;
+
+      border-radius:14px;
+
+      padding:14px 10px;
+
+      min-height:92px;
+
+      display:flex;
+
+      flex-direction:column;
+
+      align-items:center;
+
+      justify-content:center;
+
+      gap:5px;
+
+      cursor:pointer;
+
+      transition:.2s;
+
+    }
+
+    .dk163-mode-btn b{
+
+      font-size:16px;
+
+      color:#e5e7eb;
+
+    }
+
+    .dk163-mode-btn span{
+
+      font-size:12px;
+
+      color:#94a3b8;
+
+      text-align:center;
+
+    }
+
+    .dk163-mode-btn.active{
+
+      background:#2563eb;
+
+      border-color:#2563eb;
+
+      color:white;
+
+      transform:translateY(-1px);
+
+      box-shadow:
+        0 6px 18px rgba(37,99,235,.25);
+
+    }
+
+    .dk163-mode-btn.active b,
+    .dk163-mode-btn.active span{
+
+      color:white;
+
+    }
+
+    @media(max-width:700px){
+
+      .dk163-mode-grid{
+
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+}
+
+
+/* =========================================================
+   START V16.3
+========================================================= */
+
+(function(){
+
+  initDK163Style();
+
+  setTimeout(()=>{
+
+    initScheduleModeUI();
+
+    renderWeek();
+
+  },100);
+
+})();
 </script>
 
 </body>
