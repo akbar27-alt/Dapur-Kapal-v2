@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V17.0</title>
+<title>Dapur Kapal V17.1</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
 <meta name="application-version" content="17.0">
 <meta name="mobile-web-app-capable" content="yes">
@@ -238,7 +238,7 @@ footer{
 
 <header>
   <h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V17.0</p>
+  <p>Kitchen Management System • V17.1</p>
 </header>
 
 <div class="dk164-header-actions">
@@ -549,7 +549,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V17.0 • Data tersimpan di perangkat
+  Dapur Kapal V17.1 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -885,7 +885,7 @@ const DEFAULT_RECIPES = [
 ];
 
 
-/* V17.0 — Koleksi resep tambahan: sarapan, siang, malam */
+/* V17.1 — Koleksi resep tambahan: sarapan, siang, malam */
 const EXTRA_RECIPES = [
  {id:"r11",name:"Nasi Uduk Telur Balado",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"santan",qty:600,unit:"ml"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"cabai",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras dan masak bersama santan, serai, daun salam dan garam.","Rebus telur lalu kupas.","Haluskan cabai dan bawang lalu tumis sampai matang.","Masukkan telur dan aduk sampai bumbu merata.","Sajikan nasi uduk bersama telur balado."]},
  {id:"r12",name:"Bubur Ayam Sederhana",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:700,unit:"gram"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang putih",qty:40,unit:"gram"},{item:"jahe",qty:20,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak beras dengan air sampai menjadi bubur lembut.","Rebus ayam bersama bawang putih dan jahe.","Suwir ayam setelah matang.","Bumbui bubur dengan garam.","Sajikan dengan ayam suwir dan daun bawang."]},
@@ -907,7 +907,7 @@ const EXTRA_RECIPES = [
  {id:"r28",name:"Soto Daging",category:"dinner",servings:9,ingredients:[{item:"daging sapi",qty:1.5,unit:"kg"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kunyit",qty:25,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:25,unit:"gram"}],steps:["Rebus daging sampai empuk dan sisihkan kaldu.","Haluskan dan tumis bumbu.","Masukkan bumbu ke kaldu bersama serai dan daun salam.","Potong daging dan masukkan kembali.","Koreksi rasa lalu sajikan hangat."]}
 ];
 
-// V17.0 — Tambahan resep baru agar Smart Menu lebih bervariasi.
+// V17.1 — Tambahan resep baru agar Smart Menu lebih bervariasi.
 const V167_RECIPES = [
  {id:"r29",name:"Nasi Bakar Ayam Suwir",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"cabai",qty:60,unit:"gram"},{item:"daun kemangi",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak nasi sampai matang.","Rebus ayam lalu suwir.","Tumis bawang dan cabai.","Masukkan ayam dan kemangi lalu bumbui.","Bungkus nasi bersama isian dengan daun pisang.","Bakar sampai harum."]},
  {id:"r30",name:"Nasi Liwet Telur",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras.","Masak beras bersama bawang, serai, daun salam dan garam.","Rebus telur sampai matang.","Aduk nasi setelah matang.","Sajikan dengan telur."]},
@@ -926,7 +926,7 @@ const V167_RECIPES = [
 // Gabungkan resep lama + resep tambahan tanpa menggandakan ID.
 DEFAULT_RECIPES.push(...EXTRA_RECIPES, ...V167_RECIPES);
 
-/* V17.0 migration: pengguna lama tetap mendapatkan resep baru. */
+/* V17.1 migration: pengguna lama tetap mendapatkan resep baru. */
 function migrateRecipeCollection(){
   const current=getData(STORAGE.recipes,[]);
   const known=new Set(current.map(r=>r.id));
@@ -2914,7 +2914,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
   /* =========================================================
-   🚢 DAPUR KAPAL V17.0 PATCH
+   🚢 DAPUR KAPAL V17.1 PATCH
    Dibuat khusus untuk source V16.1 yang kamu kirim
 ========================================================= */
 
@@ -2923,7 +2923,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 "use strict";
 
 /* =========================================================
-   V17.0 HELPERS
+   V17.1 HELPERS
 ========================================================= */
 
 function v162Month(value){
@@ -2962,7 +2962,7 @@ function v162GetRecentRecipes(days){
 
 
 /* =========================================================
-   🧠 SMART MENU V17.0
+   🧠 SMART MENU V17.1
    Prioritas:
    1. Sesuai kategori waktu makan
    2. Punya stok
@@ -3092,13 +3092,13 @@ window.smartMenuV162=function(){
   setData(STORAGE.week,week);
 
   addActivity(
-    "Smart Menu V17.0 dibuat"
+    "Smart Menu V17.1 dibuat"
   );
 
   renderAll();
 
   alert(
-    "🤖 Smart Menu V17.0 berhasil dibuat!\n\n"+
+    "🤖 Smart Menu V17.1 berhasil dibuat!\n\n"+
     "Menu yang baru dimasak dalam 3 hari terakhir "+
     "akan dikurangi prioritasnya."
   );
@@ -3991,7 +3991,7 @@ function v162RecipeButtons(){
 
 
 /* =========================================================
-   💾 BACKUP V17.0
+   💾 BACKUP V17.1
    Tetap memakai key dk161_
 ========================================================= */
 
@@ -4059,14 +4059,14 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V17.0 berhasil dibuat."
+    "✅ Backup Dapur Kapal V17.1 berhasil dibuat."
   );
 
 };
 
 
 /* =========================================================
-   Tambahkan tombol backup V17.0
+   Tambahkan tombol backup V17.1
 ========================================================= */
 
 function v162BackupButton(){
@@ -4114,7 +4114,7 @@ function v162BackupButton(){
   button.style.marginLeft="8px";
 
   button.textContent=
-    "⬇️ Backup V17.0";
+    "⬇️ Backup V17.1";
 
 
   button.onclick=
@@ -4221,7 +4221,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V17.0:",
+      "Dapur Kapal V17.1:",
       error
     );
 
@@ -4231,20 +4231,20 @@ window.renderAll=function(){
 
 
 /* =========================================================
-   V17.0 VERSION DISPLAY
+   V17.1 VERSION DISPLAY
 ========================================================= */
 
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V17.0";
+    "Dapur Kapal V17.1";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V17.0"
+        "Kitchen Management System • V17.1"
       )
     );
 
@@ -4253,7 +4253,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V17.0 • Data tersimpan di perangkat"
+        "Dapur Kapal V17.1 • Data tersimpan di perangkat"
       )
     );
 
@@ -4268,7 +4268,7 @@ v162Version();
 
 
 /*
-  render pertama setelah seluruh fungsi V17.0
+  render pertama setelah seluruh fungsi V17.1
   sudah terpasang.
 */
 
@@ -4281,7 +4281,7 @@ setTimeout(()=>{
   }catch(e){
 
     console.error(
-      "V17.0 initial render:",
+      "V17.1 initial render:",
       e
     );
 
@@ -4292,7 +4292,7 @@ setTimeout(()=>{
 
 })();
 /* =========================================================
-   DAPUR KAPAL V17.0
+   DAPUR KAPAL V17.1
    MODE JADWAL PAGI / SIANG / MALAM / GABUNGAN
 ========================================================= */
 
@@ -4506,7 +4506,7 @@ function renderWeek(){
 
 
 /* =========================================================
-   SMART MENU V17.0
+   SMART MENU V17.1
 ========================================================= */
 
 function smartMenu(){
@@ -4630,7 +4630,7 @@ function smartMenu(){
   setData(STORAGE.week,week);
 
   addActivity(
-    "Smart Menu V17.0 dibuat: " +
+    "Smart Menu V17.1 dibuat: " +
     scheduleMode
   );
 
@@ -4662,7 +4662,7 @@ function scheduleModeLabel(mode){
 
 
 /* =========================================================
-   STYLE V17.0
+   STYLE V17.1
 ========================================================= */
 
 function initDK163Style(){
@@ -4778,7 +4778,7 @@ function initDK163Style(){
 
 
 /* =========================================================
-   START V17.0
+   START V17.1
 ========================================================= */
 
 (function(){
@@ -4796,7 +4796,7 @@ function initDK163Style(){
 })();
 
 /* =========================================================
-   DAPUR KAPAL V17.0
+   DAPUR KAPAL V17.1
    PATCH: mobile navigation, back button, notifications,
    safer storage compatibility, and version metadata.
    Existing dk161_* storage keys are intentionally preserved.
@@ -4917,82 +4917,19 @@ function dk164SyncMobileBar(){
   });
 }
 
-function dk164UpdateNotifications(){
-  const stock=getData(STORAGE.stock,[]);
-  const shopping=getData(STORAGE.shopping,[]);
-  const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0)).length;
-  const pending=shopping.filter(x=>!x.checked).length;
-  const count=low+pending;
-  let btn=document.getElementById("dk164QuickNotify");
-  if(!btn){
-    const container=document.querySelector(".dk164-header-actions");
-    if(!container) return;
-    btn=document.createElement("button");
-    btn.id="dk164QuickNotify";
-    btn.className="btn secondary dk164-notify";
-    btn.type="button";
-    btn.setAttribute("aria-label","Buka notifikasi");
-    btn.textContent="🔔 Notifikasi";
-    container.appendChild(btn);
-  }
-  document.querySelectorAll("#dk164NotifyBtn").forEach(el=>el.remove());
-  btn.innerHTML='🔔 Notifikasi<span class="dk164-dot" aria-hidden="true"></span>';
-  btn.onclick=()=>{
-    if(low){
-      showPage("stock");
-      dk164Toast(`📦 ${low} stok menipis`);
-      return;
-    }
-    if(pending){
-      showPage("shopping");
-      dk164Toast(`🛒 ${pending} item belanja belum selesai`);
-      return;
-    }
-    dk164Toast("✅ Tidak ada notifikasi baru");
-  };
-  const dot=btn.querySelector(".dk164-dot");
-  if(dot){
-    dot.textContent=count>99?"99+":String(count);
-    dot.style.display=count?"flex":"none";
-  }
-}
-
-function dk164Version(){
-  document.title="Dapur Kapal V17.0";
-  const p=document.querySelector("header p");
-  if(p) p.textContent="Kitchen Management System • V17.0";
-  const f=document.querySelector("footer");
-  if(f) f.textContent="Dapur Kapal V17.0 • Data tersimpan di perangkat";
-  const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.setAttribute("content","#0f172a");
-}
-
-// Extend the existing render hook without changing its underlying data model.
-const dk164PreviousRenderAll=window.renderAll;
-window.renderAll=function(){
-  dk164PreviousRenderAll();
-  dk164AddBackButtons();
-  dk164InstallMobileBar();
-  dk164SyncMobileBar();
-  dk164UpdateNotifications();
-};
-
-dk164AddStyle();
-dk164Version();
-setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);}},120);
 
 
 
 
 /* =========================================================
-   DAPUR KAPAL V17.0 — FINAL QUALITY PASS
+   DAPUR KAPAL V17.1 — STABILITY & INTEGRATION PASS
    Fokus: mobile UX, notifikasi, stok, belanja, resep,
    backup/restore, laporan, dan integrasi antar modul.
    Storage lama dk161_ dipertahankan untuk kompatibilitas.
 ========================================================= */
 (function(){
   "use strict";
-  const DK17_VERSION="17.0";
+  const DK17_VERSION="17.1";
 
   function dk17Toast(message){
     let el=document.getElementById("dk17Toast");
@@ -5009,13 +4946,18 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
   }
   window.dk17Toast=dk17Toast;
 
+  function dk17UniquePending(list, keyFn){
+    const seen=new Set();
+    return list.filter(item=>{ const k=keyFn(item); if(seen.has(k)) return false; seen.add(k); return true; });
+  }
+
   function dk17Alerts(){
     const stock=getData(STORAGE.stock,[]);
     const shopping=getData(STORAGE.shopping,[]);
     const tasks=getData(STORAGE.tasks,[]);
     const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0));
-    const pendingShopping=shopping.filter(x=>!x.checked);
-    const pendingTasks=tasks.filter(x=>!x.done);
+    const pendingShopping=dk17UniquePending(shopping.filter(x=>!x.checked),x=>normalize(x.item)+"|"+x.unit);
+    const pendingTasks=dk17UniquePending(tasks.filter(x=>!x.done),x=>normalize(x.text));
     return {low,pendingShopping,pendingTasks,total:low.length+pendingShopping.length+pendingTasks.length};
   }
   window.dk17Alerts=dk17Alerts;
@@ -5042,10 +4984,15 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
   }
 
   function dk17InstallNotifications(){
-    let btn=document.getElementById("dk164QuickNotify");
-    const all=document.querySelectorAll(".dk17-notify, #dk164QuickNotify, #dk17QuickNotify");
-    if(!btn && all.length) btn=all[0];
-    if(!btn) return;
+    const all=Array.from(document.querySelectorAll(".dk17-notify, #dk164QuickNotify, #dk17QuickNotify"));
+    let btn=document.getElementById("dk164QuickNotify") || all[0];
+    if(!btn){
+      const container=document.querySelector(".dk164-header-actions");
+      if(!container) return;
+      btn=document.createElement("button");
+      btn.type="button";
+      container.appendChild(btn);
+    }
     all.forEach(el=>{ if(el!==btn) el.remove(); });
     btn.id="dk164QuickNotify";
     const a=dk17Alerts();
@@ -5143,7 +5090,7 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
     a.href=url;
     a.download=`dapur-kapal-v17.0-${dateFile()}.json`;
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    dk17Toast("✅ Backup V17.0 berhasil dibuat");
+    dk17Toast("✅ Backup V17.1 berhasil dibuat");
   };
 
   window.backupData=window.dk17Backup;
@@ -5230,7 +5177,7 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
       .dk17-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:1000;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 15px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.2s;max-width:calc(100vw - 30px);text-align:center}.dk17-toast.show{opacity:1;transform:translate(-50%,0)}
       .dk17-badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;padding:0 6px;margin-left:5px;border-radius:999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700}.dk17-badge[hidden]{display:none}
       .dk17-alert-group{margin:12px 0;padding:10px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-alert-group h3{margin:0 0 8px}.dk17-alert-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #263244}.dk17-alert-row:last-child{border-bottom:0}.dk17-alert-row span{color:#94a3b8;font-size:13px}
-      .dk17-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk17-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-status span{color:#94a3b8;text-align:right}.dk17-status.ok{border-color:#14532d}.dk17-status.warn{border-color:#854d0e}.dk17-status.bad{border-color:#7f1d1d}.dk17-stock-actions{display:flex;gap:5px;margin-top:6px}
+      .dk17-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk17-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-status span{color:#94a3b8;text-align:right}.dk17-status.ok{border-color:#14532d}.dk17-status.warn{border-color:#854d0e}.dk17-status.bad{border-color:#7f1d1d}.dk17-stock-actions{display:flex;gap:5px;margin-top:6px}.dk17-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
       @media(max-width:600px){.dk17-status-grid{grid-template-columns:1fr 1fr}.dk17-status{display:block}.dk17-status span{display:block;text-align:left;margin-top:4px}.dk17-alert-row{display:block}.dk17-alert-row span{display:block;margin-top:3px}.dk17-stock-actions .btn{min-width:44px;padding-left:8px;padding-right:8px}.dk17-notify{min-height:44px}.modal-box{margin:10px auto;padding:15px}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}}
       @media(max-width:380px){.dk17-status-grid{grid-template-columns:1fr}.dk17-notify{width:100%}}
     `;
@@ -5238,23 +5185,45 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
   }
 
   function dk17Version(){
-    document.title="Dapur Kapal V17.0";
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.0"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.0 • Data tersimpan di perangkat"));
+    document.title="Dapur Kapal V17.1";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.1 • Data tersimpan di perangkat"));
     let marker=document.getElementById("dk17BuildMarker");
     if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V17.0 • Web Edition";
+    marker.textContent="BUILD V17.1 • Web Edition";
   }
 
   const dk17PrevRenderAll=window.renderAll;
+  let dk17Rendering=false;
   window.renderAll=function(){
-    dk17PrevRenderAll();
-    try{ dk17InstallNotifications(); dk17RenderDashboardStatus(); dk17RenderReports(); }catch(e){console.error("V17.0 render:",e)}
+    if(dk17Rendering) return;
+    dk17Rendering=true;
+    try{
+      if(typeof dk17PrevRenderAll === "function") dk17PrevRenderAll();
+      dk164AddBackButtons();
+      dk164InstallMobileBar();
+      dk164SyncMobileBar();
+      dk17InstallNotifications();
+      dk17RenderDashboardStatus();
+      dk17RenderReports();
+    }catch(e){ console.error("V17.1 render:",e); }
+    finally{ dk17Rendering=false; }
   };
+
+  function dk17Version(){
+    document.title="Dapur Kapal V17.1";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.1 • Data tersimpan di perangkat"));
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute("content","#0f172a");
+    let marker=document.getElementById("dk17BuildMarker");
+    if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
+    marker.textContent="BUILD V17.1 • Web Edition";
+  }
 
   dk17AddStyles();
   dk17Version();
-  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.0 initial:",e)}},80);
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.1 initial:",e)}},80);
 })();
 
 </script>
