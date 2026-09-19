@@ -5042,10 +5042,13 @@ setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);
   }
 
   function dk17InstallNotifications(){
-    const btn=document.getElementById("dk164QuickNotify");
+    let btn=document.getElementById("dk164QuickNotify");
+    const all=document.querySelectorAll(".dk17-notify, #dk164QuickNotify, #dk17QuickNotify");
+    if(!btn && all.length) btn=all[0];
     if(!btn) return;
+    all.forEach(el=>{ if(el!==btn) el.remove(); });
+    btn.id="dk164QuickNotify";
     const a=dk17Alerts();
-    btn.id="dk17QuickNotify";
     btn.className="btn secondary dk17-notify";
     btn.innerHTML=`🔔 Notifikasi <span class="dk17-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
     btn.onclick=dk17NotificationPanel;
