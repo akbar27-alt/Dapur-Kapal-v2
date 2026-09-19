@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V16.7</title>
+<title>Dapur Kapal V17.0</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
+<meta name="application-version" content="17.0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -237,7 +238,7 @@ footer{
 
 <header>
   <h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V16.7</p>
+  <p>Kitchen Management System • V17.0</p>
 </header>
 
 <div class="dk164-header-actions">
@@ -548,7 +549,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V16.7 • Data tersimpan di perangkat
+  Dapur Kapal V17.0 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -884,7 +885,7 @@ const DEFAULT_RECIPES = [
 ];
 
 
-/* V16.7 — Koleksi resep tambahan: sarapan, siang, malam */
+/* V17.0 — Koleksi resep tambahan: sarapan, siang, malam */
 const EXTRA_RECIPES = [
  {id:"r11",name:"Nasi Uduk Telur Balado",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"santan",qty:600,unit:"ml"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"cabai",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras dan masak bersama santan, serai, daun salam dan garam.","Rebus telur lalu kupas.","Haluskan cabai dan bawang lalu tumis sampai matang.","Masukkan telur dan aduk sampai bumbu merata.","Sajikan nasi uduk bersama telur balado."]},
  {id:"r12",name:"Bubur Ayam Sederhana",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:700,unit:"gram"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang putih",qty:40,unit:"gram"},{item:"jahe",qty:20,unit:"gram"},{item:"daun bawang",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak beras dengan air sampai menjadi bubur lembut.","Rebus ayam bersama bawang putih dan jahe.","Suwir ayam setelah matang.","Bumbui bubur dengan garam.","Sajikan dengan ayam suwir dan daun bawang."]},
@@ -906,7 +907,7 @@ const EXTRA_RECIPES = [
  {id:"r28",name:"Soto Daging",category:"dinner",servings:9,ingredients:[{item:"daging sapi",qty:1.5,unit:"kg"},{item:"bawang merah",qty:120,unit:"gram"},{item:"bawang putih",qty:60,unit:"gram"},{item:"kunyit",qty:25,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:25,unit:"gram"}],steps:["Rebus daging sampai empuk dan sisihkan kaldu.","Haluskan dan tumis bumbu.","Masukkan bumbu ke kaldu bersama serai dan daun salam.","Potong daging dan masukkan kembali.","Koreksi rasa lalu sajikan hangat."]}
 ];
 
-// V16.7 — Tambahan resep baru agar Smart Menu lebih bervariasi.
+// V17.0 — Tambahan resep baru agar Smart Menu lebih bervariasi.
 const V167_RECIPES = [
  {id:"r29",name:"Nasi Bakar Ayam Suwir",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"ayam",qty:1,unit:"kg"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"cabai",qty:60,unit:"gram"},{item:"daun kemangi",qty:100,unit:"gram"},{item:"garam",qty:20,unit:"gram"}],steps:["Masak nasi sampai matang.","Rebus ayam lalu suwir.","Tumis bawang dan cabai.","Masukkan ayam dan kemangi lalu bumbui.","Bungkus nasi bersama isian dengan daun pisang.","Bakar sampai harum."]},
  {id:"r30",name:"Nasi Liwet Telur",category:"breakfast",servings:9,ingredients:[{item:"beras",qty:1.2,unit:"kg"},{item:"telur",qty:9,unit:"pcs"},{item:"bawang merah",qty:100,unit:"gram"},{item:"bawang putih",qty:50,unit:"gram"},{item:"serai",qty:2,unit:"batang"},{item:"daun salam",qty:3,unit:"lembar"},{item:"garam",qty:20,unit:"gram"}],steps:["Cuci beras.","Masak beras bersama bawang, serai, daun salam dan garam.","Rebus telur sampai matang.","Aduk nasi setelah matang.","Sajikan dengan telur."]},
@@ -925,7 +926,7 @@ const V167_RECIPES = [
 // Gabungkan resep lama + resep tambahan tanpa menggandakan ID.
 DEFAULT_RECIPES.push(...EXTRA_RECIPES, ...V167_RECIPES);
 
-/* V16.7 migration: pengguna lama tetap mendapatkan resep baru. */
+/* V17.0 migration: pengguna lama tetap mendapatkan resep baru. */
 function migrateRecipeCollection(){
   const current=getData(STORAGE.recipes,[]);
   const known=new Set(current.map(r=>r.id));
@@ -2913,7 +2914,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
   /* =========================================================
-   🚢 DAPUR KAPAL V16.7 PATCH
+   🚢 DAPUR KAPAL V17.0 PATCH
    Dibuat khusus untuk source V16.1 yang kamu kirim
 ========================================================= */
 
@@ -2922,7 +2923,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 "use strict";
 
 /* =========================================================
-   V16.7 HELPERS
+   V17.0 HELPERS
 ========================================================= */
 
 function v162Month(value){
@@ -2961,7 +2962,7 @@ function v162GetRecentRecipes(days){
 
 
 /* =========================================================
-   🧠 SMART MENU V16.7
+   🧠 SMART MENU V17.0
    Prioritas:
    1. Sesuai kategori waktu makan
    2. Punya stok
@@ -3091,13 +3092,13 @@ window.smartMenuV162=function(){
   setData(STORAGE.week,week);
 
   addActivity(
-    "Smart Menu V16.7 dibuat"
+    "Smart Menu V17.0 dibuat"
   );
 
   renderAll();
 
   alert(
-    "🤖 Smart Menu V16.7 berhasil dibuat!\n\n"+
+    "🤖 Smart Menu V17.0 berhasil dibuat!\n\n"+
     "Menu yang baru dimasak dalam 3 hari terakhir "+
     "akan dikurangi prioritasnya."
   );
@@ -3990,7 +3991,7 @@ function v162RecipeButtons(){
 
 
 /* =========================================================
-   💾 BACKUP V16.7
+   💾 BACKUP V17.0
    Tetap memakai key dk161_
 ========================================================= */
 
@@ -4058,14 +4059,14 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V16.7 berhasil dibuat."
+    "✅ Backup Dapur Kapal V17.0 berhasil dibuat."
   );
 
 };
 
 
 /* =========================================================
-   Tambahkan tombol backup V16.7
+   Tambahkan tombol backup V17.0
 ========================================================= */
 
 function v162BackupButton(){
@@ -4113,7 +4114,7 @@ function v162BackupButton(){
   button.style.marginLeft="8px";
 
   button.textContent=
-    "⬇️ Backup V16.7";
+    "⬇️ Backup V17.0";
 
 
   button.onclick=
@@ -4220,7 +4221,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V16.7:",
+      "Dapur Kapal V17.0:",
       error
     );
 
@@ -4230,20 +4231,20 @@ window.renderAll=function(){
 
 
 /* =========================================================
-   V16.7 VERSION DISPLAY
+   V17.0 VERSION DISPLAY
 ========================================================= */
 
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V16.7";
+    "Dapur Kapal V17.0";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V16.7"
+        "Kitchen Management System • V17.0"
       )
     );
 
@@ -4252,7 +4253,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V16.7 • Data tersimpan di perangkat"
+        "Dapur Kapal V17.0 • Data tersimpan di perangkat"
       )
     );
 
@@ -4267,7 +4268,7 @@ v162Version();
 
 
 /*
-  render pertama setelah seluruh fungsi V16.7
+  render pertama setelah seluruh fungsi V17.0
   sudah terpasang.
 */
 
@@ -4280,7 +4281,7 @@ setTimeout(()=>{
   }catch(e){
 
     console.error(
-      "V16.7 initial render:",
+      "V17.0 initial render:",
       e
     );
 
@@ -4291,7 +4292,7 @@ setTimeout(()=>{
 
 })();
 /* =========================================================
-   DAPUR KAPAL V16.7
+   DAPUR KAPAL V17.0
    MODE JADWAL PAGI / SIANG / MALAM / GABUNGAN
 ========================================================= */
 
@@ -4505,7 +4506,7 @@ function renderWeek(){
 
 
 /* =========================================================
-   SMART MENU V16.7
+   SMART MENU V17.0
 ========================================================= */
 
 function smartMenu(){
@@ -4629,7 +4630,7 @@ function smartMenu(){
   setData(STORAGE.week,week);
 
   addActivity(
-    "Smart Menu V16.7 dibuat: " +
+    "Smart Menu V17.0 dibuat: " +
     scheduleMode
   );
 
@@ -4661,7 +4662,7 @@ function scheduleModeLabel(mode){
 
 
 /* =========================================================
-   STYLE V16.7
+   STYLE V17.0
 ========================================================= */
 
 function initDK163Style(){
@@ -4777,7 +4778,7 @@ function initDK163Style(){
 
 
 /* =========================================================
-   START V16.7
+   START V17.0
 ========================================================= */
 
 (function(){
@@ -4795,13 +4796,13 @@ function initDK163Style(){
 })();
 
 /* =========================================================
-   DAPUR KAPAL V16.7
+   DAPUR KAPAL V17.0
    PATCH: mobile navigation, back button, notifications,
    safer storage compatibility, and version metadata.
    Existing dk161_* storage keys are intentionally preserved.
 ========================================================= */
 
-const DK164_VERSION = "16.7";
+const DK164_VERSION = "17.0";
 window.dk164PreviousPage="dashboard";
 
 function dk164AddStyle(){
@@ -4957,11 +4958,11 @@ function dk164UpdateNotifications(){
 }
 
 function dk164Version(){
-  document.title="Dapur Kapal V16.7";
+  document.title="Dapur Kapal V17.0";
   const p=document.querySelector("header p");
-  if(p) p.textContent="Kitchen Management System • V16.7";
+  if(p) p.textContent="Kitchen Management System • V17.0";
   const f=document.querySelector("footer");
-  if(f) f.textContent="Dapur Kapal V16.7 • Data tersimpan di perangkat";
+  if(f) f.textContent="Dapur Kapal V17.0 • Data tersimpan di perangkat";
   const meta=document.querySelector('meta[name="theme-color"]');
   if(meta) meta.setAttribute("content","#0f172a");
 }
@@ -4978,8 +4979,280 @@ window.renderAll=function(){
 
 dk164AddStyle();
 dk164Version();
-setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V16.7:",e);}},120);
-if("serviceWorker" in navigator && location.protocol!=="file:"){ navigator.serviceWorker.register("./sw.js").catch(()=>{}); }
+setTimeout(()=>{try{renderAll();}catch(e){console.error("Dapur Kapal V17.0:",e);}},120);
+
+
+
+
+/* =========================================================
+   DAPUR KAPAL V17.0 — FINAL QUALITY PASS
+   Fokus: mobile UX, notifikasi, stok, belanja, resep,
+   backup/restore, laporan, dan integrasi antar modul.
+   Storage lama dk161_ dipertahankan untuk kompatibilitas.
+========================================================= */
+(function(){
+  "use strict";
+  const DK17_VERSION="17.0";
+
+  function dk17Toast(message){
+    let el=document.getElementById("dk17Toast");
+    if(!el){
+      el=document.createElement("div");
+      el.id="dk17Toast";
+      el.className="dk17-toast";
+      document.body.appendChild(el);
+    }
+    el.textContent=message;
+    el.classList.add("show");
+    clearTimeout(el._timer);
+    el._timer=setTimeout(()=>el.classList.remove("show"),2600);
+  }
+  window.dk17Toast=dk17Toast;
+
+  function dk17Alerts(){
+    const stock=getData(STORAGE.stock,[]);
+    const shopping=getData(STORAGE.shopping,[]);
+    const tasks=getData(STORAGE.tasks,[]);
+    const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0));
+    const pendingShopping=shopping.filter(x=>!x.checked);
+    const pendingTasks=tasks.filter(x=>!x.done);
+    return {low,pendingShopping,pendingTasks,total:low.length+pendingShopping.length+pendingTasks.length};
+  }
+  window.dk17Alerts=dk17Alerts;
+
+  function dk17NotificationPanel(){
+    const a=dk17Alerts();
+    const section=(title,items,icon,render)=> items.length ? `
+      <div class="dk17-alert-group">
+        <h3>${icon} ${title} <span class="badge">${items.length}</span></h3>
+        ${items.slice(0,8).map(render).join("")}
+      </div>` : "";
+    const html=`
+      <h2>🔔 Notifikasi Dapur</h2>
+      <p class="muted">${a.total?`${a.total} hal membutuhkan perhatian.`:"Semua aman. Tidak ada notifikasi baru."}</p>
+      ${section("Stok Menipis",a.low,"📦",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)} / min ${round(x.min||0)}</span></div>`)}
+      ${section("Belanja Belum Selesai",a.pendingShopping,"🛒",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)}</span></div>`)}
+      ${section("Tugas Belum Selesai",a.pendingTasks,"✅",x=>`<div class="dk17-alert-row"><b>${esc(x.text)}</b></div>`)}
+      <div class="row" style="margin-top:14px">
+        ${a.low.length?`<button class="btn danger fit" onclick="closeModal();showPage('stock')">📦 Buka Stok</button>`:""}
+        ${a.pendingShopping.length?`<button class="btn warning fit" onclick="closeModal();showPage('shopping')">🛒 Buka Belanja</button>`:""}
+        ${a.pendingTasks.length?`<button class="btn secondary fit" onclick="closeModal();showPage('tasks')">✅ Buka Tugas</button>`:""}
+      </div>`;
+    openModal(html);
+  }
+
+  function dk17InstallNotifications(){
+    const btn=document.getElementById("dk164QuickNotify");
+    if(!btn) return;
+    const a=dk17Alerts();
+    btn.id="dk17QuickNotify";
+    btn.className="btn secondary dk17-notify";
+    btn.innerHTML=`🔔 Notifikasi <span class="dk17-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
+    btn.onclick=dk17NotificationPanel;
+  }
+
+  function dk17AdjustStock(id,delta){
+    const stock=getData(STORAGE.stock,[]);
+    const item=stock.find(x=>x.id===id);
+    if(!item) return;
+    const old=Number(item.qty)||0;
+    item.qty=Math.max(0,round(old+delta));
+    setData(STORAGE.stock,stock);
+    addStockHistory(`${item.item}: ${delta>0?"+":""}${round(item.qty-old)} ${item.unit}`);
+    addActivity(`Stok ${delta>0?"ditambah":"dikurangi"}: ${item.item}`);
+    renderAll();
+    dk17Toast(`${item.item}: ${round(item.qty)} ${item.unit}`);
+  }
+  window.dk17AdjustStock=dk17AdjustStock;
+
+  const dk17OriginalRenderStock=window.renderStock;
+  window.renderStock=function(){
+    dk17OriginalRenderStock();
+    const stock=getData(STORAGE.stock,[]);
+    const search=normalize(document.getElementById("stockSearch")?.value);
+    const filtered=stock.filter(x=>normalize(x.item).includes(search));
+    const box=document.getElementById("stockList");
+    if(!box || !filtered.length) return;
+    const rows=box.querySelectorAll("tbody tr, table tr");
+    filtered.forEach((x,i)=>{
+      const row=rows[i+1];
+      if(!row) return;
+      const action=row.cells?.[3];
+      if(!action || action.querySelector("[data-dk17-stock]") ) return;
+      const wrap=document.createElement("div");
+      wrap.className="dk17-stock-actions";
+      wrap.innerHTML=`<button class="btn secondary fit" data-dk17-stock="1" title="Kurangi 1">−1</button><button class="btn success fit" data-dk17-stock="1" title="Tambah 1">+1</button>`;
+      wrap.children[0].onclick=()=>dk17AdjustStock(x.id,-1);
+      wrap.children[1].onclick=()=>dk17AdjustStock(x.id,1);
+      action.appendChild(wrap);
+    });
+  };
+
+  window.dk17RecipeToShopping=function(id){
+    const recipes=getData(STORAGE.recipes,[]);
+    const recipe=recipes.find(r=>r.id===id);
+    if(!recipe) return;
+    const crew=getData(STORAGE.crew,9);
+    const multiplier=crew/Number(recipe.servings||9);
+    const stock=getData(STORAGE.stock,[]);
+    const list=getData(STORAGE.shopping,[]);
+    const existing=new Map(list.map(x=>[normalize(x.item)+"|"+x.unit,x]));
+    let added=0;
+    (recipe.ingredients||[]).forEach(i=>{
+      const need=Number(i.qty)*multiplier;
+      const s=stock.find(x=>normalize(x.item)===normalize(i.item)&&x.unit===i.unit);
+      const shortage=Math.max(0,need-(s?Number(s.qty):0));
+      if(shortage<=0) return;
+      const key=normalize(i.item)+"|"+i.unit;
+      const old=existing.get(key);
+      if(old){ old.qty=round(Number(old.qty)+shortage); }
+      else {
+        const item={id:uid(),item:i.item,unit:i.unit,qty:round(shortage),checked:false,price:0};
+        list.push(item); existing.set(key,item);
+      }
+      added++;
+    });
+    setData(STORAGE.shopping,list);
+    addActivity(`Bahan ${recipe.name} ditambahkan ke belanja`);
+    renderAll();
+    closeModal();
+    showPage("shopping");
+    dk17Toast(added?`🛒 ${added} bahan masuk daftar belanja`:`✅ Stok cukup untuk ${recipe.name}`);
+  };
+
+  window.showRecipe=function(id){
+    const recipes=getData(STORAGE.recipes,[]);
+    const r=recipes.find(x=>x.id===id);
+    if(!r) return;
+    const crew=getData(STORAGE.crew,9);
+    const multiplier=crew/Number(r.servings||9);
+    const ingredients=(r.ingredients||[]).map(i=>`<li><b>${esc(i.item)}</b> — ${round(Number(i.qty)*multiplier)} ${esc(i.unit)}</li>`).join("");
+    const steps=(r.steps||[]).map((s,i)=>`<li>${esc(s)}</li>`).join("");
+    openModal(`<h2>🍽️ ${esc(r.name)}</h2><p class="muted">Resep dasar ${r.servings} orang • disesuaikan untuk ${crew} orang</p><h3>🧂 Bahan</h3><ul>${ingredients}</ul><h3>👨‍🍳 Cara Masak</h3><ol>${steps}</ol><hr><div class="row"><button class="btn success fit" onclick="cookRecipe('${r.id}');closeModal()">🍳 Masak</button><button class="btn warning fit" onclick="startChefTimer('${r.id}')">⏱️ Timer</button><button class="btn secondary fit" onclick="dk17RecipeToShopping('${r.id}')">🛒 Ke Belanja</button></div>`);
+  };
+
+  window.dk17Backup=function(){
+    const backup={app:"Dapur Kapal",version:DK17_VERSION,createdAt:new Date().toISOString(),data:{}};
+    Object.values(STORAGE).forEach(key=>backup.data[key]=getData(key,null));
+    const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=`dapur-kapal-v17.0-${dateFile()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    dk17Toast("✅ Backup V17.0 berhasil dibuat");
+  };
+
+  window.backupData=window.dk17Backup;
+
+  window.restoreData=function(event){
+    const file=event.target.files?.[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(){
+      try{
+        const backup=JSON.parse(reader.result);
+        if(!backup?.data) throw new Error("Format backup tidak dikenal");
+        const confirmText=`Restore backup ${backup.version||"lama"} akan mengganti data saat ini. Sebelum restore, backup data sekarang akan dibuat otomatis. Lanjutkan?`;
+        if(!confirm(confirmText)) return;
+        dk17Backup();
+        Object.values(STORAGE).forEach(key=>{
+          if(Object.prototype.hasOwnProperty.call(backup.data,key)) setData(key,backup.data[key]);
+        });
+        alert("✅ Restore berhasil. Aplikasi akan dimuat ulang.");
+        location.reload();
+      }catch(e){ console.error(e); alert("File backup tidak valid atau rusak."); }
+      event.target.value="";
+    };
+    reader.readAsText(file);
+  };
+
+  function dk17DashboardStatus(){
+    const dash=document.getElementById("dashboard");
+    if(!dash || document.getElementById("dk17StatusCard")) return;
+    const card=document.createElement("div");
+    card.id="dk17StatusCard"; card.className="card";
+    card.innerHTML=`<h2>🧭 Status Dapur</h2><div id="dk17StatusGrid" class="dk17-status-grid"></div>`;
+    const summary=document.getElementById("dashboardSummary");
+    (summary?.parentElement||dash).after(card);
+  }
+  function dk17RenderDashboardStatus(){
+    dk17DashboardStatus();
+    const box=document.getElementById("dk17StatusGrid"); if(!box) return;
+    const a=dk17Alerts();
+    const week=getData(STORAGE.week,{});
+    let menuCount=0; DAYS.forEach(d=>MEALS.forEach(([m])=>{if(week[d]?.[m]) menuCount++;}));
+    const stock=getData(STORAGE.stock,[]);
+    const safe=stock.filter(x=>Number(x.qty)>Number(x.min||0)).length;
+    box.innerHTML=`<div class="dk17-status ok"><b>🍱 Menu</b><span>${menuCount}/21 slot terisi</span></div><div class="dk17-status ${a.low.length?"bad":"ok"}"><b>📦 Stok</b><span>${a.low.length?`${a.low.length} menipis`:`${safe} aman`}</span></div><div class="dk17-status ${a.pendingShopping.length?"warn":"ok"}"><b>🛒 Belanja</b><span>${a.pendingShopping.length} belum selesai</span></div><div class="dk17-status ${a.pendingTasks.length?"warn":"ok"}><b>✅ Tugas</b><span>${a.pendingTasks.length} belum selesai</span></div>`;
+  }
+
+  const dk17OriginalRenderDashboard=window.renderDashboard;
+  window.renderDashboard=function(){
+    dk17OriginalRenderDashboard();
+    dk17RenderDashboardStatus();
+  };
+
+  function dk17Reports(){
+    const reports=document.getElementById("reports");
+    if(!reports || document.getElementById("dk17ReportExtra")) return;
+    const card=document.createElement("div"); card.id="dk17ReportExtra"; card.className="card";
+    card.innerHTML=`<h2>📌 Ringkasan Operasional</h2><div id="dk17ReportGrid" class="dk17-status-grid"></div>`;
+    reports.appendChild(card);
+  }
+  function dk17RenderReports(){
+    dk17Reports();
+    const box=document.getElementById("dk17ReportGrid"); if(!box) return;
+    const expenses=getData(STORAGE.expenses,[]);
+    const shopping=getData(STORAGE.shopping,[]);
+    const stock=getData(STORAGE.stock,[]);
+    const cooks=getData(STORAGE.cookLog,[]);
+    const crew=getData(STORAGE.crew,9);
+    const totalExpense=expenses.reduce((s,x)=>s+Number(x.amount||0),0);
+    const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0)).length;
+    const costPerCook=cooks.length?totalExpense/cooks.length:0;
+    const costPerCrew=cooks.length?totalExpense/(cooks.length*crew):0;
+    box.innerHTML=`<div class="dk17-status"><b>💰 Total kas</b><span>${rupiah(totalExpense)}</span></div><div class="dk17-status"><b>🍳 Masak</b><span>${cooks.length} log</span></div><div class="dk17-status"><b>📦 Stok kritis</b><span>${low}</span></div><div class="dk17-status"><b>💵 Kas / log masak</b><span>${rupiah(costPerCook)}</span></div><div class="dk17-status"><b>👨‍🍳 Kas / kru / log</b><span>${rupiah(costPerCrew)}</span></div><div class="dk17-status"><b>🛒 Belanja pending</b><span>${shopping.filter(x=>!x.checked).length}</span></div>`;
+  }
+  const dk17OriginalRenderReports=window.renderReports;
+  window.renderReports=function(){
+    dk17OriginalRenderReports();
+    dk17RenderReports();
+  };
+
+  function dk17AddStyles(){
+    if(document.getElementById("dk17Styles")) return;
+    const style=document.createElement("style"); style.id="dk17Styles";
+    style.textContent=`
+      .dk17-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:1000;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 15px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.2s;max-width:calc(100vw - 30px);text-align:center}.dk17-toast.show{opacity:1;transform:translate(-50%,0)}
+      .dk17-badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;padding:0 6px;margin-left:5px;border-radius:999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700}.dk17-badge[hidden]{display:none}
+      .dk17-alert-group{margin:12px 0;padding:10px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-alert-group h3{margin:0 0 8px}.dk17-alert-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #263244}.dk17-alert-row:last-child{border-bottom:0}.dk17-alert-row span{color:#94a3b8;font-size:13px}
+      .dk17-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk17-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-status span{color:#94a3b8;text-align:right}.dk17-status.ok{border-color:#14532d}.dk17-status.warn{border-color:#854d0e}.dk17-status.bad{border-color:#7f1d1d}.dk17-stock-actions{display:flex;gap:5px;margin-top:6px}
+      @media(max-width:600px){.dk17-status-grid{grid-template-columns:1fr 1fr}.dk17-status{display:block}.dk17-status span{display:block;text-align:left;margin-top:4px}.dk17-alert-row{display:block}.dk17-alert-row span{display:block;margin-top:3px}.dk17-stock-actions .btn{min-width:44px;padding-left:8px;padding-right:8px}.dk17-notify{min-height:44px}.modal-box{margin:10px auto;padding:15px}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}}
+      @media(max-width:380px){.dk17-status-grid{grid-template-columns:1fr}.dk17-notify{width:100%}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function dk17Version(){
+    document.title="Dapur Kapal V17.0";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.0"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.0 • Data tersimpan di perangkat"));
+    let marker=document.getElementById("dk17BuildMarker");
+    if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
+    marker.textContent="BUILD V17.0 • Web Edition";
+  }
+
+  const dk17PrevRenderAll=window.renderAll;
+  window.renderAll=function(){
+    dk17PrevRenderAll();
+    try{ dk17InstallNotifications(); dk17RenderDashboardStatus(); dk17RenderReports(); }catch(e){console.error("V17.0 render:",e)}
+  };
+
+  dk17AddStyles();
+  dk17Version();
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.0 initial:",e)}},80);
+})();
 
 </script>
 
