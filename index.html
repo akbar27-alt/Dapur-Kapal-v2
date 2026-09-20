@@ -265,6 +265,18 @@ footer{
   @media(max-width:600px){.dk72-header-row{align-items:flex-start}.dk72-app-logo{width:38px;height:38px;border-radius:11px}.dk72-back{top:62px}.dk72-notify{width:100%!important}.dk72-splash-card img{width:112px;height:112px}}
 </style>
 
+
+<style id="dk174SplashFailsafe">
+#dk72Splash{
+  animation:dk174SplashFailsafeHide .01s linear 1;
+  animation-delay:2.5s;
+  animation-fill-mode:forwards;
+}
+@keyframes dk174SplashFailsafeHide{
+  to{opacity:0;visibility:hidden;pointer-events:none}
+}
+</style>
+
 </head>
 
 <body>
@@ -5314,3 +5326,38 @@ function dk164SyncMobileBar(){
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
 })();
 </script>
+
+<script id="dk174StartupWatchdog">
+(function(){
+  "use strict";
+  var started=false;
+  function hide(){
+    var el=document.getElementById("dk72Splash");
+    if(!el) return;
+    el.classList.add("hide");
+    el.setAttribute("aria-hidden","true");
+    el.style.pointerEvents="none";
+    setTimeout(function(){ el.style.display="none"; },500);
+  }
+  function boot(){
+    if(started) return;
+    started=true;
+    try{
+      if(typeof initData==="function") initData();
+      if(typeof renderAll==="function") renderAll();
+      if(typeof showPage==="function") showPage("dashboard");
+    }catch(err){
+      console.error("Dapur Kapal V17.4 startup watchdog:",err);
+    }finally{
+      hide();
+    }
+  }
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",function(){ setTimeout(boot,80); },{once:true});
+  }else{
+    setTimeout(boot,80);
+  }
+  setTimeout(hide,3500);
+})();
+</script>
+
