@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V18.1</title>
+<title>Dapur Kapal V18.1.1</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
-<meta name="application-version" content="18.1">
+<meta name="application-version" content="18.1.1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -274,7 +274,7 @@ footer{
     <div class="dk72-splash-title">Dapur Kapal</div>
     <div class="dk72-splash-sub">Kitchen Management System</div>
     <div class="dk72-splash-loader"><span></span></div>
-    <small>V18.1 • Web Edition</small>
+    <small>V18.1.1 • Web Edition</small>
   </div>
 </div>
 
@@ -283,11 +283,11 @@ footer{
 
 <header>
   <div class="dk72-header-row"><img class="dk72-app-logo" src="dapur-kapal-icon.svg" alt="Dapur Kapal"><div class="dk72-header-copy"><h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V18.1</p></div></div>
+  <p>Kitchen Management System • V18.1.1</p></div></div>
 </header>
 
-<div class="dk174-header-actions">
-  <button id="dk174QuickNotify" class="btn secondary dk174-notify" type="button">🔔 Notifikasi</button>
+<div class="dk18114-header-actions">
+  <button id="dk18114QuickNotify" class="btn secondary dk18114-notify" type="button">🔔 Notifikasi</button>
 </div>
 
 <nav class="tabs">
@@ -594,7 +594,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V18.1 • Data tersimpan di perangkat
+  Dapur Kapal V18.1.1 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -2776,7 +2776,7 @@ function addActivity(text){
 function backupData(){
 
   const backup={
-    version:"17.5",
+    version:"18.1.1",
     createdAt:new Date().toISOString(),
     data:{}
   };
@@ -4045,7 +4045,7 @@ window.v162Backup=function(){
 
   const backup={
 
-    version:"18.1",
+    version:"18.1.1",
 
     createdAt:
       new Date().toISOString(),
@@ -4105,7 +4105,7 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V18.1 berhasil dibuat."
+    "✅ Backup Dapur Kapal V18.1.1 berhasil dibuat."
   );
 
 };
@@ -4160,7 +4160,7 @@ function v162BackupButton(){
   button.style.marginLeft="8px";
 
   button.textContent=
-    "⬇️ Backup V18.1";
+    "⬇️ Backup V18.1.1";
 
 
   button.onclick=
@@ -4267,7 +4267,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V18.1:",
+      "Dapur Kapal V18.1.1:",
       error
     );
 
@@ -4283,14 +4283,14 @@ window.renderAll=function(){
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V18.1";
+    "Dapur Kapal V18.1.1";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V18.1"
+        "Kitchen Management System • V18.1.1"
       )
     );
 
@@ -4299,7 +4299,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V18.1 • Data tersimpan di perangkat"
+        "Dapur Kapal V18.1.1 • Data tersimpan di perangkat"
       )
     );
 
@@ -4327,7 +4327,7 @@ setTimeout(()=>{
   }catch(e){
 
     console.error(
-      "V18.1 initial render:",
+      "V18.1.1 initial render:",
       e
     );
 
@@ -4849,14 +4849,14 @@ function initDK163Style(){
 ========================================================= */
 (function(){
   "use strict";
-  const DK17_VERSION="18.1";
+  const DK1811_VERSION="18.1.1";
 
-  function dk17Toast(message){
-    let el=document.getElementById("dk17Toast");
+  function dk1811Toast(message){
+    let el=document.getElementById("dk1811Toast");
     if(!el){
       el=document.createElement("div");
-      el.id="dk17Toast";
-      el.className="dk17-toast";
+      el.id="dk1811Toast";
+      el.className="dk1811-toast";
       document.body.appendChild(el);
     }
     el.textContent=message;
@@ -4864,37 +4864,37 @@ function initDK163Style(){
     clearTimeout(el._timer);
     el._timer=setTimeout(()=>el.classList.remove("show"),2600);
   }
-  window.dk17Toast=dk17Toast;
+  window.dk1811Toast=dk1811Toast;
 
-  function dk17UniquePending(list, keyFn){
+  function dk1811UniquePending(list, keyFn){
     const seen=new Set();
     return list.filter(item=>{ const k=keyFn(item); if(seen.has(k)) return false; seen.add(k); return true; });
   }
 
-  function dk17Alerts(){
+  function dk1811Alerts(){
     const stock=getData(STORAGE.stock,[]);
     const shopping=getData(STORAGE.shopping,[]);
     const tasks=getData(STORAGE.tasks,[]);
     const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0));
-    const pendingShopping=dk17UniquePending(shopping.filter(x=>!x.checked),x=>normalize(x.item)+"|"+x.unit);
-    const pendingTasks=dk17UniquePending(tasks.filter(x=>!x.done),x=>normalize(x.text));
+    const pendingShopping=dk1811UniquePending(shopping.filter(x=>!x.checked),x=>normalize(x.item)+"|"+x.unit);
+    const pendingTasks=dk1811UniquePending(tasks.filter(x=>!x.done),x=>normalize(x.text));
     return {low,pendingShopping,pendingTasks,total:low.length+pendingShopping.length+pendingTasks.length};
   }
-  window.dk17Alerts=dk17Alerts;
+  window.dk1811Alerts=dk1811Alerts;
 
-  function dk17NotificationPanel(){
-    const a=dk17Alerts();
+  function dk1811NotificationPanel(){
+    const a=dk1811Alerts();
     const section=(title,items,icon,render)=> items.length ? `
-      <div class="dk17-alert-group">
+      <div class="dk1811-alert-group">
         <h3>${icon} ${title} <span class="badge">${items.length}</span></h3>
         ${items.slice(0,8).map(render).join("")}
       </div>` : "";
     const html=`
       <h2>🔔 Notifikasi Dapur</h2>
       <p class="muted">${a.total?`${a.total} hal membutuhkan perhatian.`:"Semua aman. Tidak ada notifikasi baru."}</p>
-      ${section("Stok Menipis",a.low,"📦",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)} / min ${round(x.min||0)}</span></div>`)}
-      ${section("Belanja Belum Selesai",a.pendingShopping,"🛒",x=>`<div class="dk17-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)}</span></div>`)}
-      ${section("Tugas Belum Selesai",a.pendingTasks,"✅",x=>`<div class="dk17-alert-row"><b>${esc(x.text)}</b></div>`)}
+      ${section("Stok Menipis",a.low,"📦",x=>`<div class="dk1811-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)} / min ${round(x.min||0)}</span></div>`)}
+      ${section("Belanja Belum Selesai",a.pendingShopping,"🛒",x=>`<div class="dk1811-alert-row"><b>${esc(x.item)}</b><span>${round(x.qty)} ${esc(x.unit)}</span></div>`)}
+      ${section("Tugas Belum Selesai",a.pendingTasks,"✅",x=>`<div class="dk1811-alert-row"><b>${esc(x.text)}</b></div>`)}
       <div class="row" style="margin-top:14px">
         ${a.low.length?`<button class="btn danger fit" onclick="closeModal();showPage('stock')">📦 Buka Stok</button>`:""}
         ${a.pendingShopping.length?`<button class="btn warning fit" onclick="closeModal();showPage('shopping')">🛒 Buka Belanja</button>`:""}
@@ -4903,17 +4903,17 @@ function initDK163Style(){
     openModal(html);
   }
 
-  function dk17InstallNotifications(){
+  function dk1811InstallNotifications(){
     const all=Array.from(document.querySelectorAll(
-      ".dk17-notify, #dk174QuickNotify"
+      ".dk1811-notify, #dk18114QuickNotify"
     ));
-    let btn=document.getElementById("dk174QuickNotify")
+    let btn=document.getElementById("dk18114QuickNotify")
       || document.getElementById("dk164QuickNotify")
-      || document.getElementById("dk17QuickNotify")
+      || document.getElementById("dk1811QuickNotify")
       || all[0];
     if(!btn){
       const container=document.querySelector(
-        ".dk174-header-actions"
+        ".dk18114-header-actions"
       );
       if(!container) return;
       btn=document.createElement("button");
@@ -4921,15 +4921,15 @@ function initDK163Style(){
       container.appendChild(btn);
     }
     all.forEach(el=>{ if(el!==btn) el.remove(); });
-    btn.id="dk174QuickNotify";
-    const a=dk17Alerts();
-    btn.className="btn secondary dk17-notify";
-    btn.innerHTML=`🔔 Notifikasi <span class="dk17-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
-    btn.onclick=dk17NotificationPanel;
+    btn.id="dk18114QuickNotify";
+    const a=dk1811Alerts();
+    btn.className="btn secondary dk1811-notify";
+    btn.innerHTML=`🔔 Notifikasi <span class="dk1811-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
+    btn.onclick=dk1811NotificationPanel;
     btn.setAttribute("aria-label","Buka notifikasi Dapur");
   }
 
-  function dk17AdjustStock(id,delta){
+  function dk1811AdjustStock(id,delta){
     const stock=getData(STORAGE.stock,[]);
     const item=stock.find(x=>x.id===id);
     if(!item) return;
@@ -4939,13 +4939,13 @@ function initDK163Style(){
     addStockHistory(`${item.item}: ${delta>0?"+":""}${round(item.qty-old)} ${item.unit}`);
     addActivity(`Stok ${delta>0?"ditambah":"dikurangi"}: ${item.item}`);
     renderAll();
-    dk17Toast(`${item.item}: ${round(item.qty)} ${item.unit}`);
+    dk1811Toast(`${item.item}: ${round(item.qty)} ${item.unit}`);
   }
-  window.dk17AdjustStock=dk17AdjustStock;
+  window.dk1811AdjustStock=dk1811AdjustStock;
 
-  const dk17OriginalRenderStock=window.renderStock;
+  const dk1811OriginalRenderStock=window.renderStock;
   window.renderStock=function(){
-    dk17OriginalRenderStock();
+    dk1811OriginalRenderStock();
     const stock=getData(STORAGE.stock,[]);
     const search=normalize(document.getElementById("stockSearch")?.value);
     const filtered=stock.filter(x=>normalize(x.item).includes(search));
@@ -4956,17 +4956,17 @@ function initDK163Style(){
       const row=rows[i+1];
       if(!row) return;
       const action=row.cells?.[3];
-      if(!action || action.querySelector("[data-dk17-stock]") ) return;
+      if(!action || action.querySelector("[data-dk1811-stock]") ) return;
       const wrap=document.createElement("div");
-      wrap.className="dk17-stock-actions";
-      wrap.innerHTML=`<button class="btn secondary fit" data-dk17-stock="1" title="Kurangi 1">−1</button><button class="btn success fit" data-dk17-stock="1" title="Tambah 1">+1</button>`;
-      wrap.children[0].onclick=()=>dk17AdjustStock(x.id,-1);
-      wrap.children[1].onclick=()=>dk17AdjustStock(x.id,1);
+      wrap.className="dk1811-stock-actions";
+      wrap.innerHTML=`<button class="btn secondary fit" data-dk1811-stock="1" title="Kurangi 1">−1</button><button class="btn success fit" data-dk1811-stock="1" title="Tambah 1">+1</button>`;
+      wrap.children[0].onclick=()=>dk1811AdjustStock(x.id,-1);
+      wrap.children[1].onclick=()=>dk1811AdjustStock(x.id,1);
       action.appendChild(wrap);
     });
   };
 
-  window.dk17RecipeToShopping=function(id){
+  window.dk1811RecipeToShopping=function(id){
     const recipes=getData(STORAGE.recipes,[]);
     const recipe=recipes.find(r=>r.id===id);
     if(!recipe) return;
@@ -4995,7 +4995,7 @@ function initDK163Style(){
     renderAll();
     closeModal();
     showPage("shopping");
-    dk17Toast(added?`🛒 ${added} bahan masuk daftar belanja`:`✅ Stok cukup untuk ${recipe.name}`);
+    dk1811Toast(added?`🛒 ${added} bahan masuk daftar belanja`:`✅ Stok cukup untuk ${recipe.name}`);
   };
 
   window.showRecipe=function(id){
@@ -5006,11 +5006,11 @@ function initDK163Style(){
     const multiplier=crew/Number(r.servings||9);
     const ingredients=(r.ingredients||[]).map(i=>`<li><b>${esc(i.item)}</b> — ${round(Number(i.qty)*multiplier)} ${esc(i.unit)}</li>`).join("");
     const steps=(r.steps||[]).map((s,i)=>`<li>${esc(s)}</li>`).join("");
-    openModal(`<h2>🍽️ ${esc(r.name)}</h2><p class="muted">Resep dasar ${r.servings} orang • disesuaikan untuk ${crew} orang</p><h3>🧂 Bahan</h3><ul>${ingredients}</ul><h3>👨‍🍳 Cara Masak</h3><ol>${steps}</ol><hr><div class="row"><button class="btn success fit" onclick="cookRecipe('${r.id}');closeModal()">🍳 Masak</button><button class="btn warning fit" onclick="startChefTimer('${r.id}')">⏱️ Timer</button><button class="btn secondary fit" onclick="dk17RecipeToShopping('${r.id}')">🛒 Ke Belanja</button></div>`);
+    openModal(`<h2>🍽️ ${esc(r.name)}</h2><p class="muted">Resep dasar ${r.servings} orang • disesuaikan untuk ${crew} orang</p><h3>🧂 Bahan</h3><ul>${ingredients}</ul><h3>👨‍🍳 Cara Masak</h3><ol>${steps}</ol><hr><div class="row"><button class="btn success fit" onclick="cookRecipe('${r.id}');closeModal()">🍳 Masak</button><button class="btn warning fit" onclick="startChefTimer('${r.id}')">⏱️ Timer</button><button class="btn secondary fit" onclick="dk1811RecipeToShopping('${r.id}')">🛒 Ke Belanja</button></div>`);
   };
 
-  window.dk17Backup=function(){
-    const backup={app:"Dapur Kapal",version:DK17_VERSION,createdAt:new Date().toISOString(),data:{}};
+  window.dk1811Backup=function(){
+    const backup={app:"Dapur Kapal",version:DK1811_VERSION,createdAt:new Date().toISOString(),data:{}};
     Object.values(STORAGE).forEach(key=>backup.data[key]=getData(key,null));
     const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob);
@@ -5018,10 +5018,10 @@ function initDK163Style(){
     a.href=url;
     a.download=`dapur-kapal-v18.0-${dateFile()}.json`;
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    dk17Toast("✅ Backup V18.1 berhasil dibuat");
+    dk1811Toast("✅ Backup V18.1.1 berhasil dibuat");
   };
 
-  window.backupData=window.dk17Backup;
+  window.backupData=window.dk1811Backup;
 
   window.restoreData=function(event){
     const file=event.target.files?.[0];
@@ -5033,7 +5033,7 @@ function initDK163Style(){
         if(!backup?.data) throw new Error("Format backup tidak dikenal");
         const confirmText=`Restore backup ${backup.version||"lama"} akan mengganti data saat ini. Sebelum restore, backup data sekarang akan dibuat otomatis. Lanjutkan?`;
         if(!confirm(confirmText)) return;
-        dk17Backup();
+        dk1811Backup();
         Object.values(STORAGE).forEach(key=>{
           if(Object.prototype.hasOwnProperty.call(backup.data,key)) setData(key,backup.data[key]);
         });
@@ -5045,42 +5045,42 @@ function initDK163Style(){
     reader.readAsText(file);
   };
 
-  function dk17DashboardStatus(){
+  function dk1811DashboardStatus(){
     const dash=document.getElementById("dashboard");
-    if(!dash || document.getElementById("dk17StatusCard")) return;
+    if(!dash || document.getElementById("dk1811StatusCard")) return;
     const card=document.createElement("div");
-    card.id="dk17StatusCard"; card.className="card";
-    card.innerHTML=`<h2>🧭 Status Dapur</h2><div id="dk17StatusGrid" class="dk17-status-grid"></div>`;
+    card.id="dk1811StatusCard"; card.className="card";
+    card.innerHTML=`<h2>🧭 Status Dapur</h2><div id="dk1811StatusGrid" class="dk1811-status-grid"></div>`;
     const summary=document.getElementById("dashboardSummary");
     (summary?.parentElement||dash).after(card);
   }
-  function dk17RenderDashboardStatus(){
-    dk17DashboardStatus();
-    const box=document.getElementById("dk17StatusGrid"); if(!box) return;
-    const a=dk17Alerts();
+  function dk1811RenderDashboardStatus(){
+    dk1811DashboardStatus();
+    const box=document.getElementById("dk1811StatusGrid"); if(!box) return;
+    const a=dk1811Alerts();
     const week=getData(STORAGE.week,{});
     let menuCount=0; DAYS.forEach(d=>MEALS.forEach(([m])=>{if(week[d]?.[m]) menuCount++;}));
     const stock=getData(STORAGE.stock,[]);
     const safe=stock.filter(x=>Number(x.qty)>Number(x.min||0)).length;
-    box.innerHTML=`<div class="dk17-status ok"><b>🍱 Menu</b><span>${menuCount}/21 slot terisi</span></div><div class="dk17-status ${a.low.length?"bad":"ok"}"><b>📦 Stok</b><span>${a.low.length?`${a.low.length} menipis`:`${safe} aman`}</span></div><div class="dk17-status ${a.pendingShopping.length?"warn":"ok"}"><b>🛒 Belanja</b><span>${a.pendingShopping.length} belum selesai</span></div><div class="dk17-status ${a.pendingTasks.length?"warn":"ok"}><b>✅ Tugas</b><span>${a.pendingTasks.length} belum selesai</span></div>`;
+    box.innerHTML=`<div class="dk1811-status ok"><b>🍱 Menu</b><span>${menuCount}/21 slot terisi</span></div><div class="dk1811-status ${a.low.length?"bad":"ok"}"><b>📦 Stok</b><span>${a.low.length?`${a.low.length} menipis`:`${safe} aman`}</span></div><div class="dk1811-status ${a.pendingShopping.length?"warn":"ok"}"><b>🛒 Belanja</b><span>${a.pendingShopping.length} belum selesai</span></div><div class="dk1811-status ${a.pendingTasks.length?"warn":"ok"}><b>✅ Tugas</b><span>${a.pendingTasks.length} belum selesai</span></div>`;
   }
 
-  const dk17OriginalRenderDashboard=window.renderDashboard;
+  const dk1811OriginalRenderDashboard=window.renderDashboard;
   window.renderDashboard=function(){
-    dk17OriginalRenderDashboard();
-    dk17RenderDashboardStatus();
+    dk1811OriginalRenderDashboard();
+    dk1811RenderDashboardStatus();
   };
 
-  function dk17Reports(){
+  function dk1811Reports(){
     const reports=document.getElementById("reports");
-    if(!reports || document.getElementById("dk17ReportExtra")) return;
-    const card=document.createElement("div"); card.id="dk17ReportExtra"; card.className="card";
-    card.innerHTML=`<h2>📌 Ringkasan Operasional</h2><div id="dk17ReportGrid" class="dk17-status-grid"></div>`;
+    if(!reports || document.getElementById("dk1811ReportExtra")) return;
+    const card=document.createElement("div"); card.id="dk1811ReportExtra"; card.className="card";
+    card.innerHTML=`<h2>📌 Ringkasan Operasional</h2><div id="dk1811ReportGrid" class="dk1811-status-grid"></div>`;
     reports.appendChild(card);
   }
-  function dk17RenderReports(){
-    dk17Reports();
-    const box=document.getElementById("dk17ReportGrid"); if(!box) return;
+  function dk1811RenderReports(){
+    dk1811Reports();
+    const box=document.getElementById("dk1811ReportGrid"); if(!box) return;
     const expenses=getData(STORAGE.expenses,[]);
     const shopping=getData(STORAGE.shopping,[]);
     const stock=getData(STORAGE.stock,[]);
@@ -5090,99 +5090,99 @@ function initDK163Style(){
     const low=stock.filter(x=>Number(x.qty)<=Number(x.min||0)).length;
     const costPerCook=cooks.length?totalExpense/cooks.length:0;
     const costPerCrew=cooks.length?totalExpense/(cooks.length*crew):0;
-    box.innerHTML=`<div class="dk17-status"><b>💰 Total kas</b><span>${rupiah(totalExpense)}</span></div><div class="dk17-status"><b>🍳 Masak</b><span>${cooks.length} log</span></div><div class="dk17-status"><b>📦 Stok kritis</b><span>${low}</span></div><div class="dk17-status"><b>💵 Kas / log masak</b><span>${rupiah(costPerCook)}</span></div><div class="dk17-status"><b>👨‍🍳 Kas / kru / log</b><span>${rupiah(costPerCrew)}</span></div><div class="dk17-status"><b>🛒 Belanja pending</b><span>${shopping.filter(x=>!x.checked).length}</span></div>`;
+    box.innerHTML=`<div class="dk1811-status"><b>💰 Total kas</b><span>${rupiah(totalExpense)}</span></div><div class="dk1811-status"><b>🍳 Masak</b><span>${cooks.length} log</span></div><div class="dk1811-status"><b>📦 Stok kritis</b><span>${low}</span></div><div class="dk1811-status"><b>💵 Kas / log masak</b><span>${rupiah(costPerCook)}</span></div><div class="dk1811-status"><b>👨‍🍳 Kas / kru / log</b><span>${rupiah(costPerCrew)}</span></div><div class="dk1811-status"><b>🛒 Belanja pending</b><span>${shopping.filter(x=>!x.checked).length}</span></div>`;
   }
-  const dk17OriginalRenderReports=window.renderReports;
+  const dk1811OriginalRenderReports=window.renderReports;
   window.renderReports=function(){
-    dk17OriginalRenderReports();
-    dk17RenderReports();
+    dk1811OriginalRenderReports();
+    dk1811RenderReports();
   };
 
-  function dk17AddStyles(){
-    if(document.getElementById("dk17Styles")) return;
-    const style=document.createElement("style"); style.id="dk17Styles";
+  function dk1811AddStyles(){
+    if(document.getElementById("dk1811Styles")) return;
+    const style=document.createElement("style"); style.id="dk1811Styles";
     style.textContent=`
-      .dk17-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:1000;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 15px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.2s;max-width:calc(100vw - 30px);text-align:center}.dk17-toast.show{opacity:1;transform:translate(-50%,0)}
-      .dk17-badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;padding:0 6px;margin-left:5px;border-radius:999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700}.dk17-badge[hidden]{display:none}
-      .dk17-alert-group{margin:12px 0;padding:10px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-alert-group h3{margin:0 0 8px}.dk17-alert-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #263244}.dk17-alert-row:last-child{border-bottom:0}.dk17-alert-row span{color:#94a3b8;font-size:13px}
-      .dk17-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk17-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk17-status span{color:#94a3b8;text-align:right}.dk17-status.ok{border-color:#14532d}.dk17-status.warn{border-color:#854d0e}.dk17-status.bad{border-color:#7f1d1d}.dk17-stock-actions{display:flex;gap:5px;margin-top:6px}.dk17-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-      @media(max-width:600px){.dk17-status-grid{grid-template-columns:1fr 1fr}.dk17-status{display:block}.dk17-status span{display:block;text-align:left;margin-top:4px}.dk17-alert-row{display:block}.dk17-alert-row span{display:block;margin-top:3px}.dk17-stock-actions .btn{min-width:44px;padding-left:8px;padding-right:8px}.dk17-notify{min-height:44px}.modal-box{margin:10px auto;padding:15px}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}}
-      @media(max-width:380px){.dk17-status-grid{grid-template-columns:1fr}.dk17-notify{width:100%}}
+      .dk1811-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:1000;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 15px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.2s;max-width:calc(100vw - 30px);text-align:center}.dk1811-toast.show{opacity:1;transform:translate(-50%,0)}
+      .dk1811-badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;padding:0 6px;margin-left:5px;border-radius:999px;background:#dc2626;color:#fff;font-size:11px;font-weight:700}.dk1811-badge[hidden]{display:none}
+      .dk1811-alert-group{margin:12px 0;padding:10px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk1811-alert-group h3{margin:0 0 8px}.dk1811-alert-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #263244}.dk1811-alert-row:last-child{border-bottom:0}.dk1811-alert-row span{color:#94a3b8;font-size:13px}
+      .dk1811-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dk1811-status{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid #263244;border-radius:12px;background:#0f172a}.dk1811-status span{color:#94a3b8;text-align:right}.dk1811-status.ok{border-color:#14532d}.dk1811-status.warn{border-color:#854d0e}.dk1811-status.bad{border-color:#7f1d1d}.dk1811-stock-actions{display:flex;gap:5px;margin-top:6px}.dk1811-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      @media(max-width:600px){.dk1811-status-grid{grid-template-columns:1fr 1fr}.dk1811-status{display:block}.dk1811-status span{display:block;text-align:left;margin-top:4px}.dk1811-alert-row{display:block}.dk1811-alert-row span{display:block;margin-top:3px}.dk1811-stock-actions .btn{min-width:44px;padding-left:8px;padding-right:8px}.dk1811-notify{min-height:44px}.modal-box{margin:10px auto;padding:15px}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}}
+      @media(max-width:380px){.dk1811-status-grid{grid-template-columns:1fr}.dk1811-notify{width:100%}}
     `;
     document.head.appendChild(style);
   }
 
-  const dk17PrevRenderAll=window.renderAll;
-  let dk17Rendering=false;
+  const dk1811PrevRenderAll=window.renderAll;
+  let dk1811Rendering=false;
   window.renderAll=function(){
-    if(dk17Rendering) return;
-    dk17Rendering=true;
+    if(dk1811Rendering) return;
+    dk1811Rendering=true;
     try{
-      if(typeof dk17PrevRenderAll === "function") dk17PrevRenderAll();
-      dk17InstallNotifications();
-      dk17RenderDashboardStatus();
-      dk17RenderReports();
-    }catch(e){ console.error("V18.1 render:",e); }
-    finally{ dk17Rendering=false; }
+      if(typeof dk1811PrevRenderAll === "function") dk1811PrevRenderAll();
+      dk1811InstallNotifications();
+      dk1811RenderDashboardStatus();
+      dk1811RenderReports();
+    }catch(e){ console.error("V18.1.1 render:",e); }
+    finally{ dk1811Rendering=false; }
   };
 
-  function dk17Version(){
-    document.title="Dapur Kapal V18.1";
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1 • Data tersimpan di perangkat"));
+  function dk1811Version(){
+    document.title="Dapur Kapal V18.1.1";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1.1 • Data tersimpan di perangkat"));
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta) meta.setAttribute("content","#0f172a");
-    let marker=document.getElementById("dk17BuildMarker");
-    if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V18.1 • Web Edition";
+    let marker=document.getElementById("dk1811BuildMarker");
+    if(!marker){ marker=document.createElement("div"); marker.id="dk1811BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
+    marker.textContent="BUILD V18.1.1 • Web Edition";
   }
 
-  dk17AddStyles();
-  dk17Version();
-  setTimeout(()=>{try{renderAll()}catch(e){console.error("V18.1 initial:",e)}},80);
+  dk1811AddStyles();
+  dk1811Version();
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V18.1.1 initial:",e)}},80);
 })();
 
 
 
 </script>
-<style id="dk174CleanMobile">
+<style id="dk18114CleanMobile">
 @media(max-width:600px){
   .tabs{display:none!important}
   .app{padding-bottom:96px!important}
-  #dk174MobileBar{position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:9990;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:6px;border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.96);backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
-  #dk174MobileBar button{border:0;background:transparent;color:#cbd5e1;border-radius:12px;min-height:54px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;touch-action:manipulation}
-  #dk174MobileBar button.active{background:#2563eb;color:#fff}
-  #dk174MobileBar .ico{font-size:20px;line-height:22px}.dk174-lbl{font-size:10px}
-  #dk174More{position:fixed;right:12px;bottom:82px;z-index:9991;width:min(270px,calc(100vw - 24px));display:none;padding:8px;background:#111827;border:1px solid #334155;border-radius:16px;box-shadow:0 12px 35px rgba(0,0,0,.45)}
-  #dk174More.show{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  #dk174More button{min-height:46px}
-  .dk174-back{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;min-height:44px;padding:9px 13px;border:1px solid #334155;border-radius:11px;background:#111827;color:#e5e7eb;font-weight:700;touch-action:manipulation}
+  #dk18114MobileBar{position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:9990;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:6px;border:1px solid #334155;border-radius:18px;background:rgba(15,23,42,.96);backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  #dk18114MobileBar button{border:0;background:transparent;color:#cbd5e1;border-radius:12px;min-height:54px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;touch-action:manipulation}
+  #dk18114MobileBar button.active{background:#2563eb;color:#fff}
+  #dk18114MobileBar .ico{font-size:20px;line-height:22px}.dk18114-lbl{font-size:10px}
+  #dk18114More{position:fixed;right:12px;bottom:82px;z-index:9991;width:min(270px,calc(100vw - 24px));display:none;padding:8px;background:#111827;border:1px solid #334155;border-radius:16px;box-shadow:0 12px 35px rgba(0,0,0,.45)}
+  #dk18114More.show{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  #dk18114More button{min-height:46px}
+  .dk18114-back{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;min-height:44px;padding:9px 13px;border:1px solid #334155;border-radius:11px;background:#111827;color:#e5e7eb;font-weight:700;touch-action:manipulation}
 }
-@media(min-width:601px){#dk174MobileBar,#dk174More{display:none!important}}
+@media(min-width:601px){#dk18114MobileBar,#dk18114More{display:none!important}}
 </style>
 <script>
 (function(){
-  function sync(){const cur=document.querySelector('.page.active')?.id||'dashboard';document.querySelectorAll('#dk174MobileBar button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===cur));const morePages=['recipes','expenses','tasks','notes','reports','settings'];const m=document.querySelector('#dk174MobileBar button[data-page="more"]');if(m)m.classList.toggle('active',morePages.includes(cur));}
+  function sync(){const cur=document.querySelector('.page.active')?.id||'dashboard';document.querySelectorAll('#dk18114MobileBar button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===cur));const morePages=['recipes','expenses','tasks','notes','reports','settings'];const m=document.querySelector('#dk18114MobileBar button[data-page="more"]');if(m)m.classList.toggle('active',morePages.includes(cur));}
   function back(){const prev=window.dk181PreviousPage;showPage(prev&&prev!=='dashboard'?prev:'dashboard')}
-  window.dk174AddBackButtons=function(){document.querySelectorAll('.page').forEach(page=>{if(page.id==='dashboard'||page.querySelector('.dk174-back'))return;const first=page.firstElementChild;if(!first)return;const b=document.createElement('button');b.type='button';b.className='dk174-back';b.innerHTML='← Kembali';b.onclick=back;page.insertBefore(b,first)})};
+  window.dk18114AddBackButtons=function(){document.querySelectorAll('.page').forEach(page=>{if(page.id==='dashboard'||page.querySelector('.dk18114-back'))return;const first=page.firstElementChild;if(!first)return;const b=document.createElement('button');b.type='button';b.className='dk18114-back';b.innerHTML='← Kembali';b.onclick=back;page.insertBefore(b,first)})};
   function build(){
-    let bar=document.getElementById('dk174MobileBar');
-    if(!bar){bar=document.createElement('nav');bar.id='dk174MobileBar';bar.setAttribute('aria-label','Navigasi mobile');document.body.appendChild(bar)}
+    let bar=document.getElementById('dk18114MobileBar');
+    if(!bar){bar=document.createElement('nav');bar.id='dk18114MobileBar';bar.setAttribute('aria-label','Navigasi mobile');document.body.appendChild(bar)}
     bar.innerHTML='';
-    [['dashboard','🏠','Home'],['menu','🍱','Menu'],['stock','📦','Stok'],['shopping','🛒','Belanja'],['more','☰','Lainnya']].forEach(([p,i,l])=>{const b=document.createElement('button');b.type='button';b.dataset.page=p;b.innerHTML='<span class="ico">'+i+'</span><span class="dk174-lbl">'+l+'</span>';b.onclick=()=>{if(p==='more'){document.getElementById('dk174More')?.classList.toggle('show');return}showPage(p);document.getElementById('dk174More')?.classList.remove('show');sync()};bar.appendChild(b)});
-    let more=document.getElementById('dk174More');if(!more){more=document.createElement('div');more.id='dk174More';document.body.appendChild(more)}
+    [['dashboard','🏠','Home'],['menu','🍱','Menu'],['stock','📦','Stok'],['shopping','🛒','Belanja'],['more','☰','Lainnya']].forEach(([p,i,l])=>{const b=document.createElement('button');b.type='button';b.dataset.page=p;b.innerHTML='<span class="ico">'+i+'</span><span class="dk18114-lbl">'+l+'</span>';b.onclick=()=>{if(p==='more'){document.getElementById('dk18114More')?.classList.toggle('show');return}showPage(p);document.getElementById('dk18114More')?.classList.remove('show');sync()};bar.appendChild(b)});
+    let more=document.getElementById('dk18114More');if(!more){more=document.createElement('div');more.id='dk18114More';document.body.appendChild(more)}
     more.innerHTML='';[['recipes','📖 Resep'],['expenses','💰 Kas'],['tasks','✅ Tugas'],['notes','📝 Catatan'],['reports','📊 Laporan'],['settings','⚙️ Data']].forEach(([p,l])=>{const b=document.createElement('button');b.className='btn secondary';b.type='button';b.dataset.page=p;b.textContent=l;b.onclick=()=>{showPage(p);more.classList.remove('show');sync()};more.appendChild(b)});
-    window.dk174AddBackButtons();sync();
+    window.dk18114AddBackButtons();sync();
   }
-  document.addEventListener('click',e=>{const m=document.getElementById('dk174More'),bar=document.getElementById('dk174MobileBar');if(m&&m.classList.contains('show')&&!m.contains(e.target)&&!bar?.contains(e.target))m.classList.remove('show')},{passive:true});
-  window.dk174SyncMobile=sync;
+  document.addEventListener('click',e=>{const m=document.getElementById('dk18114More'),bar=document.getElementById('dk18114MobileBar');if(m&&m.classList.contains('show')&&!m.contains(e.target)&&!bar?.contains(e.target))m.classList.remove('show')},{passive:true});
+  window.dk18114SyncMobile=sync;
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
 })();
 </script>
 
-<!-- V18.1 CLEAN CORE -->
-<style id="dk175StartupStyle">
-  #dk72Splash.dk175-force-hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+<!-- V18.1.1 CLEAN CORE -->
+<style id="dk18115StartupStyle">
+  #dk72Splash.dk18115-force-hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 </style>
 <script>
 (function(){
@@ -5191,7 +5191,7 @@ function initDK163Style(){
   function dk181HideSplash(){
     const splash=document.getElementById("dk72Splash");
     if(!splash) return;
-    splash.classList.add("hide","dk175-force-hide");
+    splash.classList.add("hide","dk18115-force-hide");
     splash.setAttribute("aria-hidden","true");
     setTimeout(()=>{ splash.style.display="none"; },450);
   }
@@ -5201,7 +5201,7 @@ function initDK163Style(){
 })();
 </script>
 
-<!-- V18.1 OPERATIONAL LAYER -->
+<!-- V18.1.1 OPERATIONAL LAYER -->
 <style id="dk18Styles">
   .dk18-ops-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
   .dk18-ops{border:1px solid #263244;border-radius:14px;padding:12px;background:#0f172a}
@@ -5315,12 +5315,12 @@ function initDK163Style(){
     try{dk18Render()}catch(e){console.error("V18 operational layer:",e)}
   };
   function dk18Version(){
-    document.title="Dapur Kapal V18.1";
-    document.querySelector('meta[name="application-version"]')?.setAttribute("content","18.0");
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1 • Data tersimpan di perangkat"));
-    const marker=document.getElementById("dk17BuildMarker");
-    if(marker) marker.textContent="BUILD V18.1 • Web Edition";
+    document.title="Dapur Kapal V18.1.1";
+    document.querySelector('meta[name="application-version"]')?.setAttribute("content","18.1.1");
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1.1 • Data tersimpan di perangkat"));
+    const marker=document.getElementById("dk1811BuildMarker");
+    if(marker) marker.textContent="BUILD V18.1.1 • Web Edition";
   }
   function start(){
     dk18Version();
