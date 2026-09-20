@@ -2042,7 +2042,9 @@ function printShopping(){
           window.print();
         };
       <\/script>
-    </body>
+    
+<!-- V17.4 notification click fix -->
+</body>
     </html>
   `);
 
@@ -5059,21 +5061,35 @@ function dk164SyncMobileBar(){
   }
 
   function dk17InstallNotifications(){
-    const all=Array.from(document.querySelectorAll(".dk17-notify, #dk164QuickNotify, #dk17QuickNotify"));
-    let btn=document.getElementById("dk164QuickNotify") || all[0];
+    /* V17.4 FIX: include the actual V17.4 button/container IDs.
+       The previous installer only searched old V16/V17.2 IDs,
+       so the visible notification button could exist without a click handler. */
+    const all=Array.from(document.querySelectorAll(
+      ".dk17-notify, #dk164QuickNotify, #dk17QuickNotify, #dk174QuickNotify"
+    ));
+    let btn=document.getElementById("dk174QuickNotify")
+      || document.getElementById("dk164QuickNotify")
+      || document.getElementById("dk17QuickNotify")
+      || all[0];
+
     if(!btn){
-      const container=document.querySelector(".dk164-header-actions");
+      const container=document.querySelector(
+        ".dk174-header-actions, .dk164-header-actions"
+      );
       if(!container) return;
       btn=document.createElement("button");
       btn.type="button";
       container.appendChild(btn);
     }
+
     all.forEach(el=>{ if(el!==btn) el.remove(); });
+
     btn.id="dk174QuickNotify";
     const a=dk17Alerts();
     btn.className="btn secondary dk17-notify";
     btn.innerHTML=`🔔 Notifikasi <span class="dk17-badge" ${a.total?"":"hidden"}>${a.total>99?"99+":a.total}</span>`;
     btn.onclick=dk17NotificationPanel;
+    btn.setAttribute("aria-label","Buka notifikasi Dapur");
   }
 
   function dk17AdjustStock(id,delta){
