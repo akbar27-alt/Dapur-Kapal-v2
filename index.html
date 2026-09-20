@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V17.4</title>
+<title>Dapur Kapal V17.5</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
-<meta name="application-version" content="17.4">
+<meta name="application-version" content="17.5">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -265,18 +265,6 @@ footer{
   @media(max-width:600px){.dk72-header-row{align-items:flex-start}.dk72-app-logo{width:38px;height:38px;border-radius:11px}.dk72-back{top:62px}.dk72-notify{width:100%!important}.dk72-splash-card img{width:112px;height:112px}}
 </style>
 
-
-<style id="dk174SplashFailsafe">
-#dk72Splash{
-  animation:dk174SplashFailsafeHide .01s linear 1;
-  animation-delay:2.5s;
-  animation-fill-mode:forwards;
-}
-@keyframes dk174SplashFailsafeHide{
-  to{opacity:0;visibility:hidden;pointer-events:none}
-}
-</style>
-
 </head>
 
 <body>
@@ -286,7 +274,7 @@ footer{
     <div class="dk72-splash-title">Dapur Kapal</div>
     <div class="dk72-splash-sub">Kitchen Management System</div>
     <div class="dk72-splash-loader"><span></span></div>
-    <small>V17.4 • Web Edition</small>
+    <small>V17.5 • Web Edition</small>
   </div>
 </div>
 
@@ -295,7 +283,7 @@ footer{
 
 <header>
   <div class="dk72-header-row"><img class="dk72-app-logo" src="dapur-kapal-icon.svg" alt="Dapur Kapal"><div class="dk72-header-copy"><h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V17.4</p></div></div>
+  <p>Kitchen Management System • V17.5</p></div></div>
 </header>
 
 <div class="dk174-header-actions">
@@ -606,7 +594,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V17.4 • Data tersimpan di perangkat
+  Dapur Kapal V17.5 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -1074,10 +1062,7 @@ function initData(){
 function showPage(page){
 
   const current=document.querySelector(".page.active")?.id || "dashboard";
-  if(page!==current){
-    window.dk164PreviousPage=current;
-    window.dk174PreviousPage=current;
-  }
+  if(page!==current) window.dk175PreviousPage=current;
 
   document.querySelectorAll(".page").forEach(el=>{
     el.classList.remove("active");
@@ -2043,7 +2028,6 @@ function printShopping(){
         };
       <\/script>
     
-<!-- V17.4 notification click fix -->
 </body>
     </html>
   `);
@@ -2792,7 +2776,7 @@ function addActivity(text){
 function backupData(){
 
   const backup={
-    version:"17.4",
+    version:"17.5",
     createdAt:new Date().toISOString(),
     data:{}
   };
@@ -2841,7 +2825,7 @@ function restoreData(event){
       }
 
       if(!confirm(
-        "Restore backup akan mengganti data V17.4 saat ini. Lanjut?"
+        "Restore backup akan mengganti data V16.1 saat ini. Lanjut?"
       )){
         return;
       }
@@ -2967,28 +2951,13 @@ function dateFile(){
    START APP
 ========================================================= */
 
-function dk174HideSplash(){
-  const splash=document.getElementById("dk72Splash");
-  if(!splash) return;
-  splash.classList.add("hide");
-  splash.setAttribute("aria-hidden","true");
-  setTimeout(()=>{ splash.style.display="none"; },450);
-}
-
 document.addEventListener("DOMContentLoaded",()=>{
-  try{
-    initData();
-    renderAll();
-    showPage("dashboard");
-  }catch(e){
-    console.error("Dapur Kapal startup error:",e);
-  }finally{
-    requestAnimationFrame(()=>setTimeout(dk174HideSplash,120));
-  }
-});
 
-/* Safety fallback: startup errors must never leave the splash on screen forever. */
-setTimeout(dk174HideSplash,6500);
+  initData();
+  renderAll();
+  showPage("dashboard");
+
+});
 
   /* =========================================================
    🚢 DAPUR KAPAL V17.2 PATCH
@@ -4120,7 +4089,7 @@ window.v162Backup=function(){
   a.href=url;
 
   a.download=
-    "dapur-kapal-v16.2-"+
+    "dapur-kapal-v17.5-"+
     dateFile()+
     ".json";
 
@@ -4136,7 +4105,7 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V17.4 berhasil dibuat."
+    "✅ Backup Dapur Kapal V17.5 berhasil dibuat."
   );
 
 };
@@ -4191,7 +4160,7 @@ function v162BackupButton(){
   button.style.marginLeft="8px";
 
   button.textContent=
-    "⬇️ Backup V17.2";
+    "⬇️ Backup V17.5";
 
 
   button.onclick=
@@ -4298,7 +4267,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V17.4:",
+      "Dapur Kapal V17.5:",
       error
     );
 
@@ -4314,14 +4283,14 @@ window.renderAll=function(){
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V17.4";
+    "Dapur Kapal V17.5";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V17.4"
+        "Kitchen Management System • V17.5"
       )
     );
 
@@ -4330,7 +4299,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V17.4 • Data tersimpan di perangkat"
+        "Dapur Kapal V17.5 • Data tersimpan di perangkat"
       )
     );
 
@@ -4358,7 +4327,7 @@ setTimeout(()=>{
   }catch(e){
 
     console.error(
-      "V17.2 initial render:",
+      "V17.5 initial render:",
       e
     );
 
@@ -4873,132 +4842,6 @@ function initDK163Style(){
 })();
 
 /* =========================================================
-   DAPUR KAPAL V17.2
-   PATCH: mobile navigation, back button, notifications,
-   safer storage compatibility, and version metadata.
-   Existing dk161_* storage keys are intentionally preserved.
-========================================================= */
-
-const DK164_VERSION = "17.2";
-window.dk164PreviousPage="dashboard";
-
-function dk164AddStyle(){
-  if(document.getElementById("dk164Style")) return;
-  const style=document.createElement("style");
-  style.id="dk164Style";
-  style.textContent=`
-    .dk164-mobile-bar{display:none}
-    .dk164-back{display:none}
-    .dk174-notify{position:relative}
-    .dk164-dot{position:absolute;top:5px;right:5px;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:#dc2626;color:#fff;font-size:10px;display:none;align-items:center;justify-content:center}
-    .dk164-toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);z-index:300;background:#111827;color:#fff;border:1px solid #334155;border-radius:12px;padding:11px 14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;max-width:90%;text-align:center}
-    .dk164-header-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-    .dk164-mobile-only{display:none}
-    @media(max-width:600px){
-      body{padding-bottom:88px;overflow-x:hidden}
-      .app{width:100%;max-width:100%;padding:8px}
-      header{padding:12px 4px 10px;position:sticky;top:0;z-index:80;background:rgba(2,6,23,.96);backdrop-filter:blur(10px)}
-      header h1{font-size:21px;margin:0}
-      header p{font-size:12px;margin:3px 0 0}
-      .tabs{display:none}
-      .grid{grid-template-columns:1fr 1fr}
-      .row{display:grid;grid-template-columns:1fr;gap:8px;align-items:stretch}
-      .row>*{min-width:0;width:100%}
-      .row .fit{width:100%}
-      .card{padding:12px;margin-bottom:10px}
-      .card h2{font-size:18px}
-      .stat{font-size:24px}
-      .btn{min-height:44px;padding:10px 12px;font-size:14px;touch-action:manipulation}
-      input,select,textarea{font-size:16px;min-height:44px}
-      table{min-width:620px}
-      .day{padding:10px}
-      .day .row{display:flex;flex-direction:column;align-items:stretch}
-      .day .row>div{width:100%}
-      .dk163-mode-grid{grid-template-columns:1fr 1fr}
-      .dk164-mobile-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;position:fixed;left:8px;right:8px;bottom:8px;z-index:90;background:rgba(17,24,39,.98);border:1px solid #334155;border-radius:16px;padding:6px;box-shadow:0 12px 35px rgba(0,0,0,.45);padding-bottom:max(6px,env(safe-area-inset-bottom))}
-      .dk164-mobile-bar button{border:0;background:transparent;color:#94a3b8;border-radius:10px;padding:7px 2px;font-size:10px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
-      .dk164-mobile-bar button.active{background:#2563eb;color:#fff}
-      .dk164-back{display:inline-flex!important;align-items:center;gap:6px;margin-bottom:9px;border:1px solid #334155;background:#111827;color:#cbd5e1;border-radius:10px;padding:9px 12px;min-height:42px}
-      .dk174-notify{width:100%;margin-top:8px}
-      .modal{padding:8px}
-      .modal-box{width:100%;margin:8px auto;padding:14px;border-radius:16px;max-height:calc(100vh - 16px);overflow:auto}
-      .close{min-height:40px}
-      .timer{font-size:42px}
-      footer{font-size:12px;padding-bottom:20px}
-    }
-    @media(min-width:601px){.dk164-header-actions{justify-content:flex-end}}
-  `;
-  document.head.appendChild(style);
-}
-
-function dk164Toast(message){
-  let el=document.getElementById("dk164Toast");
-  if(!el){
-    el=document.createElement("div");
-    el.id="dk164Toast";
-    el.className="dk164-toast";
-    document.body.appendChild(el);
-  }
-  el.textContent=message;
-  el.style.display="block";
-  clearTimeout(window.dk164ToastTimer);
-  window.dk164ToastTimer=setTimeout(()=>{el.style.display="none";},2200);
-}
-
-function dk164AddBackButtons(){
-  document.querySelectorAll(".page").forEach(page=>{
-    if(page.id==="dashboard" || page.querySelector(".dk164-back")) return;
-    const first=page.firstElementChild;
-    if(!first) return;
-    const b=document.createElement("button");
-    b.className="dk164-back";
-    b.type="button";
-    b.innerHTML="← Kembali";
-    b.onclick=()=>dk164GoBack();
-    page.insertBefore(b,first);
-  });
-}
-
-function dk164GoBack(){
-  const previous=window.dk164PreviousPage;
-  showPage(previous && previous!=="dashboard" ? previous : "dashboard");
-}
-
-function dk164InstallMobileBar(){
-  if(document.getElementById("dk164MobileBar")) return;
-  const bar=document.createElement("nav");
-  bar.id="dk164MobileBar";
-  bar.className="dk164-mobile-bar";
-  const items=[
-    ["dashboard","🏠","Home"],
-    ["menu","🍱","Menu"],
-    ["stock","📦","Stok"],
-    ["shopping","🛒","Belanja"],
-    ["settings","⚙️","Data"]
-  ];
-  items.forEach(([page,icon,label])=>{
-    const b=document.createElement("button");
-    b.type="button";
-    b.dataset.page=page;
-    b.innerHTML=`<span>${icon}</span><span>${label}</span>`;
-    b.onclick=()=>showPage(page);
-    bar.appendChild(b);
-  });
-  document.body.appendChild(bar);
-}
-
-function dk164SyncMobileBar(){
-  const active=document.querySelector(".tabs button.active")?.dataset.page || "dashboard";
-  document.querySelectorAll("#dk164MobileBar button").forEach(b=>{
-    b.classList.toggle("active",b.dataset.page===active);
-  });
-}
-
-
-
-
-
-/* =========================================================
    DAPUR KAPAL V17.2 — STABILITY & INTEGRATION PASS
    Fokus: mobile UX, notifikasi, stok, belanja, resep,
    backup/restore, laporan, dan integrasi antar modul.
@@ -5006,7 +4849,7 @@ function dk164SyncMobileBar(){
 ========================================================= */
 (function(){
   "use strict";
-  const DK17_VERSION="17.4";
+  const DK17_VERSION="17.5";
 
   function dk17Toast(message){
     let el=document.getElementById("dk17Toast");
@@ -5061,9 +4904,6 @@ function dk164SyncMobileBar(){
   }
 
   function dk17InstallNotifications(){
-    /* V17.4 FIX: include the actual V17.4 button/container IDs.
-       The previous installer only searched old V16/V17.2 IDs,
-       so the visible notification button could exist without a click handler. */
     const all=Array.from(document.querySelectorAll(
       ".dk17-notify, #dk164QuickNotify, #dk17QuickNotify, #dk174QuickNotify"
     ));
@@ -5071,7 +4911,6 @@ function dk164SyncMobileBar(){
       || document.getElementById("dk164QuickNotify")
       || document.getElementById("dk17QuickNotify")
       || all[0];
-
     if(!btn){
       const container=document.querySelector(
         ".dk174-header-actions, .dk164-header-actions"
@@ -5081,9 +4920,7 @@ function dk164SyncMobileBar(){
       btn.type="button";
       container.appendChild(btn);
     }
-
     all.forEach(el=>{ if(el!==btn) el.remove(); });
-
     btn.id="dk174QuickNotify";
     const a=dk17Alerts();
     btn.className="btn secondary dk17-notify";
@@ -5179,9 +5016,9 @@ function dk164SyncMobileBar(){
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download=`dapur-kapal-v17.0-${dateFile()}.json`;
+    a.download=`dapur-kapal-v17.5-${dateFile()}.json`;
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    dk17Toast("✅ Backup V17.2 berhasil dibuat");
+    dk17Toast("✅ Backup V17.5 berhasil dibuat");
   };
 
   window.backupData=window.dk17Backup;
@@ -5285,24 +5122,24 @@ function dk164SyncMobileBar(){
       dk17InstallNotifications();
       dk17RenderDashboardStatus();
       dk17RenderReports();
-    }catch(e){ console.error("V17.2 render:",e); }
+    }catch(e){ console.error("V17.5 render:",e); }
     finally{ dk17Rendering=false; }
   };
 
   function dk17Version(){
-    document.title="Dapur Kapal V17.4";
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.4"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.4 • Data tersimpan di perangkat"));
+    document.title="Dapur Kapal V17.5";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V17.5"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V17.5 • Data tersimpan di perangkat"));
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta) meta.setAttribute("content","#0f172a");
     let marker=document.getElementById("dk17BuildMarker");
     if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V17.4 • Web Edition";
+    marker.textContent="BUILD V17.5 • Web Edition";
   }
 
   dk17AddStyles();
   dk17Version();
-  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.2 initial:",e)}},80);
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V17.5 initial:",e)}},80);
 })();
 
 
@@ -5326,7 +5163,7 @@ function dk164SyncMobileBar(){
 <script>
 (function(){
   function sync(){const cur=document.querySelector('.page.active')?.id||'dashboard';document.querySelectorAll('#dk174MobileBar button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===cur));const morePages=['recipes','expenses','tasks','notes','reports','settings'];const m=document.querySelector('#dk174MobileBar button[data-page="more"]');if(m)m.classList.toggle('active',morePages.includes(cur));}
-  function back(){const prev=window.dk174PreviousPage;showPage(prev&&prev!=='dashboard'?prev:'dashboard')}
+  function back(){const prev=window.dk175PreviousPage;showPage(prev&&prev!=='dashboard'?prev:'dashboard')}
   window.dk174AddBackButtons=function(){document.querySelectorAll('.page').forEach(page=>{if(page.id==='dashboard'||page.querySelector('.dk174-back'))return;const first=page.firstElementChild;if(!first)return;const b=document.createElement('button');b.type='button';b.className='dk174-back';b.innerHTML='← Kembali';b.onclick=back;page.insertBefore(b,first)})};
   function build(){
     let bar=document.getElementById('dk174MobileBar');
@@ -5343,37 +5180,25 @@ function dk164SyncMobileBar(){
 })();
 </script>
 
-<script id="dk174StartupWatchdog">
+<!-- V17.5 CLEAN CORE -->
+<style id="dk175StartupStyle">
+  #dk72Splash.dk175-force-hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+</style>
+<script>
 (function(){
   "use strict";
-  var started=false;
-  function hide(){
-    var el=document.getElementById("dk72Splash");
-    if(!el) return;
-    el.classList.add("hide");
-    el.setAttribute("aria-hidden","true");
-    el.style.pointerEvents="none";
-    setTimeout(function(){ el.style.display="none"; },500);
+  window.dk175PreviousPage = window.dk175PreviousPage || "dashboard";
+  function dk175HideSplash(){
+    const splash=document.getElementById("dk72Splash");
+    if(!splash) return;
+    splash.classList.add("hide","dk175-force-hide");
+    splash.setAttribute("aria-hidden","true");
+    setTimeout(()=>{ splash.style.display="none"; },450);
   }
-  function boot(){
-    if(started) return;
-    started=true;
-    try{
-      if(typeof initData==="function") initData();
-      if(typeof renderAll==="function") renderAll();
-      if(typeof showPage==="function") showPage("dashboard");
-    }catch(err){
-      console.error("Dapur Kapal V17.4 startup watchdog:",err);
-    }finally{
-      hide();
-    }
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",function(){ setTimeout(boot,80); },{once:true});
-  }else{
-    setTimeout(boot,80);
-  }
-  setTimeout(hide,3500);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",dk175HideSplash,{once:true});
+  else dk175HideSplash();
+  setTimeout(dk175HideSplash,6500);
 })();
 </script>
-
+</body>
+</html>
