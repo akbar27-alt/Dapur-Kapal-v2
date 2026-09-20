@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Dapur Kapal V18.0</title>
+<title>Dapur Kapal V18.1</title>
 <meta name="description" content="Dapur Kapal — Kitchen Management System untuk menu, stok, belanja, resep, kas, tugas, catatan, dan laporan.">
-<meta name="application-version" content="18.0">
+<meta name="application-version" content="18.1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -274,7 +274,7 @@ footer{
     <div class="dk72-splash-title">Dapur Kapal</div>
     <div class="dk72-splash-sub">Kitchen Management System</div>
     <div class="dk72-splash-loader"><span></span></div>
-    <small>V18.0 • Web Edition</small>
+    <small>V18.1 • Web Edition</small>
   </div>
 </div>
 
@@ -283,7 +283,7 @@ footer{
 
 <header>
   <div class="dk72-header-row"><img class="dk72-app-logo" src="dapur-kapal-icon.svg" alt="Dapur Kapal"><div class="dk72-header-copy"><h1>🚢 Dapur Kapal</h1>
-  <p>Kitchen Management System • V18.0</p></div></div>
+  <p>Kitchen Management System • V18.1</p></div></div>
 </header>
 
 <div class="dk174-header-actions">
@@ -594,7 +594,7 @@ footer{
 </section>
 
 <footer>
-  Dapur Kapal V18.0 • Data tersimpan di perangkat
+  Dapur Kapal V18.1 • Data tersimpan di perangkat
 </footer>
 
 </div>
@@ -1062,7 +1062,7 @@ function initData(){
 function showPage(page){
 
   const current=document.querySelector(".page.active")?.id || "dashboard";
-  if(page!==current) window.dk175PreviousPage=current;
+  if(page!==current) window.dk181PreviousPage=current;
 
   document.querySelectorAll(".page").forEach(el=>{
     el.classList.remove("active");
@@ -4045,7 +4045,7 @@ window.v162Backup=function(){
 
   const backup={
 
-    version:"16.2",
+    version:"18.1",
 
     createdAt:
       new Date().toISOString(),
@@ -4105,7 +4105,7 @@ window.v162Backup=function(){
 
 
   alert(
-    "✅ Backup Dapur Kapal V18.0 berhasil dibuat."
+    "✅ Backup Dapur Kapal V18.1 berhasil dibuat."
   );
 
 };
@@ -4160,7 +4160,7 @@ function v162BackupButton(){
   button.style.marginLeft="8px";
 
   button.textContent=
-    "⬇️ Backup V18.0";
+    "⬇️ Backup V18.1";
 
 
   button.onclick=
@@ -4267,7 +4267,7 @@ window.renderAll=function(){
   }catch(error){
 
     console.error(
-      "Dapur Kapal V18.0:",
+      "Dapur Kapal V18.1:",
       error
     );
 
@@ -4283,14 +4283,14 @@ window.renderAll=function(){
 function v162Version(){
 
   document.title=
-    "Dapur Kapal V18.0";
+    "Dapur Kapal V18.1";
 
 
   document
     .querySelector("header p")
     ?.replaceChildren(
       document.createTextNode(
-        "Kitchen Management System • V18.0"
+        "Kitchen Management System • V18.1"
       )
     );
 
@@ -4299,7 +4299,7 @@ function v162Version(){
     .querySelector("footer")
     ?.replaceChildren(
       document.createTextNode(
-        "Dapur Kapal V18.0 • Data tersimpan di perangkat"
+        "Dapur Kapal V18.1 • Data tersimpan di perangkat"
       )
     );
 
@@ -4327,7 +4327,7 @@ setTimeout(()=>{
   }catch(e){
 
     console.error(
-      "V18.0 initial render:",
+      "V18.1 initial render:",
       e
     );
 
@@ -4849,7 +4849,7 @@ function initDK163Style(){
 ========================================================= */
 (function(){
   "use strict";
-  const DK17_VERSION="17.5";
+  const DK17_VERSION="18.1";
 
   function dk17Toast(message){
     let el=document.getElementById("dk17Toast");
@@ -4905,7 +4905,7 @@ function initDK163Style(){
 
   function dk17InstallNotifications(){
     const all=Array.from(document.querySelectorAll(
-      ".dk17-notify, #dk164QuickNotify, #dk17QuickNotify, #dk174QuickNotify"
+      ".dk17-notify, #dk174QuickNotify"
     ));
     let btn=document.getElementById("dk174QuickNotify")
       || document.getElementById("dk164QuickNotify")
@@ -4913,7 +4913,7 @@ function initDK163Style(){
       || all[0];
     if(!btn){
       const container=document.querySelector(
-        ".dk174-header-actions, .dk164-header-actions"
+        ".dk174-header-actions"
       );
       if(!container) return;
       btn=document.createElement("button");
@@ -5018,7 +5018,7 @@ function initDK163Style(){
     a.href=url;
     a.download=`dapur-kapal-v18.0-${dateFile()}.json`;
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    dk17Toast("✅ Backup V18.0 berhasil dibuat");
+    dk17Toast("✅ Backup V18.1 berhasil dibuat");
   };
 
   window.backupData=window.dk17Backup;
@@ -5122,24 +5122,24 @@ function initDK163Style(){
       dk17InstallNotifications();
       dk17RenderDashboardStatus();
       dk17RenderReports();
-    }catch(e){ console.error("V18.0 render:",e); }
+    }catch(e){ console.error("V18.1 render:",e); }
     finally{ dk17Rendering=false; }
   };
 
   function dk17Version(){
-    document.title="Dapur Kapal V18.0";
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.0"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.0 • Data tersimpan di perangkat"));
+    document.title="Dapur Kapal V18.1";
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1 • Data tersimpan di perangkat"));
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta) meta.setAttribute("content","#0f172a");
     let marker=document.getElementById("dk17BuildMarker");
     if(!marker){ marker=document.createElement("div"); marker.id="dk17BuildMarker"; marker.className="small muted"; marker.style.marginTop="6px"; document.querySelector("header")?.appendChild(marker); }
-    marker.textContent="BUILD V18.0 • Web Edition";
+    marker.textContent="BUILD V18.1 • Web Edition";
   }
 
   dk17AddStyles();
   dk17Version();
-  setTimeout(()=>{try{renderAll()}catch(e){console.error("V18.0 initial:",e)}},80);
+  setTimeout(()=>{try{renderAll()}catch(e){console.error("V18.1 initial:",e)}},80);
 })();
 
 
@@ -5163,7 +5163,7 @@ function initDK163Style(){
 <script>
 (function(){
   function sync(){const cur=document.querySelector('.page.active')?.id||'dashboard';document.querySelectorAll('#dk174MobileBar button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===cur));const morePages=['recipes','expenses','tasks','notes','reports','settings'];const m=document.querySelector('#dk174MobileBar button[data-page="more"]');if(m)m.classList.toggle('active',morePages.includes(cur));}
-  function back(){const prev=window.dk175PreviousPage;showPage(prev&&prev!=='dashboard'?prev:'dashboard')}
+  function back(){const prev=window.dk181PreviousPage;showPage(prev&&prev!=='dashboard'?prev:'dashboard')}
   window.dk174AddBackButtons=function(){document.querySelectorAll('.page').forEach(page=>{if(page.id==='dashboard'||page.querySelector('.dk174-back'))return;const first=page.firstElementChild;if(!first)return;const b=document.createElement('button');b.type='button';b.className='dk174-back';b.innerHTML='← Kembali';b.onclick=back;page.insertBefore(b,first)})};
   function build(){
     let bar=document.getElementById('dk174MobileBar');
@@ -5180,28 +5180,28 @@ function initDK163Style(){
 })();
 </script>
 
-<!-- V18.0 CLEAN CORE -->
+<!-- V18.1 CLEAN CORE -->
 <style id="dk175StartupStyle">
   #dk72Splash.dk175-force-hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 </style>
 <script>
 (function(){
   "use strict";
-  window.dk175PreviousPage = window.dk175PreviousPage || "dashboard";
-  function dk175HideSplash(){
+  window.dk181PreviousPage = window.dk181PreviousPage || "dashboard";
+  function dk181HideSplash(){
     const splash=document.getElementById("dk72Splash");
     if(!splash) return;
     splash.classList.add("hide","dk175-force-hide");
     splash.setAttribute("aria-hidden","true");
     setTimeout(()=>{ splash.style.display="none"; },450);
   }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",dk175HideSplash,{once:true});
-  else dk175HideSplash();
-  setTimeout(dk175HideSplash,6500);
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",dk181HideSplash,{once:true});
+  else dk181HideSplash();
+  setTimeout(dk181HideSplash,6500);
 })();
 </script>
 
-<!-- V18.0 OPERATIONAL LAYER -->
+<!-- V18.1 OPERATIONAL LAYER -->
 <style id="dk18Styles">
   .dk18-ops-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
   .dk18-ops{border:1px solid #263244;border-radius:14px;padding:12px;background:#0f172a}
@@ -5315,12 +5315,12 @@ function initDK163Style(){
     try{dk18Render()}catch(e){console.error("V18 operational layer:",e)}
   };
   function dk18Version(){
-    document.title="Dapur Kapal V18.0";
+    document.title="Dapur Kapal V18.1";
     document.querySelector('meta[name="application-version"]')?.setAttribute("content","18.0");
-    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.0"));
-    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.0 • Data tersimpan di perangkat"));
+    document.querySelector("header p")?.replaceChildren(document.createTextNode("Kitchen Management System • V18.1"));
+    document.querySelector("footer")?.replaceChildren(document.createTextNode("Dapur Kapal V18.1 • Data tersimpan di perangkat"));
     const marker=document.getElementById("dk17BuildMarker");
-    if(marker) marker.textContent="BUILD V18.0 • Web Edition";
+    if(marker) marker.textContent="BUILD V18.1 • Web Edition";
   }
   function start(){
     dk18Version();
